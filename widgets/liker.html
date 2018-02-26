@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Svelto - Demo</title>
+    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
+    <script src="/static/vendor/lodash.js"></script>
+    <script src="/static/vendor/jquery.js"></script>
+    <script src="/static/vendor/Chart.js"></script>
+    <script src="/static/vendor/datatables.js"></script>
+    <script src="/static/vendor/marked.js"></script>
+    <script src="/static/javascript/svelto.js"></script>
+  </head>
+  <body class="layout">
+    <header class="layout-header sticky toolbar primary z-depth-4">
+      <div class="multiple center-y">
+        <div class="label compact transparent">
+          <i class="icon">code</i>
+        </div>
+        <a href="/" class="large">Svelto - Demo</a>
+        <div class="spacer"></div>
+        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
+      </div>
+    </header>
+    <main class="layout-content">
+
+  
+      <div class="divider block">
+        <div class="divider-content">Liker</div>
+      </div>
+    
+
+  
+      <div class="liker" data-state='null' data-state-url="" data-url="/liker-update">
+        <div class="like" data-likes="0"></div>
+        <div class="dislike" data-dislikes="0"></div>
+      </div>
+    
+  
+      <div class="liker" data-state='null' data-state-url="" data-url="/liker-update">
+        <div class="like" data-likes="100"></div>
+        <div class="dislike" data-dislikes="10"></div>
+      </div>
+    
+  
+      <div class="liker" data-state='null' data-state-url="/liker-state" data-url="/liker-update">
+        <div class="like" data-likes="101"></div>
+        <div class="dislike" data-dislikes="10"></div>
+      </div>
+    
+  
+      <div class="liker" data-state='"true"' data-state-url="" data-url="/liker-update">
+        <div class="like" data-likes="101"></div>
+        <div class="dislike" data-dislikes="10"></div>
+      </div>
+    
+  
+      <div class="liker" data-state='"false"' data-state-url="" data-url="/liker-update">
+        <div class="like" data-likes="100"></div>
+        <div class="dislike" data-dislikes="11"></div>
+      </div>
+    
+
+  <div class="multiple">
+    <div class="liker" data-url="/liker-update">
+      <div class="like" data-likes="100" data-text-counter="Likes" data-text-on="Custom Like" data-text-off="Custom Remote Like"></div>
+      <div class="dislike" data-dislikes="10" data-text-counter="Dislikes" data-text-on="Custom Dislike" data-text-off="Custom Remove Dislike"></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="liker" data-state="true" data-url="/liker-update">
+      <div class="like" data-likes="101" data-text-on="Custom Like" data-text-off="Custom Remove Like"></div>
+      <div class="dislike" data-dislikes="10" data-text-on="Custom Dislike" data-text-off="Custom Remove Dislike"></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="liker" data-state="false" data-url="/liker-update">
+      <div class="like" data-likes="100" data-text-on="Custom Like" data-text-off="Custom Remove Like"></div>
+      <div class="dislike" data-dislikes="11" data-text-on="Custom Dislike" data-text-off="Custom Remove Dislike"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+
+  <div class="liker" data-url="/liker-update">
+    <div class="like" data-likes="100" data-icon="keyboard_arrow_up"></div>
+    <div class="dislike" data-dislikes="10" data-icon="keyboard_arrow_down"></div>
+  </div>
+
+  <div class="liker multiple joined" data-url="/liker-update">
+    <div class="like button bordered" data-likes="100"></div>
+    <div class="dislike button bordered" data-dislikes="10"></div>
+  </div>
+
+  
+
+  
+      <div class="divider block">
+        <div class="divider-content">API</div>
+      </div>
+    
+
+  <div class="multiple">
+    <div class="button bordered" onclick="api ()">Init</div>
+    <div class="button bordered" onclick="api_get ()">Get</div>
+    <div class="multiple joined">
+      <div class="label bordered gray pointing-right">Set</div>
+      <div class="button bordered" onclick="api ( set">false</div>
+      <div class="button bordered" onclick="api ( set">true</div>
+      <div class="button bordered" onclick="api ( set">null</div>
+    </div>
+    <div class="button bordered" onclick="api ( reset">Reset</div>
+    <div class="button bordered" onclick="api ( toggle">Toggle</div>
+    <div class="button bordered" onclick="api ( like">Like</div>
+    <div class="button bordered" onclick="api ( dislike">Dislike</div>
+    <div class="button bordered" onclick="api ( destroy">Destroy</div>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Style</div>
+      </div>
+    
+
+  <div class="multiple actions">
+    
+      <div class="button checkbox right bordered" onclick="toggle_class ( no-icons">
+        <input type="checkbox" checked>
+        <label>No icons</label>
+      </div>
+    
+    
+      <div class="button checkbox right bordered" onclick="toggle_class ( no-counters">
+        <input type="checkbox" checked>
+        <label>No counters</label>
+      </div>
+    
+    
+      <div class="button checkbox right bordered" onclick="toggle_class ( no-counters-0">
+        <input type="checkbox" checked>
+        <label>No counters 0</label>
+      </div>
+    
+    
+      <div class="button checkbox right bordered" onclick="toggle_class ( no-labels">
+        <input type="checkbox" checked>
+        <label>No labels</label>
+      </div>
+    
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">State</div>
+      </div>
+    
+
+  <div class="multiple joined actions">
+    
+      <div class="button radio right bordered" onclick="api ( enable">
+        <input type="radio" name="state" checked>
+        <label>Enabled</label>
+      </div>
+    
+    
+      <div class="button radio right bordered" onclick="api ( disable">
+        <input type="radio" name="state" checked>
+        <label>Disabled</label>
+      </div>
+    
+  </div>
+
+  <script>
+    function api ( action, extra ) {
+      $('.liker').liker ( action, extra );
+    }
+
+    function api_get () {
+      var result = $('.liker').first ().liker ( 'get' );
+      $.toast ( JSON.stringify ( result ) );
+    }
+
+    function toggle_class ( name ) {
+      $('.liker').toggleClass ( name );
+    }
+  </script>
+
+
+
+</main>
+    <footer class="layout-footer">
+      <p class="text-center">Svelto, the modular web framework</p>
+    </footer>
+    <script>
+      /* ERROR NOTIFIER */
+      var prevErrorId = '';
+      window.onerror = function ( message, file, line ) {
+        var errorId = message + file + line;
+        if ( errorId !== prevErrorId ) {
+          prevErrorId = errorId;
+          try {
+            $.toast ({
+              body: 'File: ' + file + '<br/>Line: ' + line + '<br/>Message: ' + message,
+              ttl: Infinity,
+              color: Svelto.Colors.red
+            });
+          } catch ( e ) {
+            alert ( file + ':' + line + '\n\n' + message );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Svelto - Demo</title>
+    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
+    <script src="/static/vendor/lodash.js"></script>
+    <script src="/static/vendor/jquery.js"></script>
+    <script src="/static/vendor/Chart.js"></script>
+    <script src="/static/vendor/datatables.js"></script>
+    <script src="/static/vendor/marked.js"></script>
+    <script src="/static/javascript/svelto.js"></script>
+  </head>
+  <body class="layout">
+    <header class="layout-header sticky toolbar primary z-depth-4">
+      <div class="multiple center-y">
+        <div class="label compact transparent">
+          <i class="icon">code</i>
+        </div>
+        <a href="/" class="large">Svelto - Demo</a>
+        <div class="spacer"></div>
+        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
+      </div>
+    </header>
+    <main class="layout-content">
+
+  
+      <div class="divider block">
+        <div class="divider-content">Sizes</div>
+      </div>
+    
+
+  <div class="multiple">
+    <div class="multiple joined xxxxsmall">
+      <div class="label bordered compact">
+        <i class="icon">menu</i>
+      </div>
+      <div class="label bordered">XXXX-Small</div>
+    </div>
+    <div class="multiple joined xxxsmall">
+      <div class="label bordered compact">
+        <i class="icon">menu</i>
+      </div>
+      <div class="label bordered">XXX-Small</div>
+    </div>
+    <div class="multiple joined xxsmall">
+      <div class="label bordered compact">
+        <i class="icon">menu</i>
+      </div>
+      <div class="label bordered">XX-Small</div>
+    </div>
+    <div class="multiple joined xsmall">
+      <div class="label bordered compact">
+        <i class="icon">menu</i>
+      </div>
+      <div class="label bordered">X-Small</div>
+    </div>
+    <div class="multiple joined small">
+      <div class="label bordered compact">
+        <i class="icon">menu</i>
+      </div>
+      <div class="label bordered">Small</div>
+    </div>
+    <div class="multiple joined medium">
+      <div class="label bordered compact">
+        <i class="icon">menu</i>
+      </div>
+      <div class="label bordered">Medium</div>
+    </div>
+    <div class="multiple joined large">
+      <div class="label bordered compact">
+        <i class="icon">menu</i>
+      </div>
+      <div class="label bordered">Large</div>
+    </div>
+    <div class="multiple joined xlarge">
+      <div class="label bordered compact">
+        <i class="icon">menu</i>
+      </div>
+      <div class="label bordered">X-Large</div>
+    </div>
+    <div class="multiple joined xxlarge">
+      <div class="label bordered compact">
+        <i class="icon">menu</i>
+      </div>
+      <div class="label bordered">XX-Large</div>
+    </div>
+    <div class="multiple joined xxxlarge">
+      <div class="label bordered compact">
+        <i class="icon">menu</i>
+      </div>
+      <div class="label bordered">XXX-Large</div>
+    </div>
+    <div class="multiple joined xxxxlarge">
+      <div class="label bordered compact">
+        <i class="icon">menu</i>
+      </div>
+      <div class="label bordered">XXXX-Large</div>
+    </div>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Icons</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <div class="multiple">
+      <i class="icon xxxxsmall">menu</i>
+      <i class="icon xxxsmall">menu</i>
+      <i class="icon xxsmall">menu</i>
+      <i class="icon xsmall">menu</i>
+      <i class="icon small">menu</i>
+      <i class="icon medium">menu</i>
+      <i class="icon large">menu</i>
+      <i class="icon xlarge">menu</i>
+      <i class="icon xxlarge">menu</i>
+      <i class="icon xxxlarge">menu</i>
+      <i class="icon xxxxlarge">menu</i>
+    </div>
+  </div>
+
+</main>
+    <footer class="layout-footer">
+      <p class="text-center">Svelto, the modular web framework</p>
+    </footer>
+    <script>
+      /* ERROR NOTIFIER */
+      var prevErrorId = '';
+      window.onerror = function ( message, file, line ) {
+        var errorId = message + file + line;
+        if ( errorId !== prevErrorId ) {
+          prevErrorId = errorId;
+          try {
+            $.toast ({
+              body: 'File: ' + file + '<br/>Line: ' + line + '<br/>Message: ' + message,
+              ttl: Infinity,
+              color: Svelto.Colors.red
+            });
+          } catch ( e ) {
+            alert ( file + ':' + line + '\n\n' + message );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

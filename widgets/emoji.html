@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Svelto - Demo</title>
+    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
+    <script src="/static/vendor/lodash.js"></script>
+    <script src="/static/vendor/jquery.js"></script>
+    <script src="/static/vendor/Chart.js"></script>
+    <script src="/static/vendor/datatables.js"></script>
+    <script src="/static/vendor/marked.js"></script>
+    <script src="/static/javascript/svelto.js"></script>
+  </head>
+  <body class="layout">
+    <header class="layout-header sticky toolbar primary z-depth-4">
+      <div class="multiple center-y">
+        <div class="label compact transparent">
+          <i class="icon">code</i>
+        </div>
+        <a href="/" class="large">Svelto - Demo</a>
+        <div class="spacer"></div>
+        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
+      </div>
+    </header>
+    <main class="layout-content">
+
+  <div class="emojis-placeholder widget">Loading...</div>
+
+  
+
+  
+      <div class="divider block">
+        <div class="divider-content">Style</div>
+      </div>
+    
+
+  <div class="multiple actions">
+    <div class="multiple joined">
+      <div class="label compact bordered gray pointing-right">Type</div>
+      <div class="button bordered" onclick="render ({ make: { sprite: false }, native: { enabled: false } })">Images</div>
+      <div class="button bordered" onclick="render ({ make: { sprite: true }, native: { enabled: false } })">Sprite</div>
+      <div class="button bordered" onclick="render ({ native: { enabled: true, wrap: true } })">Native (Wrapped)</div>
+      <div class="button bordered" onclick="render ({ native: { enabled: true, wrap: false } })">Native (Unwrapped)</div>
+    </div>
+    <div class="multiple joined">
+      <div class="label compact bordered gray pointing-right">Tone</div>
+      
+      <div class="button radio right bordered" onclick="set_tone ( 1 )">
+        <input type="radio" name="tone" checked>
+        <label>1</label>
+      </div>
+    
+      
+      <div class="button radio right bordered" onclick="set_tone ( 2 )">
+        <input type="radio" name="tone" >
+        <label>2</label>
+      </div>
+    
+      
+      <div class="button radio right bordered" onclick="set_tone ( 3 )">
+        <input type="radio" name="tone" >
+        <label>3</label>
+      </div>
+    
+      
+      <div class="button radio right bordered" onclick="set_tone ( 4 )">
+        <input type="radio" name="tone" >
+        <label>4</label>
+      </div>
+    
+      
+      <div class="button radio right bordered" onclick="set_tone ( 5 )">
+        <input type="radio" name="tone" >
+        <label>5</label>
+      </div>
+    
+      
+      <div class="button radio right bordered" onclick="set_tone ( 6 )">
+        <input type="radio" name="tone" >
+        <label>6</label>
+      </div>
+    
+    </div>
+    
+      <div class="button checkbox right bordered" onclick="toggle_class ( actionable">
+        <input type="checkbox" checked>
+        <label>Actionable</label>
+      </div>
+    
+    
+      <div class="button checkbox right bordered" onclick="toggle_class ( disabled">
+        <input type="checkbox" checked>
+        <label>Disabled</label>
+      </div>
+    
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">State</div>
+      </div>
+    
+
+  <div class="multiple joined actions">
+    
+      <div class="button radio right bordered" onclick="set_state ()">
+        <input type="radio" name="state" checked>
+        <label>Base</label>
+      </div>
+    
+    
+      <div class="button radio right bordered" onclick="set_state ( hover">
+        <input type="radio" name="state" checked>
+        <label>Hover</label>
+      </div>
+    
+    
+      <div class="button radio right bordered" onclick="set_state ( active">
+        <input type="radio" name="state" checked>
+        <label>Active</label>
+      </div>
+    
+  </div>
+
+  <script>
+    var $placeholder = $('.emojis-placeholder'),
+        tone;
+
+    function toggle_class ( name ) {
+      $('i.emoji').toggleClass ( name );
+    }
+
+    function set_state ( state ) {
+      var states = ['hover', 'active'];
+      for ( var i = 0, l = states.length; i < l; i++ ) {
+        $('i.emoji').removeClass ( states[i] ).addClass ( state );
+      }
+    }
+
+    function set_tone ( nr ) {
+      tone = nr;
+      render ();
+    }
+
+    function reset () {
+      $placeholder.empty ();
+    }
+
+    function renderCategory ( category ) {
+      return Promise.all ( category.emojis.map ( function ( emoji ) {
+        return Svelto.Emoji.make ( emoji, tone );
+      })).then ( function ( emojis ) {
+        emojis = emojis.join ( ' ' );
+        var content = emojis.indexOf ( '<' ) === -1 ? '<p>' + emojis + '</p>' : '<div class="multiple">' + emojis + '</div>';
+        $placeholder.append ( '<div class="divider block"><div class="divider-content">' + category.title + '</div></div>' );
+        $placeholder.append ( '<div class="container bordered">' + content + '</div>' );
+      });
+    }
+
+    function render ( options ) {
+      _.merge ( Svelto.Emoji.options, options );
+      Svelto.EmojiData.get ().then ( function ( data ) {
+        reset ();
+        var P = Promise.resolve ();
+        data.categories.forEach ( function ( category ) {
+          P = P.then ( function () {
+            return renderCategory ( category );
+          });
+        });
+      });
+    }
+
+    render ();
+  </script>
+
+
+
+</main>
+    <footer class="layout-footer">
+      <p class="text-center">Svelto, the modular web framework</p>
+    </footer>
+    <script>
+      /* ERROR NOTIFIER */
+      var prevErrorId = '';
+      window.onerror = function ( message, file, line ) {
+        var errorId = message + file + line;
+        if ( errorId !== prevErrorId ) {
+          prevErrorId = errorId;
+          try {
+            $.toast ({
+              body: 'File: ' + file + '<br/>Line: ' + line + '<br/>Message: ' + message,
+              ttl: Infinity,
+              color: Svelto.Colors.red
+            });
+          } catch ( e ) {
+            alert ( file + ':' + line + '\n\n' + message );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

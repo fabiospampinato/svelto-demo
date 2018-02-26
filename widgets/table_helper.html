@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Svelto - Demo</title>
+    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
+    <script src="/static/vendor/lodash.js"></script>
+    <script src="/static/vendor/jquery.js"></script>
+    <script src="/static/vendor/Chart.js"></script>
+    <script src="/static/vendor/datatables.js"></script>
+    <script src="/static/vendor/marked.js"></script>
+    <script src="/static/javascript/svelto.js"></script>
+  </head>
+  <body class="layout">
+    <header class="layout-header sticky toolbar primary z-depth-4">
+      <div class="multiple center-y">
+        <div class="label compact transparent">
+          <i class="icon">code</i>
+        </div>
+        <a href="/" class="large">Svelto - Demo</a>
+        <div class="spacer"></div>
+        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
+      </div>
+    </header>
+    <main class="layout-content">
+
+  
+      <div class="divider block">
+        <div class="divider-content">Table</div>
+      </div>
+    
+
+  <table class="table white celled">
+    <thead>
+      <tr>
+        <th>First</th>
+        <th>Second</th>
+        <th>Third</th>
+        <th>Fourth</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="table-row-empty">
+        <td colspan="100%">Empty</td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+
+  
+      <div class="divider block">
+        <div class="divider-content">Actions</div>
+      </div>
+    
+
+  <div class="button bordered" onclick="table_init()">Init</div>
+  <div class="multiple joined equal">
+    <input name="id_add" placeholder="ID..." class="bordered">
+    <input name="first_add" placeholder="First.." class="bordered">
+    <input name="second_add" placeholder="Second..." class="bordered">
+    <input name="third_add" placeholder="Third..." class="bordered">
+    <input name="fourth_add" placeholder="Foruth..." class="bordered">
+    <div class="button bordered" onclick="table_row_add ()">Add</div>
+  </div>
+  <div class="multiple joined equal">
+    <input name="id_update" placeholder="ID..." class="bordered">
+    <input name="first_update" placeholder="First.." class="bordered">
+    <input name="second_update" placeholder="Second..." class="bordered">
+    <input name="third_update" placeholder="Third..." class="bordered">
+    <input name="fourth_update" placeholder="Foruth..." class="bordered">
+    <div class="button bordered" onclick="table_row_update ()">Update</div>
+  </div>
+  <div class="multiple">
+    <div class="multiple joined">
+      <input name="id_remove" placeholder="ID..." class="bordered">
+      <div class="button bordered" onclick="table_row_remove ()">Remove</div>
+    </div>
+    <div class="button bordered" onclick="table_clear ()">Clear</div>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">State</div>
+      </div>
+    
+
+  <div class="multiple joined actions">
+    
+      <div class="button radio right bordered" onclick="api ( enable">
+        <input type="radio" name="state" checked>
+        <label>Enabled</label>
+      </div>
+    
+    
+      <div class="button radio right bordered" onclick="api ( disable">
+        <input type="radio" name="state" checked>
+        <label>Disabled</label>
+      </div>
+    
+  </div>
+
+  <script>
+    var tableHelper;
+
+    function table_init () {
+      tableHelper = $('table').tableHelper('instance');
+    }
+
+    function table_row_add () {
+      if ( tableHelper ) {
+        var id = $('input[name="id_add"]').val (),
+        first = $('input[name="first_add"]').val (),
+        second = $('input[name="second_add"]').val (),
+        third = $('input[name="third_add"]').val (),
+        fourth = $('input[name="fourth_add"]').val ();
+        tableHelper.add(id, first, second, third, fourth);
+      } else {
+        $.toast ( 'You should init the tableHelper before' );
+      }
+    }
+
+    function table_row_update () {
+      if ( tableHelper ) {
+        var id = $('input[name="id_update"]').val (),
+        first = $('input[name="first_update"]').val (),
+        second = $('input[name="second_update"]').val (),
+        third = $('input[name="third_update"]').val (),
+        fourth = $('input[name="fourth_update"]').val ();
+        tableHelper.update(id, first, second, third, fourth);
+      } else {
+        $.toast ( 'You should init the tableHelper before' );
+      }
+    }
+
+    function table_row_remove () {
+      if ( tableHelper ) {
+        var id = $('input[name="id_remove"]').val ();
+        tableHelper.remove(id);
+      } else {
+        $.toast ( 'You should init the tableHelper before' );
+      }
+    }
+
+    function table_clear () {
+      if ( tableHelper ) {
+        tableHelper.clear();
+      } else {
+        $.toast ( 'You should init the tableHelper before' );
+      }
+    }
+
+    function api ( action ) {
+      $('table.table').tableHelper ( action );
+    }
+  </script>
+
+
+
+</main>
+    <footer class="layout-footer">
+      <p class="text-center">Svelto, the modular web framework</p>
+    </footer>
+    <script>
+      /* ERROR NOTIFIER */
+      var prevErrorId = '';
+      window.onerror = function ( message, file, line ) {
+        var errorId = message + file + line;
+        if ( errorId !== prevErrorId ) {
+          prevErrorId = errorId;
+          try {
+            $.toast ({
+              body: 'File: ' + file + '<br/>Line: ' + line + '<br/>Message: ' + message,
+              ttl: Infinity,
+              color: Svelto.Colors.red
+            });
+          } catch ( e ) {
+            alert ( file + ':' + line + '\n\n' + message );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

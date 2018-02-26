@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Svelto - Demo</title>
+    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
+    <script src="/static/vendor/lodash.js"></script>
+    <script src="/static/vendor/jquery.js"></script>
+    <script src="/static/vendor/Chart.js"></script>
+    <script src="/static/vendor/datatables.js"></script>
+    <script src="/static/vendor/marked.js"></script>
+    <script src="/static/javascript/svelto.js"></script>
+  </head>
+  <body class="layout">
+    <header class="layout-header sticky toolbar primary z-depth-4">
+      <div class="multiple center-y">
+        <div class="label compact transparent">
+          <i class="icon">code</i>
+        </div>
+        <a href="/" class="large">Svelto - Demo</a>
+        <div class="spacer"></div>
+        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
+      </div>
+    </header>
+    <main class="layout-content">
+
+  
+      <div class="divider block">
+        <div class="divider-content">Highlighted</div>
+      </div>
+    
+
+  <div class="label highlighted">Highlighted</div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Colors</div>
+      </div>
+    
+
+  <div class="multiple">
+    <div class="label highlighted primary">Primary</div>
+    <div class="label highlighted secondary">Secondary</div>
+    <div class="label highlighted tertiary">Tertiary</div>
+    <div class="label highlighted quaternary">Quaternary</div>
+    <div class="label highlighted black">Black</div>
+    <div class="label highlighted blue">Blue</div>
+    <div class="label highlighted brown">Brown</div>
+    <div class="label highlighted gray">Gray</div>
+    <div class="label highlighted green">Green</div>
+    <div class="label highlighted olive">Olive</div>
+    <div class="label highlighted orange">Orange</div>
+    <div class="label highlighted pink">Pink</div>
+    <div class="label highlighted purple">Purple</div>
+    <div class="label highlighted red">Red</div>
+    <div class="label highlighted teal">Teal</div>
+    <div class="label highlighted violet">Violet</div>
+    <div class="label highlighted white">White</div>
+    <div class="label highlighted yellow">Yellow</div>
+    <div class="label highlighted error">Error</div>
+    <div class="label highlighted success">Success</div>
+    <div class="label highlighted warning">Warning</div>
+    <div class="label highlighted base">Base</div>
+    <div class="label highlighted inherit">Inherit</div>
+    <div class="label highlighted transparent">Transparent</div>
+  </div>
+
+  
+
+  
+      <div class="divider block">
+        <div class="divider-content">Style</div>
+      </div>
+    
+
+  
+      <div class="button checkbox right bordered" onclick="toggle_class ( bordered">
+        <input type="checkbox" checked>
+        <label>Bordered</label>
+      </div>
+    
+
+  
+      <div class="divider block">
+        <div class="divider-content">Direction</div>
+      </div>
+    
+
+  <div class="multiple joined actions">
+    
+      <div class="button checkbox right bordered" onclick="toggle_class ( highlight-top">
+        <input type="checkbox" checked>
+        <label>Top</label>
+      </div>
+    
+    
+      <div class="button checkbox right bordered" onclick="toggle_class ( highlight-right">
+        <input type="checkbox" checked>
+        <label>Right</label>
+      </div>
+    
+    
+      <div class="button checkbox right bordered" onclick="toggle_class ( highlight-bottom">
+        <input type="checkbox" checked>
+        <label>Bottom</label>
+      </div>
+    
+    
+      <div class="button checkbox right bordered" onclick="toggle_class ( highlight-left">
+        <input type="checkbox" checked>
+        <label>Left</label>
+      </div>
+    
+  </div>
+
+  <script>
+    function toggle_class ( name ) {
+      $('.highlighted').toggleClass ( name );
+    }
+
+    function set_style ( style ) {
+      var styles = ['solid', 'dotted', 'dashed'];
+      for ( var i = 0, l = styles.length; i < l; i++ ) {
+        $('.highlighted').removeClass ( 'highlight-' + styles[i] );
+      }
+      $('.highlighted').addClass ( 'highlight-' + style );
+    }
+  </script>
+
+
+
+</main>
+    <footer class="layout-footer">
+      <p class="text-center">Svelto, the modular web framework</p>
+    </footer>
+    <script>
+      /* ERROR NOTIFIER */
+      var prevErrorId = '';
+      window.onerror = function ( message, file, line ) {
+        var errorId = message + file + line;
+        if ( errorId !== prevErrorId ) {
+          prevErrorId = errorId;
+          try {
+            $.toast ({
+              body: 'File: ' + file + '<br/>Line: ' + line + '<br/>Message: ' + message,
+              ttl: Infinity,
+              color: Svelto.Colors.red
+            });
+          } catch ( e ) {
+            alert ( file + ':' + line + '\n\n' + message );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

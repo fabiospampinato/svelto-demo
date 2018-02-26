@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Svelto - Demo</title>
+    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
+    <script src="/static/vendor/lodash.js"></script>
+    <script src="/static/vendor/jquery.js"></script>
+    <script src="/static/vendor/Chart.js"></script>
+    <script src="/static/vendor/datatables.js"></script>
+    <script src="/static/vendor/marked.js"></script>
+    <script src="/static/javascript/svelto.js"></script>
+  </head>
+  <body class="layout">
+    <header class="layout-header sticky toolbar primary z-depth-4">
+      <div class="multiple center-y">
+        <div class="label compact transparent">
+          <i class="icon">code</i>
+        </div>
+        <a href="/" class="large">Svelto - Demo</a>
+        <div class="spacer"></div>
+        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
+      </div>
+    </header>
+    <main class="layout-content">
+
+  
+      <div class="divider block">
+        <div class="divider-content">Abbr</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <abbr title="HyperText Markup Language">HTML</abbr>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Address</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <address>
+      <strong>Svelto Framework</strong><br>
+      If you find any bugs, please <a href="//github.com/svelto/svelto/issues">open an issue</a>.<br>
+      You may also want to visit us:<br>
+      Svelto Framework Inc.<br>
+      1993 Somewhere street<br>
+      Planet Earth, (123) 456-7890
+    </address>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Blockquote</div>
+      </div>
+    
+
+  <div class="multiple equal joined">
+    <div class="container bordered">
+      <blockquote>
+        <div class="placeholder"  style="width:95%; height:10px;"></div><div class="placeholder"  style="width:92%; height:10px;"></div><div class="placeholder"  style="width:100%; height:10px;"></div><div class="placeholder"  style="width:87%; height:10px;"></div><div class="placeholder"  style="width:97%; height:10px;"></div><div class="placeholder"  style="width:93%; height:10px;"></div><div class="placeholder"  style="width:97%; height:10px;"></div>
+      </blockquote>
+    </div>
+    <div class="container bordered">
+      <blockquote>
+        <div class="placeholder"  style="width:95%; height:10px;"></div><div class="placeholder"  style="width:92%; height:10px;"></div><div class="placeholder"  style="width:100%; height:10px;"></div><div class="placeholder"  style="width:87%; height:10px;"></div><div class="placeholder"  style="width:97%; height:10px;"></div><div class="placeholder"  style="width:93%; height:10px;"></div><div class="placeholder"  style="width:97%; height:10px;"></div>
+        <footer>The source is
+          <cite>Someone</cite>
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Code</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <p>This contains some <code>code ()</code>, does it look nice?</p>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Headings</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <h1>H1 - Heading title <small>Small subheader</small></h1>
+    <h2>H2 - Heading title <small>Small subheader</small></h2>
+    <h3>H3 - Heading title <small>Small subheader</small></h3>
+    <h4>H4 - Heading title <small>Small subheader</small></h4>
+    <h5>H5 - Heading title <small>Small subheader</small></h5>
+    <h6>H6 - Heading title <small>Small subheader</small></h6>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Kbd</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>canc</kbd>, <kbd id="kbd">ctrl + alt + canc</kbd>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Link</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <p>This contains a <a href="#">link</a>, does it look nice? <span>Even <a href="#">this one</a> inside a span?</span></p>
+  </div>
+
+  <div class="container bordered">
+    <p>
+      <a href="#" class="link-primary">Primary</a>
+      <a href="#" class="link-secondary">Secondary</a>
+      <a href="#" class="link-tertiary">Tertiary</a>
+      <a href="#" class="link-quaternary">Quaternary</a>
+      <a href="#" class="link-black">Black</a>
+      <a href="#" class="link-blue">Blue</a>
+      <a href="#" class="link-brown">Brown</a>
+      <a href="#" class="link-gray">Gray</a>
+      <a href="#" class="link-green">Green</a>
+      <a href="#" class="link-olive">Olive</a>
+      <a href="#" class="link-orange">Orange</a>
+      <a href="#" class="link-pink">Pink</a>
+      <a href="#" class="link-purple">Purple</a>
+      <a href="#" class="link-red">Red</a>
+      <a href="#" class="link-teal">Teal</a>
+      <a href="#" class="link-violet">Violet</a>
+      <a href="#" class="link-white">White</a>
+      <a href="#" class="link-yellow">Yellow</a>
+      <a href="#" class="link-error">Error</a>
+      <a href="#" class="link-success">Success</a>
+      <a href="#" class="link-warning">Warning</a>
+      <a href="#" class="link-base">Base</a>
+      <a href="#" class="link-inherit">Inherit</a>
+      <a href="#" class="link-transparent">Transparent</a>
+    </p>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Lists</div>
+      </div>
+    
+
+  <div class="multiple equal joined">
+    <div class="container bordered">
+      <ul>
+        <li>lorem ipsum dolor</li>
+        <li>lorem ipsum dolor</li>
+        <li>lorem ipsum dolor
+          <ul>
+            <li>lorem ipsum dolor</li>
+            <li>lorem ipsum dolor</li>
+          </ul>
+        </li>
+        <li>lorem ipsum dolor</li>
+      </ul>
+    </div>
+    <div class="container bordered">
+      <ul class="no-bullet">
+        <li>lorem ipsum dolor</li>
+        <li>lorem ipsum dolor</li>
+        <li>lorem ipsum dolor
+          <ul>
+            <li>lorem ipsum dolor</li>
+            <li>lorem ipsum dolor</li>
+          </ul>
+        </li>
+        <li>lorem ipsum dolor</li>
+      </ul>
+    </div>
+    <div class="container bordered">
+      <ol>
+        <li>lorem ipsum dolor</li>
+        <li>lorem ipsum dolor</li>
+        <li>lorem ipsum dolor
+          <ol>
+            <li>lorem ipsum dolor</li>
+            <li>lorem ipsum dolor</li>
+          </ol>
+        </li>
+        <li>lorem ipsum dolor</li>
+      </ol>
+    </div>
+    <div class="container bordered">
+      <dl>
+        <dt>lorem ipsum dolor</dt>
+        <dd>lorem ipsum dolor</dd>
+      </dl>
+      <dl>
+        <dt>lorem ipsum dolor</dt>
+        <dd>lorem ipsum dolor</dd>
+      </dl>
+    </div>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Mark</div>
+      </div>
+    
+
+  <div class="container bordered">This contains a <mark>mark</mark>, does it look nice?</div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Paragraph</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquet tincidunt turpis, in pharetra mi convallis ut. Vivamus eget sodales nibh, eu placerat erat. Vivamus massa urna, volutpat non tempus eget, placerat quis elit. Nullam pretium id arcu sed eleifend. Phasellus sollicitudin quis ante nec ornare. Maecenas nibh eros, vehicula vel eros eget, viverra semper nisi. Nulla facilisi. Praesent pretium porttitor arcu, sit amet consequat neque luctus non. Cras sodales, justo quis tempus dignissim, diam est commodo orci, eget accumsan sem ante vitae sem. Curabitur quam ipsum, porta id sapien in, consectetur auctor nibh. Vivamus egestas ante vel cursus aliquet. In non ante nec velit tempus lacinia nec sollicitudin ex. Phasellus semper lorem a diam scelerisque, sed accumsan erat molestie. Mauris vulputate lacinia erat. Nunc urna risus, facilisis at posuere in, pulvinar quis odio. Maecenas et sollicitudin arcu.</p>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Pre</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <pre id="pre">console.log ( 'This is an example pre block' );</pre>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Samp</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <p>This contains a <samp>samp</samp>, does it look nice?</p>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Small</div>
+      </div>
+    
+
+  <div class="container bordered">What's a <small>man</small> to a king? What's a <small>king</small> to a god? What's a <small>god</small> to a non believer?</div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Others</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <p>
+      <cite>cite</cite>
+      <del>deleted</del>
+      <em>empathize</em>
+      <ins>inserted</ins>
+      <i>italics</i>
+      <span>span</span>
+      <s>strikethrough</s>
+      <strong>strong</strong>
+      <u>underlined</u>
+    </p>
+  </div>
+
+</main>
+    <footer class="layout-footer">
+      <p class="text-center">Svelto, the modular web framework</p>
+    </footer>
+    <script>
+      /* ERROR NOTIFIER */
+      var prevErrorId = '';
+      window.onerror = function ( message, file, line ) {
+        var errorId = message + file + line;
+        if ( errorId !== prevErrorId ) {
+          prevErrorId = errorId;
+          try {
+            $.toast ({
+              body: 'File: ' + file + '<br/>Line: ' + line + '<br/>Message: ' + message,
+              ttl: Infinity,
+              color: Svelto.Colors.red
+            });
+          } catch ( e ) {
+            alert ( file + ':' + line + '\n\n' + message );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

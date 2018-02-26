@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Svelto - Demo</title>
+    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
+    <script src="/static/vendor/lodash.js"></script>
+    <script src="/static/vendor/jquery.js"></script>
+    <script src="/static/vendor/Chart.js"></script>
+    <script src="/static/vendor/datatables.js"></script>
+    <script src="/static/vendor/marked.js"></script>
+    <script src="/static/javascript/svelto.js"></script>
+  </head>
+  <body class="layout">
+    <header class="layout-header sticky toolbar primary z-depth-4">
+      <div class="multiple center-y">
+        <div class="label compact transparent">
+          <i class="icon">code</i>
+        </div>
+        <a href="/" class="large">Svelto - Demo</a>
+        <div class="spacer"></div>
+        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
+      </div>
+    </header>
+    <main class="layout-content">
+
+  
+      <div class="divider block">
+        <div class="divider-content">Draggables</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <div class="multiple equal">
+      <div class="label bordered compact drag-red red inverted">
+        <div class="circle centered red"></div>
+      </div>
+      <div class="label bordered compact drag-yellow yellow inverted">
+        <div class="circle centered yellow"></div>
+      </div>
+      <div class="label bordered compact drag-green green inverted">
+        <div class="circle centered green"></div>
+      </div>
+      <div class="label bordered compact drag-blue blue inverted">
+        <div class="circle centered blue"></div>
+      </div>
+      <div class="label bordered compact drag-violet violet inverted">
+        <div class="circle centered violet"></div>
+      </div>
+      <div class="label bordered compact drag-teal teal inverted">
+        <div class="circle centered teal"></div>
+      </div>
+      <div class="label bordered compact drag-orange orange inverted">
+        <div class="circle centered orange"></div>
+      </div>
+    </div>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Droppables</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <div class="multiple equal">
+      <div class="container bordered compact text-center drop-red red inverted">0</div>
+      <div class="container bordered compact text-center drop-yellow yellow inverted">0</div>
+      <div class="container bordered compact text-center drop-green green inverted">0</div>
+      <div class="container bordered compact text-center drop-blue blue inverted">0</div>
+      <div class="container bordered compact text-center drop-violet violet inverted">0</div>
+      <div class="container bordered compact text-center drop-teal teal inverted">0</div>
+      <div class="container bordered compact text-center drop-orange orange inverted">0</div>
+    </div>
+  </div>
+
+  
+
+  //TODO: $.toast ( options );
+
+  <script>
+    $(function () {
+      var colors = ['red', 'yellow', 'green', 'blue', 'violet', 'teal', 'orange'];
+      for (var i = 0, l = colors.length; i < l; i++) {
+        $('.drag-' + colors[i]).draggable ({
+          revert: true,
+          $helper: (function ( color ) {
+            return function () {
+              return useHelpers ? $('<div class="container ' + color + ' fixed">' + _.capitalize ( color ) + '</div>') : false;
+            }
+          })( colors[i] )
+        });
+        $('.drop-' + colors[i]).droppable ({
+          selector: '.drag-' + colors[i],
+          classes: {
+            target: 'z-depth-1',
+            hover: 'hover'
+          },
+          callbacks: {
+            drop: function(event, data) {
+              var $droppable = $(data.droppable);
+              var nr = Number ( $droppable.html () );
+              $droppable.html ( nr + 1 );
+            }
+          }
+        });
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+      <div class="divider block">
+        <div class="divider-content">API</div>
+      </div>
+    
+
+  <div class="button bordered" onclick="api ( destroy">Destroy</div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">State</div>
+      </div>
+    
+
+  <div class="multiple joined actions">
+    
+      <div class="button radio right bordered" onclick="api ( enable">
+        <input type="radio" name="state" checked>
+        <label>Enabled</label>
+      </div>
+    
+    
+      <div class="button radio right bordered" onclick="api ( disable">
+        <input type="radio" name="state" checked>
+        <label>Disabled</label>
+      </div>
+    
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Other</div>
+      </div>
+    
+
+  
+      <div class="button checkbox right bordered" onclick="toggle_helpers ()">
+        <input type="checkbox" >
+        <label>Helpers</label>
+      </div>
+    
+
+  <script>
+    function api ( action ) {
+      $('[class*="drop-"]').droppable ( action );
+    }
+
+    var useHelpers = false;
+    function toggle_helpers () {
+      useHelpers = !useHelpers;
+    }
+  </script>
+
+
+
+</main>
+    <footer class="layout-footer">
+      <p class="text-center">Svelto, the modular web framework</p>
+    </footer>
+    <script>
+      /* ERROR NOTIFIER */
+      var prevErrorId = '';
+      window.onerror = function ( message, file, line ) {
+        var errorId = message + file + line;
+        if ( errorId !== prevErrorId ) {
+          prevErrorId = errorId;
+          try {
+            $.toast ({
+              body: 'File: ' + file + '<br/>Line: ' + line + '<br/>Message: ' + message,
+              ttl: Infinity,
+              color: Svelto.Colors.red
+            });
+          } catch ( e ) {
+            alert ( file + ':' + line + '\n\n' + message );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

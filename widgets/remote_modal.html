@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Svelto - Demo</title>
+    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
+    <script src="/static/vendor/lodash.js"></script>
+    <script src="/static/vendor/jquery.js"></script>
+    <script src="/static/vendor/Chart.js"></script>
+    <script src="/static/vendor/datatables.js"></script>
+    <script src="/static/vendor/marked.js"></script>
+    <script src="/static/javascript/svelto.js"></script>
+  </head>
+  <body class="layout">
+    <header class="layout-header sticky toolbar primary z-depth-4">
+      <div class="multiple center-y">
+        <div class="label compact transparent">
+          <i class="icon">code</i>
+        </div>
+        <a href="/" class="large">Svelto - Demo</a>
+        <div class="spacer"></div>
+        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
+      </div>
+    </header>
+    <main class="layout-content">
+
+  
+      <div class="divider block">
+        <div class="divider-content">Remote Modal</div>
+      </div>
+    
+
+  <div class="multiple">
+    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-1">Load remote</div>
+    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-2" data-body='{"color": "primary"}'>Load remote (Primary)</div>
+    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-2" data-body='{"color": "secondary"}'>Load remote (Secondary)</div>
+    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-fullscreen">Load remote (Fullscreen)</div>
+    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-error">Load remote (Error)</div>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Helper</div>
+      </div>
+    
+
+  <div class="helper point button bordered">Helper</div>
+
+  
+
+  
+      <div class="divider block">
+        <div class="divider-content">API</div>
+      </div>
+    
+
+  <div class="multiple actions">
+    <div class="button bordered" onclick="api ()">Init</div>
+    <div class="button bordered" onclick="api ( destroy">Destroy</div>
+  </div>
+
+  <script>
+    function api ( action ) {
+      $('.remote-modal-trigger').remoteModalTrigger ( action );
+    }
+
+    $('.helper').on ( Svelto.Pointer.tap, function () {
+      $.remoteModal ({ url: '/remote-modal-1' });
+    });
+  </script>
+
+
+
+</main>
+    <footer class="layout-footer">
+      <p class="text-center">Svelto, the modular web framework</p>
+    </footer>
+    <script>
+      /* ERROR NOTIFIER */
+      var prevErrorId = '';
+      window.onerror = function ( message, file, line ) {
+        var errorId = message + file + line;
+        if ( errorId !== prevErrorId ) {
+          prevErrorId = errorId;
+          try {
+            $.toast ({
+              body: 'File: ' + file + '<br/>Line: ' + line + '<br/>Message: ' + message,
+              ttl: Infinity,
+              color: Svelto.Colors.red
+            });
+          } catch ( e ) {
+            alert ( file + ':' + line + '\n\n' + message );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

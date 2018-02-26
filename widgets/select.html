@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Svelto - Demo</title>
+    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
+    <script src="/static/vendor/lodash.js"></script>
+    <script src="/static/vendor/jquery.js"></script>
+    <script src="/static/vendor/Chart.js"></script>
+    <script src="/static/vendor/datatables.js"></script>
+    <script src="/static/vendor/marked.js"></script>
+    <script src="/static/javascript/svelto.js"></script>
+  </head>
+  <body class="layout">
+    <header class="layout-header sticky toolbar primary z-depth-4">
+      <div class="multiple center-y">
+        <div class="label compact transparent">
+          <i class="icon">code</i>
+        </div>
+        <a href="/" class="large">Svelto - Demo</a>
+        <div class="spacer"></div>
+        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
+      </div>
+    </header>
+    <main class="layout-content">
+
+  
+      <div class="divider block">
+        <div class="divider-content">Select</div>
+      </div>
+    
+
+  <div class="multiple">
+    <div class="button bordered select">
+      
+      <select name="" placeholder="Select a color...">
+        <option value="red" selected="selected">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <optgroup label="Special">
+          <option value="inherit">Inherit</option>
+          <option value="transparent">Transparent</option>
+        </optgroup>
+      </select>
+    
+      <label>Value</label>
+    </div>
+    <div class="button bordered select">
+      
+      <select name="" placeholder="Select a color...">
+        <option value="red" selected="selected">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <optgroup label="Special">
+          <option value="inherit">Inherit</option>
+          <option value="transparent">Transparent</option>
+        </optgroup>
+      </select>
+    
+      <label class="no-value">Select</label>
+    </div>
+    <div class="button bordered select">
+      <select>
+        <option value="one" selected="selected">One</option>
+        <option value="one">One</option>
+        <option value="one">One</option>
+      </select>
+      <label>Duplicates</label>
+    </div>
+    <div class="button bordered select">
+      
+      <select name="" placeholder="Select a color...">
+        <option value="red" selected="selected">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <optgroup label="Special">
+          <option value="inherit">Inherit</option>
+          <option value="transparent">Transparent</option>
+        </optgroup>
+      </select>
+    
+      <label>Nested: "<span class="select-value">Value</span>"</label>
+    </div>
+    <div class="button bordered compact select">
+      
+      <select name="" placeholder="Select a color...">
+        <option value="red" selected="selected">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <optgroup label="Special">
+          <option value="inherit">Inherit</option>
+          <option value="transparent">Transparent</option>
+        </optgroup>
+      </select>
+    
+      <label class="no-value"></label>
+    </div>
+    <div class="button bordered compact circular select">
+      
+      <select name="" placeholder="Select a color...">
+        <option value="red" selected="selected">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <optgroup label="Special">
+          <option value="inherit">Inherit</option>
+          <option value="transparent">Transparent</option>
+        </optgroup>
+      </select>
+    
+      <label class="no-value" data-icon="settings"></label>
+    </div>
+    <div class="button bordered compact circular select">
+      
+      <select name="" placeholder="Select a color...">
+        <option value="red" selected="selected">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <optgroup label="Special">
+          <option value="inherit">Inherit</option>
+          <option value="transparent">Transparent</option>
+        </optgroup>
+      </select>
+    
+      <label class="no-value" data-icon-closed="keyboard_arrow_down" data-icon-open="keyboard_arrow_up"></label>
+    </div>
+    <div class="button modal-toggler bordered" data-target="#modal">Nested</div>
+  </div>
+
+  <div id="modal" class="container modal xs-8 centerer">
+    <div class="button bordered select">
+      
+      <select name="" placeholder="Select a color...">
+        <option value="red" selected="selected">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <optgroup label="Special">
+          <option value="inherit">Inherit</option>
+          <option value="transparent">Transparent</option>
+        </optgroup>
+      </select>
+    
+      <label>Value</label>
+    </div>
+  </div>
+
+  
+
+  
+      <div class="divider block">
+        <div class="divider-content">State</div>
+      </div>
+    
+
+  <div class="multiple actions">
+    <div class="multiple joined">
+      
+      <div class="button radio right bordered" onclick="set_validity ()">
+        <input type="radio" name="validity" checked>
+        <label>Base</label>
+      </div>
+    
+      
+      <div class="button radio right bordered" onclick="set_validity ( valid">
+        <input type="radio" name="validity" checked>
+        <label>Valid</label>
+      </div>
+    
+      
+      <div class="button radio right bordered" onclick="set_validity ( invalid">
+        <input type="radio" name="validity" checked>
+        <label>Invalid</label>
+      </div>
+    
+    </div>
+    <div class="multiple joined">
+      
+      <div class="button radio right bordered" onclick="api ( enable">
+        <input type="radio" name="state" checked>
+        <label>Enabled</label>
+      </div>
+    
+      
+      <div class="button radio right bordered" onclick="api ( disable">
+        <input type="radio" name="state" checked>
+        <label>Disabled</label>
+      </div>
+    
+    </div>
+  </div>
+
+  <script>
+    function api ( action ) {
+      $('.select').select ( action );
+    }
+
+    function set_validity ( validity ) {
+      var validities = ['valid', 'invalid'];
+      for ( var i = 0, l = validities.length; i < l; i++ ) {
+        $('.select').removeClass ( validities[i] ).addClass ( validity );
+      }
+    }
+  </script>
+
+
+
+</main>
+    <footer class="layout-footer">
+      <p class="text-center">Svelto, the modular web framework</p>
+    </footer>
+    <script>
+      /* ERROR NOTIFIER */
+      var prevErrorId = '';
+      window.onerror = function ( message, file, line ) {
+        var errorId = message + file + line;
+        if ( errorId !== prevErrorId ) {
+          prevErrorId = errorId;
+          try {
+            $.toast ({
+              body: 'File: ' + file + '<br/>Line: ' + line + '<br/>Message: ' + message,
+              ttl: Infinity,
+              color: Svelto.Colors.red
+            });
+          } catch ( e ) {
+            alert ( file + ':' + line + '\n\n' + message );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

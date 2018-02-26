@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Svelto - Demo</title>
+    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
+    <script src="/static/vendor/lodash.js"></script>
+    <script src="/static/vendor/jquery.js"></script>
+    <script src="/static/vendor/Chart.js"></script>
+    <script src="/static/vendor/datatables.js"></script>
+    <script src="/static/vendor/marked.js"></script>
+    <script src="/static/javascript/svelto.js"></script>
+  </head>
+  <body class="layout">
+    <header class="layout-header sticky toolbar primary z-depth-4">
+      <div class="multiple center-y">
+        <div class="label compact transparent">
+          <i class="icon">code</i>
+        </div>
+        <a href="/" class="large">Svelto - Demo</a>
+        <div class="spacer"></div>
+        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
+      </div>
+    </header>
+    <main class="layout-content">
+
+  
+      <div class="divider block">
+        <div class="divider-content">Sample</div>
+      </div>
+    
+
+  
+      <div class="square-sample ">
+        <p>lorem ipsum dolor sit amet consectetur adipiscing elit curabitur</p>
+      </div>
+    
+
+  
+
+  
+      <div class="divider block">
+        <div class="divider-content">API</div>
+      </div>
+    
+
+  <div class="multiple actions joined">
+    <input name="matrix" class="bordered" placeholder="Values...">
+    <div class="button bordered" onclick="matrix ()">matrix</div>
+  </div>
+
+  <div class="multiple actions joined">
+    <input name="transformation" class="bordered" placeholder="Value...">
+    <div class="button bordered" onclick="transformation ( scaleX">scaleX</div>
+    <div class="button bordered" onclick="transformation ( skewY">skewY</div>
+    <div class="button bordered" onclick="transformation ( skewX">skewX</div>
+    <div class="button bordered" onclick="transformation ( scaleY">scaleY</div>
+    <div class="button bordered" onclick="transformation ( translateX">translateX</div>
+    <div class="button bordered" onclick="transformation ( translateY">translateY</div>
+  </div>
+
+  <div class="multiple actions joined">
+    <input name="scale_x" class="bordered" placeholder="X...">
+    <input name="scale_y" class="bordered" placeholder="Y...">
+    <div class="button bordered" onclick="transform2d ( scale">scale</div>
+  </div>
+
+  <div class="multiple actions joined">
+    <input name="skew_x" class="bordered" placeholder="X...">
+    <input name="skew_y" class="bordered" placeholder="Y...">
+    <div class="button bordered" onclick="transform2d ( skew">skew</div>
+  </div>
+
+  <div class="multiple actions joined">
+    <input name="translate_x" class="bordered" placeholder="X...">
+    <input name="translate_y" class="bordered" placeholder="Y...">
+    <div class="button bordered" onclick="transform2d ( translate">translate</div>
+  </div>
+
+
+  <script>
+    var $sample = $('.square-sample');
+
+    function getValue ( name ) {
+      return $('[name="' + name + '"]').val ();
+    }
+
+    function matrix () {
+      var val = getValue ( 'matrix' );
+      if ( val ) {
+        $sample.matrix ( val.split ( ',' ) );
+      } else {
+        $.toast ( $sample.matrix () );
+      }
+    }
+
+    function transformation ( type ) {
+      var val = getValue ( 'transformation' );
+      if ( val ) {
+        $sample[type] ( val );
+      } else {
+        $.toast ( $sample[type]() );
+      }
+    }
+
+    function transform2d ( name ) {
+      var x = getValue ( name + '_x' ),
+          y = getValue ( name + '_y' );
+      if ( !_.isEmpty ( x ) && !_.isEmpty ( y ) ) {
+        $sample[name] ( x, y );
+      } else {
+        $.toast ( $sample[name]() );
+      }
+    }
+  </script>
+
+
+
+</main>
+    <footer class="layout-footer">
+      <p class="text-center">Svelto, the modular web framework</p>
+    </footer>
+    <script>
+      /* ERROR NOTIFIER */
+      var prevErrorId = '';
+      window.onerror = function ( message, file, line ) {
+        var errorId = message + file + line;
+        if ( errorId !== prevErrorId ) {
+          prevErrorId = errorId;
+          try {
+            $.toast ({
+              body: 'File: ' + file + '<br/>Line: ' + line + '<br/>Message: ' + message,
+              ttl: Infinity,
+              color: Svelto.Colors.red
+            });
+          } catch ( e ) {
+            alert ( file + ':' + line + '\n\n' + message );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

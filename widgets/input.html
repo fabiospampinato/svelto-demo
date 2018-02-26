@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Svelto - Demo</title>
+    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
+    <script src="/static/vendor/lodash.js"></script>
+    <script src="/static/vendor/jquery.js"></script>
+    <script src="/static/vendor/Chart.js"></script>
+    <script src="/static/vendor/datatables.js"></script>
+    <script src="/static/vendor/marked.js"></script>
+    <script src="/static/javascript/svelto.js"></script>
+  </head>
+  <body class="layout">
+    <header class="layout-header sticky toolbar primary z-depth-4">
+      <div class="multiple center-y">
+        <div class="label compact transparent">
+          <i class="icon">code</i>
+        </div>
+        <a href="/" class="large">Svelto - Demo</a>
+        <div class="spacer"></div>
+        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
+      </div>
+    </header>
+    <main class="layout-content">
+
+  
+      <div class="divider block">
+        <div class="divider-content">Base</div>
+      </div>
+    
+
+  <input id="target" placeholder="Base">
+
+  
+      <div class="divider block">
+        <div class="divider-content">Colors</div>
+      </div>
+    
+
+  <div class="container bordered">
+    <div class="multiple">
+      <input placeholder="Primary" class="primary">
+      <input placeholder="Secondary" class="secondary">
+      <input placeholder="Tertiary" class="tertiary">
+      <input placeholder="Quaternary" class="quaternary">
+      <input placeholder="White" class="white">
+      <input placeholder="Gray" class="gray">
+      <input placeholder="Black" class="black">
+      <input placeholder="Yellow" class="yellow">
+      <input placeholder="Olive" class="olive">
+      <input placeholder="Green" class="green">
+      <input placeholder="Blue" class="blue">
+      <input placeholder="Violet" class="violet">
+      <input placeholder="Orange" class="orange">
+      <input placeholder="Purple" class="purple">
+      <input placeholder="Red" class="red">
+      <input placeholder="Pink" class="pink">
+      <input placeholder="Teal" class="teal">
+      <input placeholder="Brown" class="brown">
+      <input placeholder="Error" class="error">
+      <input placeholder="Warning" class="warning">
+      <input placeholder="Success" class="success">
+      <input placeholder="Transparent" class="transparent">
+      <input placeholder="Inherit" class="inherit">
+      <input placeholder="Base" class="base">
+    </div>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Password</div>
+      </div>
+    
+
+  <input type="password" placeholder="Password...">
+
+  
+      <div class="divider block">
+        <div class="divider-content">File</div>
+      </div>
+    
+
+  <div class="multiple">
+    <label class="button">
+      <input type="file" multiple>
+      <span class="input-file-names"></span>
+    </label>
+    <label class="button">
+      <input type="file">
+      <i class="icon">file_upload</i>
+    </label>
+    <label class="button">
+      <input type="file">
+      <span class="input-file-names">Pick a file...</span>
+    </label>
+    <label class="button">
+      <input type="file" multiple>
+      <span class="input-file-names">Multiple files...</span>
+    </label>
+    <label class="multiple joined">
+      <div class="label input-file-names">Choose a file...</div>
+      <input type="file">
+      <div class="button secondary">Choose</div>
+    </label>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Multiple</div>
+      </div>
+    
+
+  <div class="multiple">
+    <div class="multiple joined">
+      <input placeholder="Search...">
+      <div class="button compact">
+        <i class="icon">search</i>
+      </div>
+    </div>
+    <div class="multiple joined">
+      <div class="label gray">https://</div>
+      <input placeholder="www.example.com">
+    </div>
+    <div class="multiple joined">
+      <div class="label compact">
+        <i class="icon">people</i>
+      </div>
+      <input value="Value" placeholder="Placeholder...">
+    </div>
+    <div class="multiple joined">
+      <input value="Value" placeholder="Placeholder...">
+      <div class="label compact">
+        <i class="icon rotating">refresh</i>
+      </div>
+    </div>
+    <div class="multiple joined">
+      <div class="button teal">
+        <i class="icon">local_grocery_store</i>
+        <span>Checkout</span>
+      </div>
+      <input value="35.50€" placeholder="Placeholder...">
+    </div>
+  </div>
+
+  
+
+  
+      <div class="divider block">
+        <div class="divider-content">Style</div>
+      </div>
+    
+
+  <div class="multiple actions">
+    
+      <div class="button checkbox right bordered" onclick="toggle_class ( bordered">
+        <input type="checkbox" checked>
+        <label>Bordered</label>
+      </div>
+    
+    
+      <div class="button checkbox right bordered" onclick="toggle_class ( compact">
+        <input type="checkbox" checked>
+        <label>Compact</label>
+      </div>
+    
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">State</div>
+      </div>
+    
+
+  <div class="multiple actions">
+    <div class="multiple joined">
+      
+      <div class="button radio right bordered" onclick="set_validity ()">
+        <input type="radio" name="validity" checked>
+        <label>Base</label>
+      </div>
+    
+      
+      <div class="button radio right bordered" onclick="set_validity ( valid">
+        <input type="radio" name="validity" checked>
+        <label>Valid</label>
+      </div>
+    
+      
+      <div class="button radio right bordered" onclick="set_validity ( invalid">
+        <input type="radio" name="validity" checked>
+        <label>Invalid</label>
+      </div>
+    
+    </div>
+    <div class="multiple joined">
+      
+      <div class="button radio right bordered" onclick="enable ()">
+        <input type="radio" name="state" checked>
+        <label>Enabled</label>
+      </div>
+    
+      
+      <div class="button radio right bordered" onclick="disable ()">
+        <input type="radio" name="state" >
+        <label>Disabled</label>
+      </div>
+    
+    </div>
+    
+      <div class="button checkbox right bordered" onclick="toggle_attr ( readonly">
+        <input type="checkbox" checked>
+        <label>Read only</label>
+      </div>
+    
+  </div>
+
+  <script>
+    var $inputs = $('input').not ( '.actions input' );
+
+    function toggle_class ( name ) {
+      $inputs.toggleClass ( name );
+      $('.layout-content .label, .layout-content .button').not ( '.actions .button' ).toggleClass ( name );
+    }
+
+    function toggle_attr ( attr ) {
+      if ( _.isUndefined ( $inputs.attr ( attr ) ) ) {
+        $inputs.attr ( attr, attr );
+      } else {
+        $inputs.removeAttr ( attr );
+      }
+    }
+
+    function enable () {
+      $inputs.removeClass ( 'disabled' ).removeAttr ( 'disabled' );
+    }
+
+    function disable () {
+      $inputs.addClass ( 'disabled' ).attr ( 'disabled', 'disabled' );
+    }
+
+    function set_validity ( validity ) {
+      var validities = ['valid', 'invalid'];
+      for ( var i = 0, l = validities.length; i < l; i++ ) {
+        $inputs.removeClass ( validities[i] ).addClass ( validity );
+      }
+    }
+  </script>
+
+
+
+</main>
+    <footer class="layout-footer">
+      <p class="text-center">Svelto, the modular web framework</p>
+    </footer>
+    <script>
+      /* ERROR NOTIFIER */
+      var prevErrorId = '';
+      window.onerror = function ( message, file, line ) {
+        var errorId = message + file + line;
+        if ( errorId !== prevErrorId ) {
+          prevErrorId = errorId;
+          try {
+            $.toast ({
+              body: 'File: ' + file + '<br/>Line: ' + line + '<br/>Message: ' + message,
+              ttl: Infinity,
+              color: Svelto.Colors.red
+            });
+          } catch ( e ) {
+            alert ( file + ':' + line + '\n\n' + message );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

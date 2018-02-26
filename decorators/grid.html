@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Svelto - Demo</title>
+    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
+    <script src="/static/vendor/lodash.js"></script>
+    <script src="/static/vendor/jquery.js"></script>
+    <script src="/static/vendor/Chart.js"></script>
+    <script src="/static/vendor/datatables.js"></script>
+    <script src="/static/vendor/marked.js"></script>
+    <script src="/static/javascript/svelto.js"></script>
+  </head>
+  <body class="layout">
+    <header class="layout-header sticky toolbar primary z-depth-4">
+      <div class="multiple center-y">
+        <div class="label compact transparent">
+          <i class="icon">code</i>
+        </div>
+        <a href="/" class="large">Svelto - Demo</a>
+        <div class="spacer"></div>
+        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
+      </div>
+    </header>
+    <main class="layout-content">
+
+  
+      <div class="divider block">
+        <div class="divider-content">Base</div>
+      </div>
+    
+
+  <div class="multiple fluid">
+    <div class="container bordered xs-1">1</div>
+    <div class="container bordered xs-1">1</div>
+    <div class="container bordered xs-1">1</div>
+    <div class="container bordered xs-1">1</div>
+    <div class="container bordered xs-1">1</div>
+    <div class="container bordered xs-1">1</div>
+    <div class="container bordered xs-1">1</div>
+    <div class="container bordered xs-1">1</div>
+    <div class="container bordered xs-1">1</div>
+    <div class="container bordered xs-1">1</div>
+    <div class="container bordered xs-1">1</div>
+    <div class="container bordered xs-1">1</div>
+  </div>
+  <div class="multiple fluid">
+    <div class="container bordered xs-3">3</div>
+    <div class="container bordered xs-6">6</div>
+    <div class="container bordered xs-3">3</div>
+  </div>
+  <div class="multiple fluid">
+    <div class="container bordered xs-3">3</div>
+    <div class="container bordered xs-9">9</div>
+  </div>
+  <div class="multiple fluid">
+    <div class="container bordered xs-1">1</div>
+    <div class="container bordered xs-4">4</div>
+    <div class="container bordered xs-5">5</div>
+    <div class="container bordered xs-2">2</div>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Complex 1</div>
+      </div>
+    
+
+  <div class="multiple fluid stretched">
+    <div class="multiple vertical fluid xs-4">
+      <div class="container bordered">4</div>
+      <div class="multiple fluid stretched">
+        <div class="multiple vertical fluid">
+          <div class="container bordered">2</div>
+          <div class="container bordered">2</div>
+        </div>
+        <div class="container bordered">2</div>
+      </div>
+    </div>
+    <div class="multiple vertical stretched joined fluid xs-4">
+      <div class="container bordered">4</div>
+      <div class="container bordered no-grow">4</div>
+    </div>
+    <div class="multiple vertical fluid xs-4">
+      <div class="multiple fluid">
+        <div class="container bordered">2</div>
+        <div class="container bordered">2</div>
+      </div>
+      <div class="container bordered">4</div>
+      <div class="multiple fluid">
+        <div class="container bordered">2</div>
+        <div class="container bordered">2</div>
+      </div>
+    </div>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Complex 2</div>
+      </div>
+    
+
+  <div class="multiple fluid stretched">
+    <div class="multiple vertical fluid xs-9">
+      <div class="container bordered">9</div>
+      <div class="multiple fluid stretched">
+        <div class="container bordered">3</div>
+        <div class="multiple vertical fluid">
+          <div class="container bordered">6</div>
+          <div class="multiple fluid joined">
+            <div class="container bordered">3</div>
+            <div class="container bordered">3</div>
+          </div>
+          <div class="container bordered">6</div>
+        </div>
+      </div>
+      <div class="container bordered">9</div>
+    </div>
+    <div class="container bordered xs-3">3</div>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Responsive</div>
+      </div>
+    
+
+  <div class="multiple">
+    <div class="container bordered xs-12 sm-4">
+      <span class="hidden-sm-up">12</span>
+      <span class="hidden-xs-down">4</span>
+    </div>
+    <div class="container bordered xs-12 sm-8">
+      <span class="hidden-sm-up">12</span>
+      <span class="hidden-xs-down">8</span>
+    </div>
+    <div class="container bordered xs-12 sm-5 md-3">
+      <span class="hidden-sm-up">12</span>
+      <span class="hidden-xs-down hidden-md-up">5</span>
+      <span class="hidden-sm-down">3</span>
+    </div>
+    <div class="container bordered xs-12 sm-7 md-6">
+      <span class="hidden-sm-up">12</span>
+      <span class="hidden-xs-down hidden-md-up">7</span>
+      <span class="hidden-sm-down">6</span>
+    </div>
+    <div class="container bordered xs-12 sm-7 md-3">
+      <span class="hidden-sm-up">12</span>
+      <span class="hidden-xs-down hidden-md-up">7</span>
+      <span class="hidden-sm-down">3</span>
+    </div>
+    <div class="container bordered xs-12 sm-5 md-6">
+      <span class="hidden-sm-up">12</span>
+      <span class="hidden-xs-down hidden-md-up">5</span>
+      <span class="hidden-sm-down">6</span>
+    </div>
+    <div class="container bordered xs-12 sm-8 md-4">
+      <span class="hidden-sm-up">12</span>
+      <span class="hidden-xs-down hidden-md-up">8</span>
+      <span class="hidden-sm-down">4</span>
+    </div>
+    <div class="container bordered xs-12 sm-4 md-2">
+      <span class="hidden-sm-up">12</span>
+      <span class="hidden-xs-down hidden-md-up">4</span>
+      <span class="hidden-sm-down">2</span>
+    </div>
+  </div>
+
+  //TODO: $.toast ( options );
+
+</main>
+    <footer class="layout-footer">
+      <p class="text-center">Svelto, the modular web framework</p>
+    </footer>
+    <script>
+      /* ERROR NOTIFIER */
+      var prevErrorId = '';
+      window.onerror = function ( message, file, line ) {
+        var errorId = message + file + line;
+        if ( errorId !== prevErrorId ) {
+          prevErrorId = errorId;
+          try {
+            $.toast ({
+              body: 'File: ' + file + '<br/>Line: ' + line + '<br/>Message: ' + message,
+              ttl: Infinity,
+              color: Svelto.Colors.red
+            });
+          } catch ( e ) {
+            alert ( file + ':' + line + '\n\n' + message );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

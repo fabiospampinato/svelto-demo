@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <title>Svelto - Demo</title>
+    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
+    <script src="/static/vendor/lodash.js"></script>
+    <script src="/static/vendor/jquery.js"></script>
+    <script src="/static/vendor/Chart.js"></script>
+    <script src="/static/vendor/datatables.js"></script>
+    <script src="/static/vendor/marked.js"></script>
+    <script src="/static/javascript/svelto.js"></script>
+  </head>
+  <body class="layout">
+    <header class="layout-header sticky toolbar primary z-depth-4">
+      <div class="multiple center-y">
+        <div class="label compact transparent">
+          <i class="icon">code</i>
+        </div>
+        <a href="/" class="large">Svelto - Demo</a>
+        <div class="spacer"></div>
+        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
+      </div>
+    </header>
+    <main class="layout-content">
+
+  
+      <div class="divider block">
+        <div class="divider-content">_</div>
+      </div>
+    
+
+  <div class="multiple">
+    <a href="/_/alignment.html" class="button bordered green">Alignment</a>
+    <a href="/_/border.html" class="button bordered green">Border</a>
+    <a href="/_/clearfix.html" class="button bordered green">Clearfix</a>
+    <a href="/_/cursor.html" class="button bordered green">Cursor</a>
+    <a href="/_/display.html" class="button bordered green">Display</a>
+    <a href="/_/flexbox.html" class="button bordered green">Flexbox</a>
+    <a href="/_/flip.html" class="button bordered green">Flip</a>
+    <a href="/_/float.html" class="button bordered green">Float</a>
+    <a href="/_/margin.html" class="button bordered green">Margin</a>
+    <a href="/_/overflow.html" class="button bordered green">Overflow</a>
+    <a href="/_/padding.html" class="button bordered green">Padding</a>
+    <a href="/_/position.html" class="button bordered green">Position</a>
+    <a href="/_/rotation.html" class="button bordered green">Rotation</a>
+    <a href="/_/screen_reader.html" class="button bordered">Screen Reader</a>
+    <a href="/_/text.html" class="button bordered green">Text</a>
+    <a href="/_/visibility.html" class="button bordered green">Visibility</a>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Core</div>
+      </div>
+    
+
+  <div class="multiple">
+    <a href="/core/browser.html" class="button bordered green">Browser</a>
+    <a href="/core/cookie.html" class="button bordered green">Cookie</a>
+    <a href="/core/gutter.html" class="button bordered green">Gutter</a>
+    <a href="/core/layout.html" class="button bordered green">Layout</a>
+    <a href="/core/multiple.html" class="button bordered green">Multiple</a>
+    <a href="/core/pointer.html" class="button bordered green">Pointer</a>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Decorators</div>
+      </div>
+    
+
+  <div class="multiple">
+    <a href="/decorators/actionable.html" class="button bordered green">Actionable</a>
+    <a href="/decorators/animations.html" class="button bordered green">Animations</a>
+    <a href="/decorators/attached.html" class="button bordered green">Attached</a>
+    <a href="/decorators/blurred.html" class="button bordered green">Blurred</a>
+    <a href="/decorators/border_radius.html" class="button bordered green">Border Radius</a>
+    <a href="/decorators/bordered.html" class="button bordered green">Bordered</a>
+    <a href="/decorators/centered.html" class="button bordered olive">Centered</a>
+    <a href="/decorators/colors.html" class="button bordered green">Colors</a>
+    <a href="/decorators/disabled.html" class="button bordered green">Disabled</a>
+    <a href="/decorators/floated.html" class="button bordered green">Floated</a>
+    <a href="/decorators/fluid.html" class="button bordered green">Fluid</a>
+    <a href="/decorators/grid.html" class="button bordered green">Grid</a>
+    <a href="/decorators/hidden.html" class="button bordered green">Hidden</a>
+    <a href="/decorators/highlighted.html" class="button bordered green">Highlighted</a>
+    <a href="/decorators/limited.html" class="button bordered green">Limited</a>
+    <a href="/decorators/obscured.html" class="button bordered green">Obscured</a>
+    <a href="/decorators/order.html" class="button bordered green">Order</a>
+    <a href="/decorators/pointing.html" class="button bordered green">Pointing</a>
+    <a href="/decorators/raisable.html" class="button bordered green">Raisable</a>
+    <a href="/decorators/scrollable.html" class="button bordered olive">Scrollable</a>
+    <a href="/decorators/sizes.html" class="button bordered green">Sizes</a>
+    <a href="/decorators/spaced.html" class="button bordered green">Spaced</a>
+    <a href="/decorators/target.html" class="button bordered green">Target</a>
+    <a href="/decorators/z_depths.html" class="button bordered green">Z-Depths</a>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Lib</div>
+      </div>
+    
+
+  <div class="multiple">
+    <a href="/lib/autofocus.html" class="button bordered green">Autofocus</a>
+    <a href="/lib/color.html" class="button bordered green">Color</a>
+    <a href="/lib/embedded_css.html" class="button bordered green">Embedded CSS</a>
+    <a href="/lib/emojify.html" class="button bordered green">Emojify</a>
+    <a href="/lib/fullscreen.html" class="button bordered green">Fullscreen</a>
+    <a href="/lib/fuzzy.html" class="button bordered green">Fuzzy</a>
+    <a href="/lib/n_times_action.html" class="button bordered green">N Times Action</a>
+    <a href="/lib/notification.html" class="button bordered green">Notification</a>
+    <a href="/lib/one_time_action.html" class="button bordered green">One Time Action</a>
+    <a href="/lib/positionate.html" class="button bordered green">Positionate</a>
+    <a href="/lib/regexes.html" class="button bordered green">Regexes</a>
+    <a href="/lib/storage.html" class="button bordered green">Storage</a>
+    <a href="/lib/timer.html" class="button bordered green">Timer</a>
+    <a href="/lib/touching.html" class="button bordered green">Touching</a>
+    <a href="/lib/transform.html" class="button bordered green">Transform</a>
+    <a href="/lib/validator.html" class="button bordered green">Validator</a>
+  </div>
+
+  
+      <div class="divider block">
+        <div class="divider-content">Widgets</div>
+      </div>
+    
+
+  <div class="multiple">
+    <a href="/widgets/accordion.html" class="button bordered green">Accordion</a>
+    <a href="/widgets/actions.html" class="button bordered green">Actions</a>
+    <a href="/widgets/avatar.html" class="button bordered green">Avatar</a>
+    <a href="/widgets/badge.html" class="button bordered green">Badge</a>
+    <a href="/widgets/breadcrumb.html" class="button bordered green">Breadcrumb</a>
+    <a href="/widgets/button.html" class="button bordered olive">Button</a>
+    <a href="/widgets/card.html" class="button bordered green">Card</a>
+    <a href="/widgets/carousel.html" class="button bordered olive">Carousel</a>
+    <a href="/widgets/centerer.html" class="button bordered green">Centerer</a>
+    <a href="/widgets/chart.html" class="button bordered green">Chart</a>
+    <a href="/widgets/chat.html" class="button bordered green">Chat</a>
+    <a href="/widgets/checkbox.html" class="button bordered green">Checkbox</a>
+    <a href="/widgets/class_switch.html" class="button bordered green">Class Switch</a>
+    <a href="/widgets/colorpicker.html" class="button bordered green">Colorpicker</a>
+    <a href="/widgets/container.html" class="button bordered green">Container</a>
+    <a href="/widgets/datatables.html" class="button bordered green">Datatables</a>
+    <a href="/widgets/datatables_pager.html" class="button bordered green">Datatables Pager</a>
+    <a href="/widgets/datepicker.html" class="button bordered green">Datepicker</a>
+    <a href="/widgets/divider.html" class="button bordered green">Divider</a>
+    <a href="/widgets/draggable.html" class="button bordered green">Draggable</a>
+    <a href="/widgets/droppable.html" class="button bordered green">Droppable</a>
+    <a href="/widgets/editor.html" class="button bordered green">Editor</a>
+    <a href="/widgets/embed.html" class="button bordered green">Embed</a>
+    <a href="/widgets/emoji.html" class="button bordered green">Emoji</a>
+    <a href="/widgets/emojipicker.html" class="button bordered green">Emojipicker</a>
+    <a href="/widgets/emojipicker_popover.html" class="button bordered green">Emojipicker Popover</a>
+    <a href="/widgets/expander.html" class="button bordered green">Expander</a>
+    <a href="/widgets/figure.html" class="button bordered green">Figure</a>
+    <a href="/widgets/flag.html" class="button bordered green">Flag</a>
+    <a href="/widgets/flickable.html" class="button bordered green">Flickable</a>
+    <a href="/widgets/flippable.html" class="button bordered green">Flippable</a>
+    <a href="/widgets/footer.html" class="button bordered green">Footer</a>
+    <a href="/widgets/form.html" class="button bordered green">Form</a>
+    <a href="/widgets/form_ajax.html" class="button bordered green">Form Ajax</a>
+    <a href="/widgets/form_sync.html" class="button bordered green">Form Sync</a>
+    <a href="/widgets/form_validate.html" class="button bordered green">Form Validate</a>
+    <a href="/widgets/fullscreenable.html" class="button bordered green">Fullscreenable</a>
+    <a href="/widgets/header.html" class="button bordered green">Header</a>
+    <a href="/widgets/icon.html" class="button bordered green">Icon</a>
+    <a href="/widgets/icons.html" class="button bordered green">Icons</a>
+    <a href="/widgets/image.html" class="button bordered green">Image</a>
+    <a href="/widgets/infobar.html" class="button bordered green">Infobar</a>
+    <a href="/widgets/input.html" class="button bordered green">Input</a>
+    <a href="/widgets/input_autogrow.html" class="button bordered green">Input Autogrow</a>
+    <a href="/widgets/justified_layout.html" class="button bordered">Justified Layout</a>
+    <a href="/widgets/label.html" class="button bordered olive">Label</a>
+    <a href="/widgets/lazy.html" class="button bordered">Lazy</a>
+    <a href="/widgets/liker.html" class="button bordered green">Liker</a>
+    <a href="/widgets/modal.html" class="button bordered green">Modal</a>
+    <a href="/widgets/numbox.html" class="button bordered green">Numbox</a>
+    <a href="/widgets/overlay.html" class="button bordered green">Overlay</a>
+    <a href="/widgets/pager.html" class="button bordered green">Pager</a>
+    <a href="/widgets/pagination.html" class="button bordered green">Pagination</a>
+    <a href="/widgets/panel.html" class="button bordered green">Panel</a>
+    <a href="/widgets/parallax.html" class="button bordered orange">Parallax</a>
+    <a href="/widgets/placeholder.html" class="button bordered green">Placeholder</a>
+    <a href="/widgets/popover.html" class="button bordered green">Popover</a>
+    <a href="/widgets/prism.html" class="button bordered orange">Prism</a>
+    <a href="/widgets/progressbar.html" class="button bordered green">Progressbar</a>
+    <a href="/widgets/radio.html" class="button bordered green">Radio</a>
+    <a href="/widgets/rails.html" class="button bordered green">Rails</a>
+    <a href="/widgets/rater.html" class="button bordered orange">Rater</a>
+    <a href="/widgets/remote_action.html" class="button bordered green">Remote Action</a>
+    <a href="/widgets/remote_loader.html" class="button bordered green">Remote Loader</a>
+    <a href="/widgets/remote_modal.html" class="button bordered green">Remote Modal</a>
+    <a href="/widgets/remote_panel.html" class="button bordered green">Remote Panel</a>
+    <a href="/widgets/remote_popover.html" class="button bordered green">Remote Popover</a>
+    <a href="/widgets/ripple.html" class="button bordered green">Ripple</a>
+    <a href="/widgets/scroller.html" class="button bordered green">Scroller</a>
+    <a href="/widgets/sections.html" class="button bordered green">Sections</a>
+    <a href="/widgets/select.html" class="button bordered green">Select</a>
+    <a href="/widgets/selectable.html" class="button bordered green">Selectable</a>
+    <a href="/widgets/selectable_actions.html" class="button bordered green">Selectable Actions</a>
+    <a href="/widgets/shape.html" class="button bordered green">Shape</a>
+    <a href="/widgets/slider.html" class="button bordered green">Slider</a>
+    <a href="/widgets/spacer.html" class="button bordered green">Spacer</a>
+    <a href="/widgets/spinner.html" class="button bordered green">Spinner</a>
+    <a href="/widgets/spinner_overlay.html" class="button bordered green">Spinner Overlay</a>
+    <a href="/widgets/statistic.html" class="button bordered green">Statistic</a>
+    <a href="/widgets/subscriber.html" class="button bordered green">Subscriber</a>
+    <a href="/widgets/switch.html" class="button bordered green">Switch</a>
+    <a href="/widgets/table.html" class="button bordered green">Table</a>
+    <a href="/widgets/table_helper.html" class="button bordered green">Table Helper</a>
+    <a href="/widgets/table_sortable.html" class="button bordered green">Table Sortable</a>
+    <a href="/widgets/tabs.html" class="button bordered green">Tabs</a>
+    <a href="/widgets/tagbox.html" class="button bordered green">Tagbox</a>
+    <a href="/widgets/textarea.html" class="button bordered green">Textarea</a>
+    <a href="/widgets/textarea_autogrow.html" class="button bordered green">Textarea Autogrow</a>
+    <a href="/widgets/time_ago.html" class="button bordered green">Time ago</a>
+    <a href="/widgets/toast.html" class="button bordered green">Toast</a>
+    <a href="/widgets/toolbar.html" class="button bordered green">Toolbar</a>
+    <a href="/widgets/tooltip.html" class="button bordered green">Tooltip</a>
+    <a href="/widgets/typography.html" class="button bordered green">Typography</a>
+    <a href="/widgets/zoomable.html" class="button bordered green">Zoomable</a>
+  </div>
+
+  
+  <script>
+    $(function () {
+
+      var $buttons = $('.layout-content .button'),
+          green_nr = $buttons.filter ( '.green' ).length,
+          olive_nr = $buttons.filter ( '.olive' ).length,
+          orange_nr = $buttons.filter ( '.orange' ).length,
+          red_nr = $buttons.filter ( '.red' ).length,
+          others_nr = $buttons.length - green_nr - olive_nr - orange_nr - red_nr;
+
+      $.toast ({
+        body: '<p>' +
+                '<span class="text-green">Ready (' + green_nr + ')</span><br/>' +
+                '<span class="text-olive">Improvable (' + olive_nr + ')</span><br/>' +
+                '<span class="text-orange">To fix (' + orange_nr + ')</span><br/>' +
+                '<span class="text-red">Problematic (' + red_nr + ')</span><br/>' +
+                '<span class="text-white">Others (' + others_nr + ')</span>' +
+              '</p>',
+        ttl: Infinity
+      });
+
+    });
+  </script>
+
+
+</main>
+    <footer class="layout-footer">
+      <p class="text-center">Svelto, the modular web framework</p>
+    </footer>
+    <script>
+      /* ERROR NOTIFIER */
+      var prevErrorId = '';
+      window.onerror = function ( message, file, line ) {
+        var errorId = message + file + line;
+        if ( errorId !== prevErrorId ) {
+          prevErrorId = errorId;
+          try {
+            $.toast ({
+              body: 'File: ' + file + '<br/>Line: ' + line + '<br/>Message: ' + message,
+              ttl: Infinity,
+              color: Svelto.Colors.red
+            });
+          } catch ( e ) {
+            alert ( file + ':' + line + '\n\n' + message );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>
