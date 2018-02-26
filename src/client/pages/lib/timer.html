@@ -1,0 +1,57 @@
+
+<!-- TIMER -->
+
+<template name="timer">
+
+  {{{widget.divider "API"}}}
+
+  <div class="multiple">
+    <div class="multiple joined">
+      <input value="300" name="milliseconds" placeholder="Milliseconds..." class="bordered">
+      {{{widget.checkbox "Autostart" "autostart"}}}
+      {{{widget.action "Set" "timer_set ()"}}}
+    </div>
+    <div class="multiple joined">
+      <input value="1000" name="milliseconds_once" placeholder="Milliseconds..." class="bordered">
+      {{{widget.action "Once" "timer_once ()"}}}
+    </div>
+    {{{widget.action "Play" "timer_api ( 'play' )"}}}
+    {{{widget.action "Pause" "timer_api ( 'pause' )"}}}
+    {{{widget.action "Stop" "timer_api ( 'stop' )"}}}
+    {{{widget.action "Toggle" "timer_api ( 'toggle' )"}}}
+    {{{widget.action "Reset" "timer_api ( 'reset' )"}}}
+    {{{widget.action "Go" "timer_api ( 'go' )"}}}
+    {{{widget.action "Remaining" "timer_remaining ()"}}}
+  </div>
+
+  <script>
+    var timer = false;
+
+    function timer_callback () {
+      $.toast ({
+        body: 'Timer executed!',
+        color: Svelto.Colors.green
+      });
+    }
+
+    function timer_api ( method ) {
+      timer[method]();
+    }
+
+    function timer_set () {
+      var milliseconds = Number ( $('input[name="milliseconds"]').val () ),
+          autostart = $('input[name="autostart"]').prop ( 'checked' );
+      timer = new Svelto.Timer ( timer_callback, milliseconds, autostart );
+    }
+
+    function timer_once () {
+      var milliseconds = Number ( $('input[name="milliseconds_once"]').val () );
+      timer.once ( milliseconds );
+    }
+
+    function timer_remaining () {
+      $.toast ( 'Remaining: ' + timer.remaining () );
+    }
+  </script>
+
+</template>

@@ -1,0 +1,91 @@
+
+<!-- BADGE -->
+
+<template name="badge">
+
+  {{{widget.divider "Badge"}}}
+
+  <div class="multiple vertical">
+    <div class="label bordered compact">
+      <span>Default</span>
+      <div class="badge">0</div>
+    </div>
+    <div class="label bordered compact">
+      <i class="icon">menu</i>
+      <div class="badge top-left primary">1</div>
+    </div>
+    <div class="label bordered compact">
+      <i class="icon">menu</i>
+      <div class="badge top-right secondary">2</div>
+    </div>
+    <div class="label bordered compact">
+      <i class="icon">menu</i>
+      <div class="badge bottom-right tertiary">3</div>
+    </div>
+    <div class="label bordered compact">
+      <i class="icon">menu</i>
+      <div class="badge bottom-left quaternary">4</div>
+    </div>
+  </div>
+
+  {{{> badge_actions}}}
+
+</template>
+
+<!-- ACTIONS -->
+
+<template name="badge_actions">
+
+  {{{widget.divider "Style"}}}
+
+  <div class="multiple actions">
+    {{{widget.checkAction "Actionable" "toggle_class ( 'actionable' )"}}}
+    {{{widget.checkAction "Bordered" "toggle_class ( 'bordered' )"}}}
+  </div>
+
+  {{{widget.divider "Content"}}}
+
+  <div class="multiple actions">
+    <div class="multiple joined">
+      <input placeholder="Badge content..." name="content" class="bordered">
+      {{{widget.action "Set icon" "set_icon ()"}}}
+      {{{widget.action "Set text" "set_text ()"}}}
+    </div>
+  </div>
+
+  {{{widget.divider "State"}}}
+
+  <div class="multiple actions joined">
+    {{{widget.radioAction "Enabled" "state" "enable ()" true}}}
+    {{{widget.radioAction "Disabled" "state" "disable ()"}}}
+  </div>
+
+  <script>
+    function getValue ( name ) {
+      return $('[name="' + name + '"]').val ();
+    }
+
+    function toggle_class ( name ) {
+      $('.badge').toggleClass ( name );
+    }
+
+    function set_icon () {
+      var icon = getValue ( 'content');
+      $('.badge').html ( '<i class="icon">' + icon + '</i>' );
+    }
+
+    function set_text () {
+      var text = getValue ( 'content' );
+      $('.badge').html ( text );
+    }
+
+    function enable () {
+      $('.badge').removeClass ( 'disabled' );
+    }
+
+    function disable () {
+      $('.badge').addClass ( 'disabled' );
+    }
+  </script>
+
+</template>

@@ -1,0 +1,42 @@
+
+<!-- AUTOGROW -->
+
+<template name="textarea_autogrow">
+
+  {{{widget.divider "Textarea autogrow"}}}
+
+  <textarea placeholder="Placeholder..." class="autogrow bordered">Value</textarea>
+
+  {{{> textarea_autogrow_actions}}}
+
+</template>
+
+<!-- ACTIONS -->
+
+<template name="textarea_autogrow_actions">
+
+  {{{widget.divider "API"}}}
+
+  <div class="multiple actions">
+    {{{widget.action "Init" "api ()"}}}
+    {{{widget.action "Destroy" "api ( 'destroy' )"}}}
+  </div>
+
+  {{{widget.divider "Style"}}}
+
+  <div class="multiple actions">
+    {{{widget.checkAction "Compact" "toggle_class ( 'compact' )"}}}
+    {{{widget.checkAction "Bordered" "toggle_class ( 'bordered' )" true}}}
+  </div>
+
+  <script>
+    function toggle_class ( name ) {
+      $('.autogrow').toggleClass ( name );
+    }
+
+    function api ( action ) {
+      $('textarea.autogrow').autogrowTextarea ( action );
+    }
+  </script>
+
+</template>

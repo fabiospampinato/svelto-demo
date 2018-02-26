@@ -1,0 +1,61 @@
+
+<!-- IMAGE -->
+
+<template name="image">
+
+  {{{widget.divider "Image"}}}
+
+  {{{sample.image "centered"}}}
+
+  {{{widget.divider "Sizes"}}}
+
+  <div class="container bordered">
+    <div class="multiple">
+      {{{sample.image "xxxxsmall"}}}
+      {{{sample.image "xxxsmall"}}}
+      {{{sample.image "xxsmall"}}}
+      {{{sample.image "xsmall"}}}
+      {{{sample.image "small"}}}
+      {{{sample.image "medium"}}}
+      {{{sample.image "large"}}}
+      {{{sample.image "xlarge"}}}
+      {{{sample.image "xxlarge"}}}
+      {{{sample.image "xxxlarge"}}}
+      {{{sample.image "xxxxlarge"}}}
+    </div>
+  </div>
+
+  {{{> image_actions}}}
+
+</template>
+
+<!-- ACTIONS -->
+
+<template name="image_actions">
+
+  {{{widget.divider "Style"}}}
+
+  {{{widget.checkAction "Bordered" "toggle_class ( 'bordered' )"}}}
+
+  {{{widget.divider "State"}}}
+
+  <div class="multiple joined actions">
+    {{{widget.radioAction "Enabled" "state" "enable ()" true}}}
+    {{{widget.radioAction "Disabled" "state" "disable ()"}}}
+  </div>
+
+  <script>
+    function toggle_class ( name ) {
+      $('img').toggleClass ( name );
+    }
+
+    function enable () {
+      $('img').removeClass ( 'disabled' );
+    }
+
+    function disable () {
+      $('img').addClass ( 'disabled' );
+    }
+  </script>
+
+</template>

@@ -1,0 +1,87 @@
+
+<!-- REMOTE LOADER -->
+
+<template name="remote_loader">
+
+  <div class="widget"> <!-- Wrapping so that the loaded content gets removed on `route` -->
+
+    {{{widget.divider "Remote Loader"}}}
+
+    <div class="multiple equal text-center">
+      <div class="remote-loader" data-url="/remote-loader-text">
+        {{{widget.spinner "secondary"}}}
+      </div>
+      <div class="remote-loader" data-url="/remote-loader-json">
+        {{{widget.spinner "secondary"}}}
+      </div>
+      <div class="remote-loader" data-url="/remote-loader-widget">
+        {{{widget.spinner "secondary"}}}
+      </div>
+      <div class="remote-loader no-wrap" data-url="/remote-loader-no-wrap">
+        {{{widget.spinner "secondary"}}}
+      </div>
+      <div class="remote-loader" data-url="/remote-loader-json-wrong">
+        {{{widget.spinner "secondary"}}}
+      </div>
+      <div class="remote-loader" data-url="/remote-loader-json-message">
+        {{{widget.spinner "secondary"}}}
+      </div>
+      <div class="remote-loader" data-cache="#local-content">
+        {{{widget.spinner "secondary"}}}
+      </div>
+    </div>
+
+    <script type="text/html" id="local-content">
+      <span>Script content</span>
+    </script>
+
+    {{{widget.divider "Target"}}}
+
+    <div id="target" class="container bordered">
+      <p>I'm a target for...</p>
+    </div>
+
+    <div class="remote-loader" data-url="/remote-loader-target" data-target="#target" data-target-filter=".ok">
+      {{{widget.spinner "secondary"}}}
+    </div>
+
+    {{{widget.divider "Trigger"}}}
+
+    <div class="remote-loader-trigger button bordered" data-url="/remote-loader-text">Remote Load</div>
+
+    {{{widget.divider "Helper"}}}
+
+    <div class="multiple helpers">
+      <div class="helper before button bordered">Helper (Before)</div>
+      <div class="helper after button bordered">Helper (After)</div>
+    </div>
+
+    {{{widget.divider "Scroll"}}}
+
+    <div class="spacer" style="height: 300vh;"></div>
+    <div class="remote-loader" data-url="/remote-loader-scroll">
+      {{{widget.spinner "secondary"}}}
+    </div>
+    <div class="remote-loader preload" data-url="/remote-loader-preload">
+      {{{widget.spinner "secondary"}}}
+    </div>
+
+  </div>
+
+  {{{> remote_loader_init}}}
+
+</template>
+
+<!-- INIT -->
+
+<template name="remote_loader_init">
+  <script>
+    var $helpers = $('.helpers');
+    $('.helper.before').on ( 'click', function () {
+      $.remoteLoader ({ url: '/remote-loader-text' }, $helpers, 'before' );
+    });
+    $('.helper.after').on ( 'click', function () {
+      $.remoteLoader ({ url: '/remote-loader-text' }, $helpers, 'after' );
+    });
+  </script>
+</template>

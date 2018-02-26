@@ -1,0 +1,21 @@
+{
+  "autorun": true,
+  "terminals": [
+    {
+      "name": "Statico",
+      "commands": [
+        "npm run website:clean",
+        "npm run website:build",
+        "npm run website:watch"
+      ]
+    },
+    {
+      "name": "Svelto",
+      "command": "npm run svelto:dev"
+    },
+    {
+      "name": "Server",
+      "command": "npm run website:serve"
+    }
+  ]
+}

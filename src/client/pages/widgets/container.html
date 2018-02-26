@@ -1,0 +1,48 @@
+
+<!-- CONTAINER -->
+
+<template name="container">
+
+  {{{widget.divider "Container"}}}
+
+  <div id="target" class="container">
+    {{{sample.paragraph}}}
+  </div>
+
+  {{{> container_actions}}}
+
+</template>
+
+<!-- ACTIONS -->
+
+<template name="container_actions">
+
+  {{{widget.divider "Style"}}}
+
+  <div class="multiple">
+    {{{widget.checkAction "Bordered" "toggle_class ( 'bordered' )"}}}
+    {{{widget.checkAction "Compact" "toggle_class ( 'compact' )"}}}
+  </div>
+
+  {{{widget.divider "State"}}}
+
+  <div class="multiple joined actions">
+    {{{widget.radioAction "Enabled" "state" "enable ()" true}}}
+    {{{widget.radioAction "Disabled" "state" "disable ()"}}}
+  </div>
+
+  <script>
+    function toggle_class ( name ) {
+      $('.container').toggleClass ( name );
+    }
+
+    function enable () {
+      $('.container').removeClass ( 'disabled' );
+    }
+
+    function disable () {
+      $('.container').addClass ( 'disabled' );
+    }
+  </script>
+
+</template>

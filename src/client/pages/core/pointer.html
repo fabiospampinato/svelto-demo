@@ -1,0 +1,64 @@
+
+<!-- POINTER -->
+
+<template name="pointer">
+
+  {{{widget.divider "Target"}}}
+
+  <div class="square bordered centered target" style="height: 300px; width: 75%;"></div>
+
+  {{{widget.divider "Triggered"}}}
+
+  <div class="multiple">
+    {{{widget.checkbox "Tap" "tap"}}}
+    {{{widget.checkbox "Double tap" "dbltap"}}}
+    {{{widget.checkbox "Down" "down"}}}
+    {{{widget.checkbox "Move" "move"}}}
+    {{{widget.checkbox "Up" "up"}}}
+    {{{widget.checkbox "Cancel" "cancel"}}}
+    {{{widget.checkbox "Over" "over"}}}
+    {{{widget.checkbox "Enter" "enter"}}}
+    {{{widget.checkbox "Out" "out"}}}
+    {{{widget.checkbox "Leave" "leave"}}}
+  </div>
+
+  {{{> pointer_init}}}
+
+  {{{> pointer_actions}}}
+
+</template>
+
+<!-- INIT -->
+
+<template name="pointer_init">
+
+  <script>
+    function pointer_handler ( event, data ) {
+      var name = event.data.name;
+      if ( name === 'down' ) {
+        pointer_uncheck_all ();
+      }
+      $('input[type="checkbox"][name="' + name + '"]').prop ( 'checked', true );
+    }
+
+    function pointer_uncheck_all () {
+      $('input[type="checkbox"]').prop ( 'checked', false );
+    }
+
+    for ( var prop in Svelto.Pointer ) {
+      if ( !_.isString ( Svelto.Pointer[prop] ) ) continue;
+      $('.target').on ( Svelto.Pointer[prop], { name: prop }, pointer_handler );
+    }
+  </script>
+
+</template>
+
+<!-- ACTIONS -->
+
+<template name="pointer_actions">
+
+  {{{widget.divider "Actions"}}}
+
+  {{{widget.action "Reset" "pointer_uncheck_all ()"}}}
+
+</template>

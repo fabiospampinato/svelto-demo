@@ -1,0 +1,115 @@
+
+<!-- SECTIONS -->
+
+<template name="sections">
+
+  {{{widget.divider "All"}}}
+
+  <div class="container bordered">
+    <div class="sections">
+      <div class="section-left">Left</div>
+      <div class="section-center">Center</div>
+      <div class="section-right">Right</div>
+    </div>
+  </div>
+
+  {{{widget.divider "No left"}}}
+
+  <div class="container bordered">
+    <div class="sections">
+      <div class="section-center">Center</div>
+      <div class="section-right">Right</div>
+    </div>
+  </div>
+
+  {{{widget.divider "No center"}}}
+
+  <div class="container bordered">
+    <div class="sections">
+      <div class="section-left">Left</div>
+      <div class="section-right">Right</div>
+    </div>
+  </div>
+
+  {{{widget.divider "No right"}}}
+
+  <div class="container bordered">
+    <div class="sections">
+      <div class="section-left">Left</div>
+      <div class="section-center">Center</div>
+    </div>
+  </div>
+
+  {{{widget.divider "Only left"}}}
+
+  <div class="container bordered">
+    <div class="section-left">Left</div>
+  </div>
+
+  {{{widget.divider "Only center"}}}
+
+  <div class="container bordered">
+    <div class="section-center">Center</div>
+  </div>
+
+  {{{widget.divider "Only right"}}}
+
+  <div class="container bordered">
+    <div class="section-right">Right</div>
+  </div>
+
+  {{{widget.divider "Advanced"}}}
+
+  <div class="container bordered">
+    <div class="sections center-y">
+      <div class="section-left">
+        <div class="multiple">
+          <div class="button xsmall compact bordered">
+            <i class="icon">thumb_up</i>
+          </div>
+          <div class="button xsmall compact bordered">
+            <i class="icon">thumb_down</i>
+          </div>
+        </div>
+      </div>
+      <div class="section-center">
+        <p class="large">Title</p>
+      </div>
+      <div class="section-right">
+        <div class="multiple">
+          <div class="button xsmall compact bordered">
+            <i class="icon">menu</i>
+          </div>
+          <div class="button xsmall compact bordered">
+            <i class="icon">apps</i>
+          </div>
+          <div class="button xsmall compact bordered">
+            <i class="icon">refresh</i>
+          </div>
+          <div class="button xsmall compact bordered">
+            <i class="icon">more_vert</i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{{> sections_actions}}}
+
+</template>
+
+<!-- ACTIONS -->
+
+<template name="sections_actions">
+
+  {{{widget.divider "Style"}}}
+
+  {{{widget.checkAction "Forced center" "toggle_class ( 'forced' )"}}}
+
+  <script>
+    function toggle_class ( name ) {
+      $('.section-center').toggleClass ( name );
+    }
+  </script>
+
+</template>

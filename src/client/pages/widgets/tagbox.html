@@ -1,0 +1,70 @@
+
+<!-- TAGBOX -->
+
+<template name="tagbox">
+
+  {{{widget.divider "Tagbox"}}}
+
+  <div class="tagbox bordered">
+    <input name="name" value="these,are,some,tags,ain't,cool?" class="hidden">
+    <div class="tagbox-tags">
+      <input name="partial_name" placeholder="Add tag..." class="tagbox-partial autogrow compact">
+    </div>
+  </div>
+
+  {{{> tagbox_actions}}}
+
+</template>
+
+<!-- ACTIONS -->
+
+<template name="tagbox_actions">
+
+  {{{widget.divider "API"}}}
+
+  <div class="multiple actions">
+    {{{widget.action "Init" "api ()"}}}
+    {{{widget.action "Get" "api_get ()"}}}
+    <div class="multiple joined">
+      <input placeholder="Tags..." name="add" class="bordered">
+      {{{widget.action "Add" "api_add ()"}}}
+    </div>
+    <div class="multiple joined">
+      <input placeholder="Tags..." name="remove" class="bordered">
+      {{{widget.action "Remove" "api_remove ()"}}}
+    </div>
+    {{{widget.action "Clear" "api ( 'clear' )"}}}
+    {{{widget.action "Reset" "api ( 'reset' )"}}}
+    {{{widget.action "Destroy" "api ( 'destroy' )"}}}
+  </div>
+
+  {{{widget.divider "State"}}}
+
+  <div class="multiple joined actions">
+    {{{widget.radioAction "Enabled" "state" "api ( 'enable' )" true}}}
+    {{{widget.radioAction "Disabled" "state" "api ( 'disable' )"}}}
+  </div>
+
+  <script>
+    function getValue ( name ) {
+      return $('[name="' + name + '"]').val ();
+    }
+
+    function api_get () {
+      $.toast ( $('.tagbox').tagbox ( 'get' ).join ( ' - ' ) );
+    }
+
+    function api_add () {
+      $('.tagbox').tagbox ( 'add', getValue ( 'add' ) );
+    }
+
+    function api_remove () {
+      $('.tagbox').tagbox ( 'remove', getValue ( 'remove' ) );
+    }
+
+    function api ( action ) {
+      $('.tagbox').tagbox ( action );
+    }
+  </script>
+
+</template>

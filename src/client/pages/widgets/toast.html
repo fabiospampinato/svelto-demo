@@ -1,0 +1,271 @@
+
+<!-- TOAST -->
+
+<template name="toast">
+
+  {{{widget.divider "API"}}}
+
+  <div class="multiple">
+    {{{widget.action "Create" "toast_api_create ()"}}}
+    {{{widget.action "Open" "toast_api_open ()"}}}
+    {{{widget.action "Close" "toast_api_close ()"}}}
+    {{{widget.action "isOpen" "toast_api_isOpen ()"}}}
+  </div>
+
+  {{{widget.divider "Text"}}}
+
+  <div class="multiple">
+    {{{widget.action "Short" "toast_short ()"}}}
+    {{{widget.action "Medium" "toast_medium ()"}}}
+    {{{widget.action "Long" "toast_long ()"}}}
+  </div>
+
+  {{{widget.divider "Anchors"}}}
+
+  <div class="multiple">
+    {{{widget.action "Top-Left" "toast_anchor ({ y: 'top', x: 'left' })"}}}
+    {{{widget.action "Top-Center" "toast_anchor ({ y: 'top', x: 'center' })"}}}
+    {{{widget.action "Top-Expanded" "toast_anchor ({ y: 'top', x: 'expanded' })"}}}
+    {{{widget.action "Top-Right" "toast_anchor ({ y: 'top', x: 'right' })"}}}
+    {{{widget.action "Bottom-Left" "toast_anchor ({ y: 'bottom', x: 'left' })"}}}
+    {{{widget.action "Bottom-Center" "toast_anchor ({ y: 'bottom', x: 'center' })"}}}
+    {{{widget.action "Bottom-Expanded" "toast_anchor ({ y: 'bottom', x: 'expanded' })"}}}
+    {{{widget.action "Bottom-Right" "toast_anchor ({ y: 'bottom', x: 'right' })"}}}
+  </div>
+
+  {{{widget.divider "Buttons"}}}
+
+  <div class="multiple">
+    {{{widget.action "One" "toast_btns_one ()"}}}
+    {{{widget.action "Two" "toast_btns_two ()"}}}
+    {{{widget.action "Three" "toast_btns_three ()"}}}
+  </div>
+
+  {{{widget.divider "Icon"}}}
+
+  <div class="multiple">
+    {{{widget.action "Icon + Body" "toast_icon ()"}}}
+    {{{widget.action "Icon + Title + Body" "toast_icon_title ()"}}}
+    {{{widget.action "Icon + Title + Body + Buttons" "toast_icon_adv ()"}}}
+  </div>
+
+  {{{widget.divider "Advanced"}}}
+
+  <div class="multiple">
+    {{{widget.action "Title + Body" "toast_adv_one ()"}}}
+    {{{widget.action "Title + Body + Image" "toast_adv_two ()"}}}
+    {{{widget.action "Title + Body + Image + Buttons" "toast_adv_three ()"}}}
+    {{{widget.action "Title + Custom body + Image + Buttons" "toast_adv_four ()"}}}
+  </div>
+
+  {{{widget.divider "Colors"}}}
+
+  <div class="multiple">
+    {{{widget.action "Primary" "toast_colored ( 'primary' )" "primary"}}}
+    {{{widget.action "Secondary" "toast_colored ( 'secondary' )" "secondary"}}}
+    {{{widget.action "Tertiary" "toast_colored ( 'tertiary' )" "tertiary"}}}
+    {{{widget.action "Quaternary" "toast_colored ( 'quaternary' )" "quaternary"}}}
+    {{{widget.action "Black" "toast_colored ( 'black' )" "black"}}}
+    {{{widget.action "Blue" "toast_colored ( 'blue' )" "blue"}}}
+    {{{widget.action "Brown" "toast_colored ( 'brown' )" "brown"}}}
+    {{{widget.action "Gray" "toast_colored ( 'gray' )" "gray"}}}
+    {{{widget.action "Green" "toast_colored ( 'green' )" "green"}}}
+    {{{widget.action "Olive" "toast_colored ( 'olive' )" "olive"}}}
+    {{{widget.action "Orange" "toast_colored ( 'orange' )" "orange"}}}
+    {{{widget.action "Pink" "toast_colored ( 'pink' )" "pink"}}}
+    {{{widget.action "Purple" "toast_colored ( 'purple' )" "purple"}}}
+    {{{widget.action "Red" "toast_colored ( 'red' )" "red"}}}
+    {{{widget.action "Teal" "toast_colored ( 'teal' )" "teal"}}}
+    {{{widget.action "Violet" "toast_colored ( 'violet' )" "violet"}}}
+    {{{widget.action "White" "toast_colored ( 'white' )" "white"}}}
+    {{{widget.action "Yellow" "toast_colored ( 'yellow' )" "yellow"}}}
+    {{{widget.action "Error" "toast_colored ( 'error' )" "error"}}}
+    {{{widget.action "Success" "toast_colored ( 'success' )" "success"}}}
+    {{{widget.action "Warning" "toast_colored ( 'warning' )" "warning"}}}
+    {{{widget.action "Base" "toast_colored ( 'base' )" "base"}}}
+    {{{widget.action "Inherit" "toast_colored ( 'inherit' )" "inherit"}}}
+    {{{widget.action "Transparent" "toast_colored ( 'transparent' )" "transparent"}}}
+  </div>
+
+  <script>
+    function toast_short () {
+      $.toast ( 'Short toast' );
+    }
+
+    function toast_medium () {
+      $.toast ( 'A medium toast, maybe some useful infos here' );
+    }
+
+    function toast_long () {
+      $.toast ( 'A very looooooooooong toast, maybe some tips here or whatever takes a long space, how does it fit?' );
+    }
+
+    function toast_btns_one () {
+      $.toast ({
+        body: 'Toast with one button',
+        buttons: [{
+          text: 'Foo'
+        }]
+      });
+    }
+
+    function toast_btns_two () {
+      $.toast ({
+        body: 'Toast with two buttons',
+        buttons: [{
+          text: 'Foo'
+        }, {
+          text: 'Bar'
+        }]
+      });
+    }
+
+    function toast_btns_three () {
+      $.toast ({
+        body: 'Toast with three buttons',
+        buttons: [{
+          text: 'Foo'
+        }, {
+          text: 'Bar'
+        }, {
+          text: 'Baz'
+        }]
+      });
+    }
+
+    function toast_adv_one () {
+      $.toast ({
+        title: 'Test title',
+        body: 'This is just an example body'
+      });
+    }
+
+    function toast_adv_two () {
+      $.toast ({
+        title: 'Test title',
+        body: 'This is just an example body',
+        img: '{{sample.imageUrl}}'
+      });
+    }
+
+    function toast_adv_three () {
+      $.toast ({
+        title: 'Test title',
+        body: 'This is just an example body',
+        img: '{{sample.imageUrl}}',
+        buttons: [{
+          text: 'Foo'
+        }, {
+          text: 'Bar'
+        }]
+      });
+    }
+
+    function toast_adv_four () {
+      $.toast ({
+        title: 'Test title',
+        body: '<sub>sub</sub>Something<sup>sup</sup>',
+        img: '{{sample.imageUrl}}',
+        buttons: [{
+          text: 'Foo'
+        }, {
+          text: 'Bar'
+        }]
+      });
+    }
+
+    function toast_icon () {
+      $.toast ({
+        body: 'This is just an example body',
+        icon: 'person'
+      });
+    }
+
+    function toast_icon_title () {
+      $.toast ({
+        title: 'Test title',
+        body: 'This is just an example body',
+        icon: 'person'
+      });
+    }
+
+    function toast_icon_adv () {
+      $.toast ({
+        title: 'Test title',
+        body: 'This is just an example body',
+        icon: 'person',
+        buttons: [{
+          text: 'Foo'
+        }, {
+          text: 'Bar'
+        }]
+      });
+    }
+
+    function toast_colored ( color ) {
+      $.toast ({
+        body: 'Toast with custom color',
+        color: color
+      });
+    }
+    var anchor_id = 0;
+
+    function toast_anchor ( anchor ) {
+      $.toast ({
+        body: 'Toast[' + (anchor_id += 1) + '] in anchor: { y: `' + anchor.y + '`, x: `' + anchor.x + '` }',
+        anchor: anchor
+      });
+    }
+    var created_toast;
+
+    function toast_api_create () {
+      created_toast = $.toast ({
+        body: 'API toast',
+        autoplay: false
+      });
+    }
+
+    function toast_api_open () {
+      if ( created_toast ) {
+        created_toast.open ();
+      } else {
+        $.toast ( 'You should `Create` it before...' );
+      }
+    }
+
+    function toast_api_close () {
+      if ( created_toast ) {
+        created_toast.close();
+      } else {
+        $.toast ( 'You should `Create` it before...' );
+      }
+    }
+
+    function toast_api_isOpen () {
+      if ( created_toast ) {
+        $.toast ( created_toast.isOpen () );
+      } else {
+        $.toast ( 'You should `Create` it before...' );
+      }
+    }
+  </script>
+
+  {{{> toast_actions}}}
+
+</template>
+
+<!-- ACTIONS -->
+
+<template name="toast_actions">
+
+  {{{widget.divider "Style"}}}
+
+  {{{widget.checkAction "Sticky header" "toggle_sticky_header ()" true}}}
+
+  <script>
+    function toggle_sticky_header () {
+      $('.layout-header').toggleClass ( 'sticky' );
+    }
+  </script>
+
+</template>

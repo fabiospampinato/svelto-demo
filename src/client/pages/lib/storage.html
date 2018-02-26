@@ -1,0 +1,61 @@
+
+<!-- STORAGE -->
+
+<template name="storage">
+
+  {{{widget.divider "Storage"}}}
+
+  <div class="multiple equal joined">
+    <input name="storage_key_nr" placeholder="Key number..." class="bordered">
+    <input name="storage_key" placeholder="Key..." class="bordered">
+    <input name="storage_value" placeholder="Value..." class="bordered">
+    <input name="storage_ttl" placeholder="Time To Live..." class="bordered">
+  </div>
+
+  {{{> storage_actions}}}
+
+</template>
+
+<!-- ACTIONS -->
+
+<template name="storage_actions">
+
+  {{{widget.divider "API"}}}
+
+  <div class="multiple">
+    {{{widget.action "Key" "storage_key ()"}}}
+    {{{widget.action "Get" "storage_get ()"}}}
+    {{{widget.action "Set" "storage_set ()"}}}
+    {{{widget.action "Remove" "storage_remove ()"}}}
+    {{{widget.action "Clear" "storage_clear ()"}}}
+  </div>
+
+  <script>
+    function getValue ( name ) {
+      return $('input[name="storage_' + name + '"]').val ();
+    }
+
+    function storage_key () {
+      $.toast ( Svelto.Storage.key ( Number ( getValue ( 'key_nr' ) ) ) );
+    }
+
+    function storage_get () {
+      $.toast ( Svelto.Storage.get ( getValue ( 'key' ) ) );
+    }
+
+    function storage_set () {
+      var ttl = getValue ( 'ttl' );
+      ttl = ttl.length ? Number ( ttl ) : undefined;
+      Svelto.Storage.set ( getValue ( 'key' ), getValue ( 'value' ), ttl );
+    }
+
+    function storage_remove () {
+      Svelto.Storage.remove ( getValue ( 'key' ) );
+    }
+
+    function storage_clear () {
+      Svelto.Storage.clear ();
+    }
+  </script>
+
+</template>
