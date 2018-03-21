@@ -587,7 +587,7 @@ const widget = {
 
   nowSecs: ( offset = 0 ) => {
 
-    return Math.floor ( Date.now () / 1000 ) + offset;
+    return Math.floor ( Date.now () / 1000 ) - offset;
 
   }
 

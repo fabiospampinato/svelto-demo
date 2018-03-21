@@ -3,35 +3,33 @@
 
 <template name="time_ago">
 
-  <!-- //FIXME: Broken page -->
-
-  {{{widget.divider "Time ago"}}}
+  {{{widget.divider "Time Ago"}}}
 
   <div class="container bordered">
     <span class="timeago" data-timestamp="{{{widget.nowSecs}}}"></span>
   </div>
 
-  {{{widget.divider "Time ago -90"}}}
+  {{{widget.divider "Time Ago - 1m 30s ago"}}}
 
   <div class="container bordered">
-    <span class="timeago" data-timestamp="{{{widget.nowSecs -90}}}"></span>
+    <span class="timeago" data-timestamp="{{{widget.nowSecs 90}}}"></span>
   </div>
 
-  {{{widget.divider "Time ago -120"}}}
+  {{{widget.divider "Time Ago - 2m ago"}}}
 
   <div class="container bordered">
-    <span class="timeago" data-timestamp="{{{widget.nowSecs -120}}}"></span>
+    <span class="timeago" data-timestamp="{{{widget.nowSecs 120}}}"></span>
   </div>
 
-  {{{widget.divider "Time ago -3600"}}}
+  {{{widget.divider "Time Ago - 1h ago"}}}
 
   <div class="container bordered">
-    <span class="timeago" data-timestamp="{{{widget.nowSecs -3600}}}"></span>
+    <span class="timeago" data-timestamp="{{{widget.nowSecs 3600}}}"></span>
   </div>
 
-  {{{widget.divider "Time ago title -7200"}}}
+  {{{widget.divider "Time Ago Title - 2h ago"}}}
 
-  <div class="label bordered compact timeago" data-timestamp="{{{widget.nowSecs -7200}}}" data-options='{"title":true}'>
+  <div class="label bordered compact timeago" data-timestamp="{{{widget.nowSecs 7200}}}" data-options='{"title":true}'>
     <i class="icon">access_time</i>
   </div>
 
