@@ -41,9 +41,9 @@
 
 <template name="validator_init">
 
-  {{{widget.toast body="<span class=\"text-green\">Match</span> or <span class=\"text-red\">not</span>" ttl="forever"}}}
-
   <script>
+    $.toast ({ body: '<span class="text-green">Match</span> or <span class="text-red">not</span>', ttl: Infinity });
+
     $('input').on ( 'input change', function () {
       var $input = $(this),
           args = $input.data ( 'args' ),

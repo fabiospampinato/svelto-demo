@@ -455,7 +455,7 @@ const widget = {
 
     width = _.isNumber ( width ) ? `${width}px` : width;
     height = _.isNumber ( height ) ? `${height}px` : height;
-    content = content !== false ? ( _.isString ( content ) ? content : width + ' - ' + height ) : '';
+    content = content !== false && content !== 'false' ? ( _.isString ( content ) ? content : width + ' - ' + height ) : '';
 
     return `<div class="placeholder" ${ratio ? `data-ratio="${ratio}"` : ''} style="width:${width}; height:${height};">${content}</div>`;
 
@@ -585,23 +585,9 @@ const widget = {
 
   /* TOOLS */
 
-  timeAgo: timestamp => {
-
-    return '//TODO: return _.timeAgo ( timestamp ).str;';
-
-  },
-
-  toast: options => {
-
-    return '//TODO: $.toast ( options );';
-
-  },
-
-  /* UTILITIES */
-
   nowSecs: ( offset = 0 ) => {
 
-    return '//TODO: _.nowSecs () + offset;';
+    return Math.floor ( Date.now () / 1000 ) + offset;
 
   }
 

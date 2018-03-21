@@ -7,7 +7,7 @@
 
   {{{widget.editor}}}
 
-  {{{widget.divider "Nested"}}}
+  {{{widget.divider "Nested"}}} <!-- //FIXME: Pressing `esc` with the editor is fullscreen toggles fullscreen and closes the wrapper -->
 
   <div class="multiple">
     <div class="button modal-toggler bordered" data-target="#modal">Modal</div>
@@ -43,7 +43,7 @@
     <div class="multiple joined">
       <div class="label compact bordered gray pointing-right">Get</div>
       {{{widget.action "Plain" "api ( 'get' )"}}}
-      {{{widget.action "Parsed" "api ( 'get', true )"}}}
+      {{{widget.action "Parsed" "api ( 'get', true )"}}} <!-- //FIXME: Not working, test again -->
     </div>
     <div class="multiple joined">
       <input name="set" placeholder="Set..." class="bordered">

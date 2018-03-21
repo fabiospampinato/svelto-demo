@@ -3,42 +3,42 @@
 
 const requests = {
 
-  '/selectable-action-action': req => {
+  '/selectable-action-action': async req => {
 
-    const getIds = () => _.castArray ( req.body['ids[]'] ).join ( ', ' );
+    const {ids} = await req.json ();
 
     return {
-      message: `Rows ids: ${getIds ()}`
+      message: `Rows ids: ${ids.join ( ', ' )}`
     };
 
   },
 
-  '/selectable-action-modal': req => {
+  '/selectable-action-modal': async req => {
 
-    const getIds = () => _.castArray ( req.body['ids[]'] ).join ( ', ' );
+    const {ids} = await req.json ();
 
     return {
-      modal: `<div class="modal container">Rows ids: ${getIds ()}</div>`
+      modal: `<div class="modal container">Rows ids: ${ids.join ( ', ' )}</div>`
     };
 
   },
 
-  '/selectable-action-panel': req => {
+  '/selectable-action-panel': async req => {
 
-    const getIds = () => _.castArray ( req.body['ids[]'] ).join ( ', ' );
+    const {ids} = await req.json ();
 
     return {
-      panel: `<div class="panel container">Rows ids: ${getIds ()}</div>`
+      panel: `<div class="panel container">Rows ids: ${ids.join ( ', ' )}</div>`
     };
 
   },
 
-  '/selectable-action-popover': req => {
+  '/selectable-action-popover': async req => {
 
-    const getIds = () => _.castArray ( req.body['ids[]'] ).join ( ', ' );
+    const {ids} = await req.json ();
 
     return {
-      popover: `<div class="popover container">Rows ids: ${getIds ()}</div>`
+      popover: `<div class="popover container">Rows ids: ${ids.join ( ', ' )}</div>`
     };
 
   }

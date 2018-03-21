@@ -31,9 +31,9 @@
 
 <template name="regexes_init">
 
-  {{{widget.toast body="<span class=\"text-green\">Match</span> or <span class=\"text-red\">not</span>" ttl="forever"}}}
-
   <script>
+    $.toast ({ body: '<span class="text-green">Match</span> or <span class="text-red">not</span>', ttl: Infinity });
+
     $('input').on ( 'input change', function () {
       var $input = $(this),
           match = !!$input.val ().match ( Svelto.Regexes[$input.attr ( 'name' )] );

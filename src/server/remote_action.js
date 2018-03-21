@@ -3,23 +3,29 @@
 
 const requests = {
 
-  '/remote-action-1': () => ({
+  '/remote-action-basic': () => ({
     message: 'Task accomplished Master!'
   }),
 
-  '/remote-action-2': ({ body }) => ({
-    message: `Color: "${body.color}"`
-  }),
+  '/remote-action-body': async req => {
 
-  '/remote-action-3': () => ({
+    const {color} = await req.json ();
+
+    return {
+      message: `Color: "${color}"`
+    };
+
+  },
+
+  '/remote-action-refresh': () => ({
     refresh: true
   }),
 
-  '/remote-action-4': () => ({
+  '/remote-action-redirect': () => ({
     url: 'https://www.google.com'
   }),
 
-  '/remote-action-5': () => ({
+  '/remote-action-noop': () => ({
     noop: true
   })
 

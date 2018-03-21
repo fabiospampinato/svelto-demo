@@ -6,11 +6,11 @@
   {{{widget.divider "Remote Modal"}}}
 
   <div class="multiple">
-    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-1">Load remote</div>
-    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-2" data-body='{"color": "primary"}'>Load remote (Primary)</div>
-    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-2" data-body='{"color": "secondary"}'>Load remote (Secondary)</div>
-    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-fullscreen">Load remote (Fullscreen)</div>
-    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-error">Load remote (Error)</div>
+    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-basic">Basic</div>
+    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-body" data-body='{"color": "primary"}'>Body (Primary)</div>
+    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-body" data-body='{"color": "secondary"}'>Body (Secondary)</div>
+    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-fullscreen">Fullscreen</div>
+    <div class="button bordered remote-modal-trigger" data-url="/remote-modal-error">Error</div>
   </div>
 
   {{{widget.divider "Helper"}}}
@@ -38,7 +38,7 @@
     }
 
     $('.helper').on ( Svelto.Pointer.tap, function () {
-      $.remoteModal ({ url: '/remote-modal-1' });
+      $.remoteModal ({ url: '/remote-modal-basic' });
     });
   </script>
 

@@ -155,7 +155,9 @@
 
 <template name="selectable_actions_popover">
 
-  {{{widget.toast "Right click on the table to open a popover"}}}
+  <script>
+    $.toast ({ body: 'Right click on the table to open a popover', ttl: Infinity });
+  </script>
 
   <div class="selectable-actions popover container no-tip bordered" data-target=".table.selectable">
     <div class="multiple vertical stretched no-wrap joined">

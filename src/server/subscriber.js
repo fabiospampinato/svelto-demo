@@ -3,11 +3,11 @@
 
 const requests = {
 
-  '/subscriber-update': ({ body }) => {
+  '/subscriber-update': async req => {
 
-    const counter = Number ( body.current.counter ),
-          prevState = body.current.state,
-          state = body.state;
+    let {current, state} = await req.json (),
+        counter = Number ( current.counter ),
+        prevState = current.state;
 
     if ( state !== prevState ) {
       if ( state === true ) counter++;

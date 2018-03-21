@@ -204,6 +204,14 @@
     function hsl2hsv () {
       setHsv ( Svelto.Color.hsl2hsv ( getHsl () ) );
     }
+
+    function init () {
+      setHex ({ r: 'ff', g: '00', b: '00' });
+      hex2rgb ();
+      hex2hsv ();
+      hex2hsl ();
+    }
+    init ();
   </script>
 
 </template>

@@ -3,6 +3,8 @@
 
 <template name="droppable">
 
+  <!-- //FIXME: The draggable is rendered below the droppable -->
+
   {{{widget.divider "Draggables"}}}
 
   <div class="container bordered">
@@ -55,10 +57,9 @@
 
 <template name="droppable_init">
 
-  {{widget.toast body="Drag the draggables to the respective droppables" ttl="forever"}}
-
   <script>
-    $(function () {
+    $.toast ({ body: 'Drag the draggables to the respective droppables', ttl: Infinity });
+    Svelto.Readify.add ( function () {
       var colors = ['red', 'yellow', 'green', 'blue', 'violet', 'teal', 'orange'];
       for (var i = 0, l = colors.length; i < l; i++) {
         $('.drag-' + colors[i]).draggable ({

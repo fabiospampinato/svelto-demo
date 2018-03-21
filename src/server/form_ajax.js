@@ -3,22 +3,22 @@
 
 const requests = {
 
-  '/form-ajax-basic': req => { //FIXME
+  '/form-ajax-basic': async req => {
 
-    const form = reqParse ( req );
+    const formData = await req.formData ();
 
     return {
-      message: `Form submitted using ajax! What's "${form.fields.input_1}"?`
+      message: `Form submitted using ajax! What's "${formData.get ( 'input_1' )}"?`
     };
 
   },
 
-  '/form-ajax-file': req => { //FIXME
+  '/form-ajax-file': async req => {
 
-    const form = reqParse ( req );
+    const formData = await req.formData ();
 
     return {
-      message: `Form submitted using ajax! "${form.files.file.name}" has been uploaded too!`
+      message: `Form submitted using ajax! "${formData.get ( 'file' ).name}" has been uploaded too!`
     };
 
   }

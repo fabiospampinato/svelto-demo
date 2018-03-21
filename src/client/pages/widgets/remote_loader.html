@@ -75,13 +75,17 @@
 <!-- INIT -->
 
 <template name="remote_loader_init">
+
   <script>
     var $helpers = $('.helpers');
+
     $('.helper.before').on ( 'click', function () {
       $.remoteLoader ({ url: '/remote-loader-text' }, $helpers, 'before' );
     });
+
     $('.helper.after').on ( 'click', function () {
       $.remoteLoader ({ url: '/remote-loader-text' }, $helpers, 'after' );
     });
   </script>
+
 </template>

@@ -6,18 +6,18 @@
   {{{widget.divider "Remote Popover"}}}
 
   <div class="multiple">
-    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-1">Load remote</div>
-    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-2" data-body='{"color": "primary"}'>Load remote (Primary)</div>
-    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-2" data-body='{"color": "secondary"}'>Load remote (Secondary)</div>
-    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-fullscreen">Load remote (Fullscreen)</div>
-    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-error">Load remote (Error)</div>
+    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-basic">Basic</div>
+    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-body" data-body='{"color": "primary"}'>Body (Primary)</div>
+    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-body" data-body='{"color": "secondary"}'>Body (Secondary)</div> <!-- //FIXME: Not working if triggered after `Body (Primary)` -->
+    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-fullscreen">Fullscreen</div>
+    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-error">Error</div>
   </div>
 
   {{{widget.divider "Helper"}}}
 
   <div class="multiple">
-    <div class="helper anchor button bordered">Helper (anchor)</div>
-    <div class="helper point button bordered">Helper (point)</div>
+    <div class="helper anchor button bordered">Anchor</div>
+    <div class="helper point button bordered">Point</div>
   </div>
 
   {{{> remote_popover_actions}}}
@@ -44,11 +44,11 @@
         $helperPoint = $('.helper.point');
 
     $helperAnchor.on ( Svelto.Pointer.tap, function () {
-      $.remotePopover ( { url: '/remote-popover-1' }, $helperAnchor );
+      $.remotePopover ( { url: '/remote-popover-basic' }, $helperAnchor );
     });
 
     $helperPoint.on ( Svelto.Pointer.tap, function () {
-      $.remotePopover ( { url: '/remote-popover-1' }, { x: 200, y: 200 } );
+      $.remotePopover ( { url: '/remote-popover-basic' }, { x: 200, y: 200 } );
     });
   </script>
 

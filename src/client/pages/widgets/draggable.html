@@ -52,9 +52,8 @@
 
 <template name="draggables_init">
 
-  {{widget.toast body="Drag the labels around" ttl="forever"}}
-
   <script>
+    $.toast ({ body: 'Drag the labels around', ttl: Infinity });
     $('.scroll').draggable ({
       scroll: {
         active: true

@@ -3,12 +3,12 @@
 
 const requests = {
 
-  '/liker-update': ({ body }) => {
+  '/liker-update': async req => {
 
-    const likes = Number ( body.current.likes ),
-          dislikes = Number ( body.current.dislikes ),
-          prevState = body.current.state,
-          state = body.state;
+    let {current, state} = await req.json (),
+        likes = Number ( current.likes ),
+        dislikes = Number ( current.dislikes ),
+        prevState = current.state;
 
     if ( state !== prevState ) {
       if ( state === true ) likes++;

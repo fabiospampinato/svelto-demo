@@ -150,9 +150,9 @@
 
 <template name="touching_init">
 
-  {{widget.toast body="Drag the squares, the green ones are those returned" ttl="forever"}}
-
   <script>
+
+    $.toast ({ body: 'Drag the squares, the green ones are those returned', ttl: Infinity });
 
     function getValue ( name ) {
       return $('input[name="' + name + '"]').val ();
@@ -236,7 +236,7 @@
 
     /* READY */
 
-    $(function () {
+    Svelto.Readify.add ( function () {
       init_drag_all ();
       init_drag_most ();
       init_drag_punctual ();

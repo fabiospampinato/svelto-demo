@@ -21,8 +21,6 @@
 
 <template name="positionate_positionate">
 
-  {{widget.toast "The anchor is draggable"}}
-
   {{{widget.divider "Positionate"}}}
 
   <div class="multiple">
@@ -50,6 +48,8 @@
   </div>
 
   <script>
+    $.toast ( 'The anchor is draggable' );
+
     var $anchor = $('.anchor'),
         $positionable = $('.positionable');
 

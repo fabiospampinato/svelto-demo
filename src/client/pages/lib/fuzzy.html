@@ -21,9 +21,9 @@
 
 <template name="fuzzy_init">
 
-  {{{widget.toast body="<span class=\"text-green\">Match</span> or <span class=\"text-red\">not</span>" ttl="forever"}}}
-
   <script>
+    $.toast ({ body: '<span class="text-green">Match</span> or <span class="text-red">not</span>', ttl: Infinity });
+
     function getValue ( name ) {
       return $('[name="' + name + '"]').val ();
     }

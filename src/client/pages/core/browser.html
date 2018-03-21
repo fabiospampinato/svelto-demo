@@ -68,10 +68,9 @@
 <template name="browser_init">
 
   <script>
-    var $html = $('html');
     _.forOwn ( Svelto.Browser.is, function ( value, key ) {
       var matched = _.isFunction ( value ) ? value () : value;
-      $('.' + key).not ( $html ).toggleClass ( Svelto.Colors.green, matched );
+      $('.' + key).not ( $.$html ).toggleClass ( Svelto.Colors.green, matched );
     });
   </script>
 
