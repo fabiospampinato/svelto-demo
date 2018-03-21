@@ -1,94 +1,6 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">Draggables</div>
-      </div>
-    
-
-  <div class="container constrainer bordered">
-    <div class="multiple">
-      <a href="/" class="button bordered draggable">Link</a>
-      <div class="label bordered draggable">Draggable</div>
-      <div class="label bordered scroll">Scroll</div>
-      <div class="label bordered revert">Revert</div>
-      <div class="label bordered helper">Helper</div>
-      <div class="label bordered helper-revert">Helper - Revert</div>
-      
-      <div class="button checkbox right bordered">
-        <input type="checkbox" name="" value="">
-        <label>Toggable draggable</label>
-      </div>
-    
-      <div class="multiple joined only-handler">
-        <div class="label bordered pointing-right">Only handler</div>
-        <div class="label bordered compact draggable-handler">
-          <i class="icon">menu</i>
-        </div>
-      </div>
-      <div class="label bordered x-axis">X-Axis</div>
-      <div class="label bordered y-axis">Y-Axis</div>
-      <div class="label bordered constrained">Constrained</div>
-      <div class="label bordered constrained-center">Constrained center</div>
-      <div class="label bordered constrained-tolerance">Constrained 100-50 tolerance</div>
-      <div class="label bordered constrained-window">Constrained (Window)</div>
-      <div class="label bordered constrained-coordinates-modifier">Modifier 2x</div>
-      <img src="/static/sample/sample.png" class="xxxxsmall draggable"/>
-    </div>
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">Proxy</div>
-      </div>
-    
-
-  <div class="container bordered">
-    <div class="label bordered proxyed">Proxy</div>
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">Proxy - Helper</div>
-      </div>
-    
-
-  <div class="container bordered">
-    <div class="label bordered proxyed-helper">Proxy</div>
-  </div>
-
-  
-
-  //TODO: $.toast ( options );
-
-  <script>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Draggable | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Draggable</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">Draggables</div></div><div class="container constrainer bordered"><div class="multiple"><a href="/" class="button bordered draggable">Link</a><div class="label bordered draggable">Draggable</div><div class="label bordered scroll">Scroll</div><div class="label bordered revert">Revert</div><div class="label bordered helper">Helper</div><div class="label bordered helper-revert">Helper - Revert</div><div class="button checkbox right bordered"><input type="checkbox" name="" value=""> <label>Toggable draggable</label></div><div class="multiple joined only-handler"><div class="label bordered pointing-right">Only handler</div><div class="label bordered compact draggable-handler"><i class="icon">menu</i></div></div><div class="label bordered x-axis">X-Axis</div><div class="label bordered y-axis">Y-Axis</div><div class="label bordered constrained">Constrained</div><div class="label bordered constrained-center">Constrained center</div><div class="label bordered constrained-tolerance">Constrained 100-50 tolerance</div><div class="label bordered constrained-window">Constrained (Window)</div><div class="label bordered constrained-coordinates-modifier">Modifier 2x</div><img src="/static/sample/sample.png" class="xxxxsmall draggable"></div></div><div class="divider block"><div class="divider-content">Proxy</div></div><div class="container bordered"><div class="label bordered proxyed">Proxy</div></div><div class="divider block"><div class="divider-content">Proxy - Helper</div></div><div class="container bordered"><div class="label bordered proxyed-helper">Proxy</div></div><script>$.toast ({ body: 'Drag the labels around', ttl: Infinity });
     $('.scroll').draggable ({
       scroll: {
         active: true
@@ -166,72 +78,7 @@
       proxy: {
         $element: $('.proxyed-helper').closest ( '.container' )
       }
-    });
-  </script>
-
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">Actions</div>
-      </div>
-    
-
-  <div class="multiple actions">
-    <div class="button bordered" onclick="api ( destroy">Destroy</div>
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">Scrollability</div>
-      </div>
-    
-
-  <div class="multiple actions joined">
-    
-      <div class="button radio right bordered" onclick="no_scrollability ()">
-        <input type="radio" name="scroll" checked>
-        <label>Base</label>
-      </div>
-    
-    
-      <div class="button radio right bordered" onclick="toggle_body_scrollable ( true )">
-        <input type="radio" name="scroll" >
-        <label>Body</label>
-      </div>
-    
-    
-      <div class="button radio right bordered" onclick="toggle_container_scrollable ( true )">
-        <input type="radio" name="scroll" >
-        <label>Container</label>
-      </div>
-    
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">State</div>
-      </div>
-    
-
-  <div class="multiple joined actions">
-    
-      <div class="button radio right bordered" onclick="api ( enable">
-        <input type="radio" name="state" checked>
-        <label>Enabled</label>
-      </div>
-    
-    
-      <div class="button radio right bordered" onclick="api ( disable">
-        <input type="radio" name="state" checked>
-        <label>Disabled</label>
-      </div>
-    
-  </div>
-
-  <script>
-    function remove_proxy () {
+    });</script><div class="divider block"><div class="divider-content">Actions</div></div><div class="multiple actions"><div class="button bordered" onclick="api ( 'destroy' )">Destroy</div></div><div class="divider block"><div class="divider-content">Scrollability</div></div><div class="multiple actions joined"><div class="button radio right bordered" onclick="no_scrollability ()"><input type="radio" name="scroll" checked="checked"> <label>Base</label></div><div class="button radio right bordered" onclick="toggle_body_scrollable ( true )"><input type="radio" name="scroll"> <label>Body</label></div><div class="button radio right bordered" onclick="toggle_container_scrollable ( true )"><input type="radio" name="scroll"> <label>Container</label></div></div><div class="divider block"><div class="divider-content">State</div></div><div class="multiple joined actions"><div class="button radio right bordered" onclick="api ( 'enable' )"><input type="radio" name="state" checked="checked"> <label>Enabled</label></div><div class="button radio right bordered" onclick="api ( 'disable' )"><input type="radio" name="state"> <label>Disabled</label></div></div><script>function remove_proxy () {
       $('.proxyed').remove ();
     }
 
@@ -268,17 +115,7 @@
       })
       $multiple.css ( 'width', force ? '130%' : 'auto' );
       toggle_body_scrollable ( false );
-    }
-  </script>
-
-
-
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+    }</script></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -294,7 +131,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>

@@ -1,63 +1,6 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">Settings</div>
-      </div>
-    
-
-  <div class="multiple equal joined">
-    <input name="nta_group" placeholder="Group..." class="bordered">
-    <input name="nta_action" placeholder="Action..." class="bordered">
-    <input name="nta_times" placeholder="Times..." class="bordered">
-    <input name="nta_expiry" placeholder="Expiry..." class="bordered">
-  </div>
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">Actions</div>
-      </div>
-    
-
-  <div class="multiple actions">
-    <div class="button bordered" onclick="nta_run ()">Run</div>
-    <div class="button bordered" onclick="nta_run ( false )">Run (Return false)</div>
-    <div class="button bordered" onclick="nta_get ()">Get</div>
-    <div class="button bordered" onclick="nta_set ()">Set</div>
-    <div class="button bordered" onclick="nta_remove ()">Remove</div>
-  </div>
-
-  <script>
-    function getValue ( name ) {
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>N Times Action | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - N Times Action</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">Settings</div></div><div class="multiple equal joined"><input name="nta_group" placeholder="Group..." class="bordered"> <input name="nta_action" placeholder="Action..." class="bordered"> <input name="nta_times" placeholder="Times..." class="bordered"> <input name="nta_expiry" placeholder="Expiry..." class="bordered"></div><div class="divider block"><div class="divider-content">Actions</div></div><div class="multiple actions"><div class="button bordered" onclick="nta_run ()">Run</div><div class="button bordered" onclick="nta_run ( false )">Run (Return false)</div><div class="button bordered" onclick="nta_get ()">Get</div><div class="button bordered" onclick="nta_set ()">Set</div><div class="button bordered" onclick="nta_remove ()">Remove</div></div><script>function getValue ( name ) {
       return $('input[name="nta_' + name + '"]').val ();
     }
 
@@ -95,17 +38,7 @@
         action: getValue ( 'action' )
       }).remove ();
       $.toast ( 'Removed' );
-    }
-  </script>
-
-
-
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+    }</script></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -121,7 +54,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>

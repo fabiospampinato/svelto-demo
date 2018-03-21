@@ -1,159 +1,6 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">Base</div>
-      </div>
-    
-
-  <textarea placeholder="Base"></textarea>
-
-  
-      <div class="divider block">
-        <div class="divider-content">Colors</div>
-      </div>
-    
-
-  <div class="container bordered">
-    <div class="multiple">
-      <textarea placeholder="Primary" class="primary">Primary</textarea>
-      <textarea placeholder="Secondary" class="secondary">Secondary</textarea>
-      <textarea placeholder="Tertiary" class="tertiary">Tertiary</textarea>
-      <textarea placeholder="Quaternary" class="quaternary">Quaternary</textarea>
-      <textarea placeholder="White" class="white">White</textarea>
-      <textarea placeholder="Gray" class="gray">Gray</textarea>
-      <textarea placeholder="Black" class="black">Black</textarea>
-      <textarea placeholder="Yellow" class="yellow">Yellow</textarea>
-      <textarea placeholder="Olive" class="olive">Olive</textarea>
-      <textarea placeholder="Green" class="green">Green</textarea>
-      <textarea placeholder="Blue" class="blue">Blue</textarea>
-      <textarea placeholder="Violet" class="violet">Violet</textarea>
-      <textarea placeholder="Orange" class="orange">Orange</textarea>
-      <textarea placeholder="Purple" class="purple">Purple</textarea>
-      <textarea placeholder="Red" class="red">Red</textarea>
-      <textarea placeholder="Pink" class="pink">Pink</textarea>
-      <textarea placeholder="Teal" class="teal">Teal</textarea>
-      <textarea placeholder="Brown" class="brown">Brown</textarea>
-      <textarea placeholder="Error" class="error">Error</textarea>
-      <textarea placeholder="Warning" class="warning">Warning</textarea>
-      <textarea placeholder="Success" class="success">Success</textarea>
-      <textarea placeholder="Transparent" class="transparent">Transparent</textarea>
-      <textarea placeholder="Inherit" class="inherit">Inherit</textarea>
-      <textarea placeholder="Base" class="base">Base</textarea>
-    </div>
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">Unresizable</div>
-      </div>
-    
-
-  <div class="container bordered">
-    <textarea placeholder="Unresizable" class="unresizable"></textarea>
-  </div>
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">Style</div>
-      </div>
-    
-
-  <div class="multiple actions">
-    
-      <div class="button checkbox right bordered" onclick="toggle_class ( bordered">
-        <input type="checkbox" checked>
-        <label>Bordered</label>
-      </div>
-    
-    
-      <div class="button checkbox right bordered" onclick="toggle_class ( compact">
-        <input type="checkbox" checked>
-        <label>Compact</label>
-      </div>
-    
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">State</div>
-      </div>
-    
-
-  <div class="multiple actions">
-    <div class="multiple joined">
-      
-      <div class="button radio right bordered" onclick="set_validity ()">
-        <input type="radio" name="validity" checked>
-        <label>Base</label>
-      </div>
-    
-      
-      <div class="button radio right bordered" onclick="set_validity ( valid">
-        <input type="radio" name="validity" checked>
-        <label>Valid</label>
-      </div>
-    
-      
-      <div class="button radio right bordered" onclick="set_validity ( invalid">
-        <input type="radio" name="validity" checked>
-        <label>Invalid</label>
-      </div>
-    
-    </div>
-    <div class="multiple joined">
-      
-      <div class="button radio right bordered" onclick="enable ()">
-        <input type="radio" name="state" checked>
-        <label>Enabled</label>
-      </div>
-    
-      
-      <div class="button radio right bordered" onclick="disable ()">
-        <input type="radio" name="state" >
-        <label>Disabled</label>
-      </div>
-    
-    </div>
-    
-      <div class="button checkbox right bordered" onclick="toggle_attr ( readonly">
-        <input type="checkbox" checked>
-        <label>Read only</label>
-      </div>
-    
-  </div>
-
-  <script>
-    function toggle_class ( name ) {
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Textarea | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Textarea</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">Base</div></div><textarea placeholder="Base"></textarea><div class="divider block"><div class="divider-content">Colors</div></div><div class="container bordered"><div class="multiple"><textarea placeholder="Primary" class="primary">Primary</textarea> <textarea placeholder="Secondary" class="secondary">Secondary</textarea> <textarea placeholder="Tertiary" class="tertiary">Tertiary</textarea> <textarea placeholder="Quaternary" class="quaternary">Quaternary</textarea> <textarea placeholder="White" class="white">White</textarea> <textarea placeholder="Gray" class="gray">Gray</textarea> <textarea placeholder="Black" class="black">Black</textarea> <textarea placeholder="Yellow" class="yellow">Yellow</textarea> <textarea placeholder="Olive" class="olive">Olive</textarea> <textarea placeholder="Green" class="green">Green</textarea> <textarea placeholder="Blue" class="blue">Blue</textarea> <textarea placeholder="Violet" class="violet">Violet</textarea> <textarea placeholder="Orange" class="orange">Orange</textarea> <textarea placeholder="Purple" class="purple">Purple</textarea> <textarea placeholder="Red" class="red">Red</textarea> <textarea placeholder="Pink" class="pink">Pink</textarea> <textarea placeholder="Teal" class="teal">Teal</textarea> <textarea placeholder="Brown" class="brown">Brown</textarea> <textarea placeholder="Error" class="error">Error</textarea> <textarea placeholder="Warning" class="warning">Warning</textarea> <textarea placeholder="Success" class="success">Success</textarea> <textarea placeholder="Transparent" class="transparent">Transparent</textarea> <textarea placeholder="Inherit" class="inherit">Inherit</textarea> <textarea placeholder="Base" class="base">Base</textarea></div></div><div class="divider block"><div class="divider-content">Unresizable</div></div><div class="container bordered"><textarea placeholder="Unresizable" class="unresizable"></textarea></div><div class="divider block"><div class="divider-content">Style</div></div><div class="multiple actions"><div class="button checkbox right bordered" onclick="toggle_class ( 'bordered' )"><input type="checkbox"> <label>Bordered</label></div><div class="button checkbox right bordered" onclick="toggle_class ( 'compact' )"><input type="checkbox"> <label>Compact</label></div></div><div class="divider block"><div class="divider-content">State</div></div><div class="multiple actions"><div class="multiple joined"><div class="button radio right bordered" onclick="set_validity ()"><input type="radio" name="validity" checked="checked"> <label>Base</label></div><div class="button radio right bordered" onclick="set_validity ( 'valid' )"><input type="radio" name="validity"> <label>Valid</label></div><div class="button radio right bordered" onclick="set_validity ( 'invalid' )"><input type="radio" name="validity"> <label>Invalid</label></div></div><div class="multiple joined"><div class="button radio right bordered" onclick="enable ()"><input type="radio" name="state" checked="checked"> <label>Enabled</label></div><div class="button radio right bordered" onclick="disable ()"><input type="radio" name="state"> <label>Disabled</label></div></div><div class="button checkbox right bordered" onclick="toggle_attr ( 'readonly' )"><input type="checkbox"> <label>Read only</label></div></div><script>function toggle_class ( name ) {
       $('textarea').toggleClass ( name );
     }
 
@@ -178,17 +25,7 @@
       for ( var i = 0, l = validities.length; i < l; i++ ) {
         $('textarea' ).removeClass ( validities[i] ).addClass ( validity );
       }
-    }
-  </script>
-
-
-
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+    }</script></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -204,7 +41,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>

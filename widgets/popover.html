@@ -1,152 +1,6 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">Popovers</div>
-      </div>
-    
-
-  <div class="multiple">
-    <div class="button popover-toggler bordered" data-target="#base">Base</div>
-    <div class="button popover-toggler bordered" data-target="#affixed">Affixed</div>
-    <div class="button popover-toggler bordered" data-target="#no-tip">No tip</div>
-    <div class="button popover-toggler bordered compact" data-target="#base">
-      <i class="icon">settings</i>
-    </div>
-    <div class="button popover-toggler circular bordered compact" data-target="#base">
-      <i class="icon">settings</i>
-    </div>
-    <div class="button popover-toggler bordered" data-target="#dividers">Dividers</div>
-    <div class="button popover-toggler bordered" data-target="#advanced">Advanced</div>
-    <div class="button popover-toggler bordered" data-target="#long_text">Long text</div>
-    <div class="button popover-toggler bordered" data-target="#fullscreen">Fullscreen</div>
-    <div class="button popover-toggler bordered" data-target="#size_change">Size change</div>
-    <div class="button popover-toggler bordered" data-target="#size_change_2">Size change 2</div>
-    <div class="button modal-toggler bordered" data-target="#modal">Nested</div>
-  </div>
-
-  
-
-  <div id="base" class="popover container">
-    <div class="multiple vertical stretched no-wrap joined">
-      <div class="button sharp">Action 1</div>
-      <div class="button sharp">Action 2</div>
-      <div class="button sharp">Action 3</div>
-      <div class="button sharp">Action 312313</div>
-    </div>
-  </div>
-
-  <div id="point" class="popover container no-tip">
-    <div class="multiple vertical stretched no-wrap joined">
-      <div class="button sharp">Action 1</div>
-      <div class="button sharp">Action 2</div>
-      <div class="button sharp">Action 3</div>
-      <div class="button sharp">Action 312313</div>
-    </div>
-  </div>
-
-  <div id="affixed" class="popover affixed container">
-    <p>Affixed</p>
-  </div>
-
-  <div id="no-tip" class="popover no-tip container">
-    <p>No tip</p>
-  </div>
-
-  <div id="dividers" class="popover container">
-    <div class="multiple vertical stretched no-wrap">
-      <div class="button sharp">Action 1</div>
-      <div class="divider"></div>
-      <div class="button sharp">Action 2</div>
-      <div class="divider">Divider</div>
-      <div class="button sharp">Action 3</div>
-      <div class="divider block">
-        <div class="divider-content">Block</div>
-      </div>
-      <div class="button sharp">Action 4</div>
-      <div class="divider text">Text</div>
-      <div class="button sharp">Action 5</div>
-    </div>
-  </div>
-
-  <div id="advanced" class="popover card">
-    <div class="card-header inherit">Header</div>
-    <div class="card-block">Content</div>
-    <div class="card-footer">Footer</div>
-  </div>
-
-  <div id="long_text" class="popover card bordered">
-    <div class="card-header bordered">Header</div>
-    <div class="card-block">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquet tincidunt turpis, in pharetra mi convallis ut. Vivamus eget sodales nibh, eu placerat erat. Vivamus massa urna, volutpat non tempus eget, placerat quis elit. Nullam pretium id arcu sed eleifend. Phasellus sollicitudin quis ante nec ornare. Maecenas nibh eros, vehicula vel eros eget, viverra semper nisi. Nulla facilisi. Praesent pretium porttitor arcu, sit amet consequat neque luctus non. Cras sodales, justo quis tempus dignissim, diam est commodo orci, eget accumsan sem ante vitae sem. Curabitur quam ipsum, porta id sapien in, consectetur auctor nibh. Vivamus egestas ante vel cursus aliquet. In non ante nec velit tempus lacinia nec sollicitudin ex. Phasellus semper lorem a diam scelerisque, sed accumsan erat molestie. Mauris vulputate lacinia erat. Nunc urna risus, facilisis at posuere in, pulvinar quis odio. Maecenas et sollicitudin arcu.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquet tincidunt turpis, in pharetra mi convallis ut. Vivamus eget sodales nibh, eu placerat erat. Vivamus massa urna, volutpat non tempus eget, placerat quis elit. Nullam pretium id arcu sed eleifend. Phasellus sollicitudin quis ante nec ornare. Maecenas nibh eros, vehicula vel eros eget, viverra semper nisi. Nulla facilisi. Praesent pretium porttitor arcu, sit amet consequat neque luctus non. Cras sodales, justo quis tempus dignissim, diam est commodo orci, eget accumsan sem ante vitae sem. Curabitur quam ipsum, porta id sapien in, consectetur auctor nibh. Vivamus egestas ante vel cursus aliquet. In non ante nec velit tempus lacinia nec sollicitudin ex. Phasellus semper lorem a diam scelerisque, sed accumsan erat molestie. Mauris vulputate lacinia erat. Nunc urna risus, facilisis at posuere in, pulvinar quis odio. Maecenas et sollicitudin arcu.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquet tincidunt turpis, in pharetra mi convallis ut. Vivamus eget sodales nibh, eu placerat erat. Vivamus massa urna, volutpat non tempus eget, placerat quis elit. Nullam pretium id arcu sed eleifend. Phasellus sollicitudin quis ante nec ornare. Maecenas nibh eros, vehicula vel eros eget, viverra semper nisi. Nulla facilisi. Praesent pretium porttitor arcu, sit amet consequat neque luctus non. Cras sodales, justo quis tempus dignissim, diam est commodo orci, eget accumsan sem ante vitae sem. Curabitur quam ipsum, porta id sapien in, consectetur auctor nibh. Vivamus egestas ante vel cursus aliquet. In non ante nec velit tempus lacinia nec sollicitudin ex. Phasellus semper lorem a diam scelerisque, sed accumsan erat molestie. Mauris vulputate lacinia erat. Nunc urna risus, facilisis at posuere in, pulvinar quis odio. Maecenas et sollicitudin arcu.</p>
-    </div>
-    <div class="card-footer bordered">Footer</div>
-  </div>
-
-  <div id="size_change" class="popover container bordered">
-    <input value="Horizontally..." class="autogrow bordered">
-    <textarea class="autogrow bordered">Vertically...</textarea>
-    <div class="tagbox bordered">
-      <input name="name" value="this,est,tagbox" class="hidden">
-      <div class="tagbox-tags">
-        <input name="partial_name" placeholder="Add tag..." class="tagbox-partial autogrow compact">
-      </div>
-    </div>
-    <!-- //TODO: datepicker:change -->
-    <!-- //TODO: tabs:change -->
-    <!-- //TODO: tablehelper:change -->
-    <!-- //TODO: textarea increase in dimensions -->
-  </div>
-
-  <div id="size_change_2" class="popover container bordered">
-    <span class="timeago" data-timestamp="//TODO: _.nowSecs () + offset;">//TODO: return _.timeAgo ( timestamp ).str;</span>
-  </div>
-
-  <div id="fullscreen" class="popover fullscreen container">
-    <p>Fullscreen</p>
-  </div>
-
-  <div id="modal" class="container modal xs-8 centerer">
-    <div class="button popover-toggler bordered" data-target="#popover-nested">Popover</div>
-  </div>
-
-  <div id="popover-nested" class="popover container">Popover</div>
-
-
-
-  
-
-  <script>
-    $.toast ( 'Right click anywere to open a popover' );
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Popover | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Popover</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">Popovers</div></div><div class="multiple"><div class="button popover-toggler bordered" data-target="#base">Base</div><div class="button popover-toggler bordered" data-target="#affixed">Affixed</div><div class="button popover-toggler bordered" data-target="#no-tip">No tip</div><div class="button popover-toggler bordered compact" data-target="#base"><i class="icon">settings</i></div><div class="button popover-toggler circular bordered compact" data-target="#base"><i class="icon">settings</i></div><div class="button popover-toggler bordered" data-target="#dividers">Dividers</div><div class="button popover-toggler bordered" data-target="#advanced">Advanced</div><div class="button popover-toggler bordered" data-target="#long_text">Long text</div><div class="button popover-toggler bordered" data-target="#fullscreen">Fullscreen</div><div class="button popover-toggler bordered" data-target="#size_change">Size change</div><div class="button popover-toggler bordered" data-target="#size_change_2">Size change 2</div><div class="button modal-toggler bordered" data-target="#modal">Nested</div></div><div id="base" class="popover container"><div class="multiple vertical stretched no-wrap joined"><div class="button sharp">Action 1</div><div class="button sharp">Action 2</div><div class="button sharp">Action 3</div><div class="button sharp">Action 312313</div></div></div><div id="point" class="popover container no-tip"><div class="multiple vertical stretched no-wrap joined"><div class="button sharp">Action 1</div><div class="button sharp">Action 2</div><div class="button sharp">Action 3</div><div class="button sharp">Action 312313</div></div></div><div id="affixed" class="popover affixed container"><p>Affixed</p></div><div id="no-tip" class="popover no-tip container"><p>No tip</p></div><div id="dividers" class="popover container"><div class="multiple vertical stretched no-wrap"><div class="button sharp">Action 1</div><div class="divider"></div><div class="button sharp">Action 2</div><div class="divider">Divider</div><div class="button sharp">Action 3</div><div class="divider block"><div class="divider-content">Block</div></div><div class="button sharp">Action 4</div><div class="divider text">Text</div><div class="button sharp">Action 5</div></div></div><div id="advanced" class="popover card"><div class="card-header inherit">Header</div><div class="card-block">Content</div><div class="card-footer">Footer</div></div><div id="long_text" class="popover card bordered"><div class="card-header bordered">Header</div><div class="card-block"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquet tincidunt turpis, in pharetra mi convallis ut. Vivamus eget sodales nibh, eu placerat erat. Vivamus massa urna, volutpat non tempus eget, placerat quis elit. Nullam pretium id arcu sed eleifend. Phasellus sollicitudin quis ante nec ornare. Maecenas nibh eros, vehicula vel eros eget, viverra semper nisi. Nulla facilisi. Praesent pretium porttitor arcu, sit amet consequat neque luctus non. Cras sodales, justo quis tempus dignissim, diam est commodo orci, eget accumsan sem ante vitae sem. Curabitur quam ipsum, porta id sapien in, consectetur auctor nibh. Vivamus egestas ante vel cursus aliquet. In non ante nec velit tempus lacinia nec sollicitudin ex. Phasellus semper lorem a diam scelerisque, sed accumsan erat molestie. Mauris vulputate lacinia erat. Nunc urna risus, facilisis at posuere in, pulvinar quis odio. Maecenas et sollicitudin arcu.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquet tincidunt turpis, in pharetra mi convallis ut. Vivamus eget sodales nibh, eu placerat erat. Vivamus massa urna, volutpat non tempus eget, placerat quis elit. Nullam pretium id arcu sed eleifend. Phasellus sollicitudin quis ante nec ornare. Maecenas nibh eros, vehicula vel eros eget, viverra semper nisi. Nulla facilisi. Praesent pretium porttitor arcu, sit amet consequat neque luctus non. Cras sodales, justo quis tempus dignissim, diam est commodo orci, eget accumsan sem ante vitae sem. Curabitur quam ipsum, porta id sapien in, consectetur auctor nibh. Vivamus egestas ante vel cursus aliquet. In non ante nec velit tempus lacinia nec sollicitudin ex. Phasellus semper lorem a diam scelerisque, sed accumsan erat molestie. Mauris vulputate lacinia erat. Nunc urna risus, facilisis at posuere in, pulvinar quis odio. Maecenas et sollicitudin arcu.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquet tincidunt turpis, in pharetra mi convallis ut. Vivamus eget sodales nibh, eu placerat erat. Vivamus massa urna, volutpat non tempus eget, placerat quis elit. Nullam pretium id arcu sed eleifend. Phasellus sollicitudin quis ante nec ornare. Maecenas nibh eros, vehicula vel eros eget, viverra semper nisi. Nulla facilisi. Praesent pretium porttitor arcu, sit amet consequat neque luctus non. Cras sodales, justo quis tempus dignissim, diam est commodo orci, eget accumsan sem ante vitae sem. Curabitur quam ipsum, porta id sapien in, consectetur auctor nibh. Vivamus egestas ante vel cursus aliquet. In non ante nec velit tempus lacinia nec sollicitudin ex. Phasellus semper lorem a diam scelerisque, sed accumsan erat molestie. Mauris vulputate lacinia erat. Nunc urna risus, facilisis at posuere in, pulvinar quis odio. Maecenas et sollicitudin arcu.</p></div><div class="card-footer bordered">Footer</div></div><div id="size_change" class="popover container bordered"><input value="Horizontally..." class="autogrow bordered"> <textarea class="autogrow bordered">Vertically...</textarea><div class="tagbox bordered"><input name="name" value="this,est,tagbox" class="hidden"><div class="tagbox-tags"><input name="partial_name" placeholder="Add tag..." class="tagbox-partial autogrow compact"></div></div></div><div id="size_change_2" class="popover container bordered"><span class="timeago" data-timestamp="1521653442"></span></div><div id="fullscreen" class="popover fullscreen container"><p>Fullscreen</p></div><div id="modal" class="container modal xs-8 centerer"><div class="button popover-toggler bordered" data-target="#popover-nested">Popover</div></div><div id="popover-nested" class="popover container">Popover</div><script>$.toast ( 'Right click anywere to open a popover' );
 
     var instance = $('#point').popover ( 'instance' );
     $(window).on ( 'contextmenu', function ( event ) {
@@ -157,64 +11,13 @@
         instance.option ( 'positionate', _.extend ( {}, Svelto.Widgets.Popover.config.options.positionate, { constrainer: { $element: $(window) }, point: { x: point.x, y: point.y }, alignment: { x: 'left' } } ) );
         instance.open ();
       }
-    });
-  </script>
-
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">Style</div>
-      </div>
-    
-
-  
-      <div class="button checkbox right bordered" onclick="toggle_class ( bordered">
-        <input type="checkbox" checked>
-        <label>Bordered</label>
-      </div>
-    
-
-  
-      <div class="divider block">
-        <div class="divider-content">State</div>
-      </div>
-    
-
-  <div class="multiple joined actions">
-    
-      <div class="button radio right bordered" onclick="api ( enable">
-        <input type="radio" name="state" checked>
-        <label>Enabled</label>
-      </div>
-    
-    
-      <div class="button radio right bordered" onclick="api ( disable">
-        <input type="radio" name="state" checked>
-        <label>Disabled</label>
-      </div>
-    
-  </div>
-
-  <script>
-    function toggle_class ( name ) {
+    });</script><div class="divider block"><div class="divider-content">Style</div></div><div class="button checkbox right bordered" onclick="toggle_class ( 'bordered' )"><input type="checkbox"> <label>Bordered</label></div><div class="divider block"><div class="divider-content">State</div></div><div class="multiple joined actions"><div class="button radio right bordered" onclick="api ( 'enable' )"><input type="radio" name="state" checked="checked"> <label>Enabled</label></div><div class="button radio right bordered" onclick="api ( 'disable' )"><input type="radio" name="state"> <label>Disabled</label></div></div><script>function toggle_class ( name ) {
       $('.popover').toggleClass ( name );
     }
 
     function api ( action ) {
       $('.popover-toggler').popoverToggler ( action );
-    }
-  </script>
-
-
-
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+    }</script></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -230,7 +33,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>

@@ -1,82 +1,7 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Positionate | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Positionate</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">Anchor</div></div><div class="square-sample anchor draggable" style="z-index: 1000000; cursor: move;"></div><div class="square-sample positionable secondary" style="position:fixed; top:0; left: 0; z-index: 1000001; margin: 0;"></div><div class="divider block"><div class="divider-content">Positionate</div></div><div class="multiple"><div class="button checkbox right bordered"><input type="checkbox" name="" value=""> <label>Live</label></div><div class="button bordered" onclick="positionate2anchor ()">Auto</div><div class="multiple joined"><div class="label compact bordered gray pointing-right">Direction</div><div class="button bordered" onclick="positionate2anchor ( 'top' )">Top</div><div class="button bordered" onclick="positionate2anchor ( 'right' )">Right</div><div class="button bordered" onclick="positionate2anchor ( 'bottom' )">Bottom</div><div class="button bordered" onclick="positionate2anchor ( 'left' )">Left</div></div><div class="multiple joined"><div class="label compact bordered gray pointing-right">Axis</div><div class="button bordered" onclick="positionate2axis ( 'x' )">X</div><div class="button bordered" onclick="positionate2axis ( 'y' )">Y</div></div><div class="button bordered" onclick="positionate2diraxis ( 'top', 'x' )">Top - X</div><div class="button bordered" onclick="positionate2diraxis ( 'left', 'y' )">Left - Y</div><div class="multiple joined"><input name="x" placeholder="X axis..." class="bordered"> <input name="y" placeholder="Y axis..." class="bordered"><div class="button bordered" onclick="positionate2coordinates ()">Coordinates</div></div></div><script>$.toast ( 'The anchor is draggable' );
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">Anchor</div>
-      </div>
-    
-
-  <div class="square-sample anchor draggable" style="z-index: 1000000; cursor: move;"></div>
-
-  <div class="square-sample positionable secondary" style="position:fixed; top:0; left: 0; z-index: 1000001; margin: 0;"></div>
-
-  
-
-  //TODO: $.toast ( options );
-
-  
-      <div class="divider block">
-        <div class="divider-content">Positionate</div>
-      </div>
-    
-
-  <div class="multiple">
-    
-      <div class="button checkbox right bordered">
-        <input type="checkbox" name="" value="">
-        <label>Live</label>
-      </div>
-    
-    <div class="button bordered" onclick="positionate2anchor ()">Auto</div>
-    <div class="multiple joined">
-      <div class="label compact bordered gray pointing-right">Direction</div>
-      <div class="button bordered" onclick="positionate2anchor ( top">Top</div>
-      <div class="button bordered" onclick="positionate2anchor ( right">Right</div>
-      <div class="button bordered" onclick="positionate2anchor ( bottom">Bottom</div>
-      <div class="button bordered" onclick="positionate2anchor ( left">Left</div>
-    </div>
-    <div class="multiple joined">
-      <div class="label compact bordered gray pointing-right">Axis</div>
-      <div class="button bordered" onclick="positionate2axis ( x">X</div>
-      <div class="button bordered" onclick="positionate2axis ( y">Y</div>
-    </div>
-    <div class="button bordered" onclick="positionate2diraxis ( top">Top - X</div>
-    <div class="button bordered" onclick="positionate2diraxis ( left">Left - Y</div>
-    <div class="multiple joined">
-      <input name="x" placeholder="X axis..." class="bordered">
-      <input name="y" placeholder="Y axis..." class="bordered">
-      <div class="button bordered" onclick="positionate2coordinates ()">Coordinates</div>
-    </div>
-  </div>
-
-  <script>
     var $anchor = $('.anchor'),
         $positionable = $('.positionable');
 
@@ -158,99 +83,13 @@
         strict: strict,
         $anchor: $anchor
       });
-    }
-  </script>
-
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">Pointer</div>
-      </div>
-    
-
-  <div class="multiple joined">
-    
-      <div class="button radio right bordered" onclick="pointer_auto ()">
-        <input type="radio" name="pointer" >
-        <label>Auto</label>
-      </div>
-    
-    
-      <div class="button radio right bordered" onclick="pointer_disable ()">
-        <input type="radio" name="pointer" checked>
-        <label>Disabled</label>
-      </div>
-    
-  </div>
-
-  <script>
-    var pointer = false;
+    }</script><div class="divider block"><div class="divider-content">Pointer</div></div><div class="multiple joined"><div class="button radio right bordered" onclick="pointer_auto ()"><input type="radio" name="pointer"> <label>Auto</label></div><div class="button radio right bordered" onclick="pointer_disable ()"><input type="radio" name="pointer" checked="checked"> <label>Disabled</label></div></div><script>var pointer = false;
     function pointer_auto () {
       pointer = 'auto';
     }
     function pointer_disable () {
       pointer = false;
-    }
-  </script>
-
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">Alignment</div>
-      </div>
-    
-
-  <div class="multiple">
-    <div class="multiple joined actions">
-      <div class="label compact bordered gray pointing-right">X</div>
-      
-      <div class="button radio right bordered" onclick="set_x_alignment ( left">
-        <input type="radio" name="alignment_x" checked>
-        <label>Left</label>
-      </div>
-    
-      
-      <div class="button radio right bordered" onclick="set_x_alignment ( center">
-        <input type="radio" name="alignment_x" checked>
-        <label>Center</label>
-      </div>
-    
-      
-      <div class="button radio right bordered" onclick="set_x_alignment ( right">
-        <input type="radio" name="alignment_x" checked>
-        <label>Right</label>
-      </div>
-    
-    </div>
-    <div class="multiple joined actions">
-      <div class="label compact bordered gray pointing-right">Y</div>
-      
-      <div class="button radio right bordered" onclick="set_y_alignment ( top">
-        <input type="radio" name="alignment_y" checked>
-        <label>Top</label>
-      </div>
-    
-      
-      <div class="button radio right bordered" onclick="set_y_alignment ( center">
-        <input type="radio" name="alignment_y" checked>
-        <label>Center</label>
-      </div>
-    
-      
-      <div class="button radio right bordered" onclick="set_y_alignment ( bottom">
-        <input type="radio" name="alignment_y" checked>
-        <label>Bottom</label>
-      </div>
-    
-    </div>
-  </div>
-
-  <script>
-    var alignment_x = 'center',
+    }</script><div class="divider block"><div class="divider-content">Alignment</div></div><div class="multiple"><div class="multiple joined actions"><div class="label compact bordered gray pointing-right">X</div><div class="button radio right bordered" onclick="set_x_alignment ( 'left' )"><input type="radio" name="alignment_x"> <label>Left</label></div><div class="button radio right bordered" onclick="set_x_alignment ( 'center' )"><input type="radio" name="alignment_x" checked="checked"> <label>Center</label></div><div class="button radio right bordered" onclick="set_x_alignment ( 'right' )"><input type="radio" name="alignment_x"> <label>Right</label></div></div><div class="multiple joined actions"><div class="label compact bordered gray pointing-right">Y</div><div class="button radio right bordered" onclick="set_y_alignment ( 'top' )"><input type="radio" name="alignment_y"> <label>Top</label></div><div class="button radio right bordered" onclick="set_y_alignment ( 'center' )"><input type="radio" name="alignment_y" checked="checked"> <label>Center</label></div><div class="button radio right bordered" onclick="set_y_alignment ( 'bottom' )"><input type="radio" name="alignment_y"> <label>Bottom</label></div></div></div><script>var alignment_x = 'center',
         alignment_y = 'center';
 
     function set_x_alignment ( new_alignment ) {
@@ -259,89 +98,16 @@
 
     function set_y_alignment ( new_alignment ) {
       alignment_y = new_alignment;
-    }
-  </script>
-
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">Strictness</div>
-      </div>
-    
-
-  <div class="multiple joined actions">
-    
-      <div class="button radio right bordered" onclick="set_strict ()">
-        <input type="radio" name="strict" checked>
-        <label>Adaptable</label>
-      </div>
-    
-    
-      <div class="button radio right bordered" onclick="set_strict ( true )">
-        <input type="radio" name="strict" >
-        <label>Strict</label>
-      </div>
-    
-
-  </div>
-
-  <script>
-    var strict;
+    }</script><div class="divider block"><div class="divider-content">Strictness</div></div><div class="multiple joined actions"><div class="button radio right bordered" onclick="set_strict ()"><input type="radio" name="strict" checked="checked"> <label>Adaptable</label></div><div class="button radio right bordered" onclick="set_strict ( true )"><input type="radio" name="strict"> <label>Strict</label></div></div><script>var strict;
 
     function set_strict ( new_strict ) {
       strict = new_strict;
-    }
-  </script>
-
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">Positionable size</div>
-      </div>
-    
-
-  <div class="multiple joined actions">
-    
-      <div class="button radio right bordered" onclick="set_size ( xxxsmall">
-        <input type="radio" name="size" checked>
-        <label>XXX-Small</label>
-      </div>
-    
-    
-      <div class="button radio right bordered" onclick="set_size ( medium">
-        <input type="radio" name="size" checked>
-        <label>Medium</label>
-      </div>
-    
-    
-      <div class="button radio right bordered" onclick="set_size ( xxxlarge">
-        <input type="radio" name="size" checked>
-        <label>XXX-Large</label>
-      </div>
-    
-  </div>
-
-  <script>
-    function set_size ( size ) {
+    }</script><div class="divider block"><div class="divider-content">Positionable size</div></div><div class="multiple joined actions"><div class="button radio right bordered" onclick="set_size ( 'xxxsmall' )"><input type="radio" name="size"> <label>XXX-Small</label></div><div class="button radio right bordered" onclick="set_size ( 'medium' )"><input type="radio" name="size" checked="checked"> <label>Medium</label></div><div class="button radio right bordered" onclick="set_size ( 'xxxlarge' )"><input type="radio" name="size"> <label>XXX-Large</label></div></div><script>function set_size ( size ) {
       var sizes = ['xxxsmall', 'medium', 'xxxlarge'];
       for ( var i = 0, l = sizes.length; i < l; i++ ) {
         $positionable.removeClass ( sizes[i] ).addClass ( size );
       }
-    }
-  </script>
-
-
-
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+    }</script></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -357,7 +123,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>

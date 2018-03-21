@@ -1,52 +1,6 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">Emojify</div>
-      </div>
-    
-
-  <div class="container bordered emojify">
-    <p>Unicode: 😀 ✌ ✌🏻 ✌🏽 ✌🏾 ✌🏿 🐼 🌶 🚕 🇬🇧 👨‍👨‍👧‍👧</p>
-    <p>Names: :grin: :flag-it: :zipper_mouth_face: :woman-woman-girl-girl:</p>
-    <p>Emoticon: ;) :D :-* :'(</p>
-    <p>Tones [V]: :v: :v::tone-1: :v::tone-2: :v::tone-3: :v::tone-4: :v::tone-5: :v::tone-6:</p>
-    <p>Tones [+1]: :+1: :+1::tone-1: :+1::tone-2: :+1::tone-3: :+1::tone-4: :+1::tone-5: :+1::tone-6:</p>
-  </div>
-
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Emojify | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Emojify</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">Emojify</div></div><div class="container bordered emojify"><p>Unicode: 😀 ✌ ✌🏻 ✌🏽 ✌🏾 ✌🏿 🐼 🌶 🚕 🇬🇧 👨‍👨‍👧‍👧</p><p>Names: :grin: :flag-it: :zipper_mouth_face: :woman-woman-girl-girl:</p><p>Emoticon: ;) :D :-* :'(</p><p>Tones [V]: :v: :v::tone-1: :v::tone-2: :v::tone-3: :v::tone-4: :v::tone-5: :v::tone-6:</p><p>Tones [+1]: :+1: :+1::tone-1: :+1::tone-2: :+1::tone-3: :+1::tone-4: :+1::tone-5: :+1::tone-6:</p></div></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -62,7 +16,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>

@@ -1,110 +1,8 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">Actionable</div>
-      </div>
-    
-
-  <div class="label actionable">Actionable</div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">Colors</div>
-      </div>
-    
-
-  <div class="multiple">
-    <div class="label actionable primary">Primary</div>
-    <div class="label actionable secondary">Secondary</div>
-    <div class="label actionable tertiary">Tertiary</div>
-    <div class="label actionable quaternary">Quaternary</div>
-    <div class="label actionable black">Black</div>
-    <div class="label actionable blue">Blue</div>
-    <div class="label actionable brown">Brown</div>
-    <div class="label actionable gray">Gray</div>
-    <div class="label actionable green">Green</div>
-    <div class="label actionable olive">Olive</div>
-    <div class="label actionable orange">Orange</div>
-    <div class="label actionable pink">Pink</div>
-    <div class="label actionable purple">Purple</div>
-    <div class="label actionable red">Red</div>
-    <div class="label actionable teal">Teal</div>
-    <div class="label actionable violet">Violet</div>
-    <div class="label actionable white">White</div>
-    <div class="label actionable yellow">Yellow</div>
-    <div class="label actionable error">Error</div>
-    <div class="label actionable success">Success</div>
-    <div class="label actionable warning">Warning</div>
-    <div class="label actionable base">Base</div>
-    <div class="label actionable inherit">Inherit</div>
-    <div class="label actionable transparent">Transparent</div>
-  </div>
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">Style</div>
-      </div>
-    
-
-  <div class="multiple actions">
-    
-      <div class="button checkbox right bordered" onclick="toggle_class ( bordered">
-        <input type="checkbox" checked>
-        <label>Bordered</label>
-      </div>
-    
-    
-      <div class="button checkbox right bordered" onclick="toggle_class ( inverted">
-        <input type="checkbox" checked>
-        <label>Inverted</label>
-      </div>
-    
-  </div>
-
-  <script>
-    function toggle_class ( name ) {
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Actionable | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Actionable</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">Actionable</div></div><div class="label actionable">Actionable</div><div class="divider block"><div class="divider-content">Colors</div></div><div class="multiple"><div class="label actionable primary">Primary</div><div class="label actionable secondary">Secondary</div><div class="label actionable tertiary">Tertiary</div><div class="label actionable quaternary">Quaternary</div><div class="label actionable black">Black</div><div class="label actionable blue">Blue</div><div class="label actionable brown">Brown</div><div class="label actionable gray">Gray</div><div class="label actionable green">Green</div><div class="label actionable olive">Olive</div><div class="label actionable orange">Orange</div><div class="label actionable pink">Pink</div><div class="label actionable purple">Purple</div><div class="label actionable red">Red</div><div class="label actionable teal">Teal</div><div class="label actionable violet">Violet</div><div class="label actionable white">White</div><div class="label actionable yellow">Yellow</div><div class="label actionable error">Error</div><div class="label actionable success">Success</div><div class="label actionable warning">Warning</div><div class="label actionable base">Base</div><div class="label actionable inherit">Inherit</div><div class="label actionable transparent">Transparent</div></div><div class="divider block"><div class="divider-content">Style</div></div><div class="multiple actions"><div class="button checkbox right bordered" onclick="toggle_class ( 'bordered' )"><input type="checkbox"> <label>Bordered</label></div><div class="button checkbox right bordered" onclick="toggle_class ( 'inverted' )"><input type="checkbox"> <label>Inverted</label></div></div><script>function toggle_class ( name ) {
       $('.actionable').toggleClass ( name );
-    }
-  </script>
-
-
-
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+    }</script></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -120,7 +18,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>

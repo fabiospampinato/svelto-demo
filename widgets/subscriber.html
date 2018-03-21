@@ -1,165 +1,6 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">Subscriber</div>
-      </div>
-    
-
-  
-      <div class="subscriber" data-state='null' data-state-url="" data-url="/subscriber-update">
-        <div class="toggle"></div>
-        <div class="counter" data-counter="0"></div>
-      </div>
-    
-  
-      <div class="subscriber" data-state='null' data-state-url="" data-url="/subscriber-update">
-        <div class="toggle"></div>
-        <div class="counter" data-counter="10"></div>
-      </div>
-    
-  
-      <div class="subscriber" data-state='null' data-state-url="/subscriber-state" data-url="/subscriber-update">
-        <div class="toggle"></div>
-        <div class="counter" data-counter="10"></div>
-      </div>
-    
-  
-      <div class="subscriber" data-state='"true"' data-state-url="" data-url="/subscriber-update">
-        <div class="toggle"></div>
-        <div class="counter" data-counter="10"></div>
-      </div>
-    
-  
-      <div class="subscriber" data-state='"false"' data-state-url="" data-url="/subscriber-update">
-        <div class="toggle"></div>
-        <div class="counter" data-counter="10"></div>
-      </div>
-    
-
-  <div class="multiple">
-    <div class="subscriber" data-url="/subscriber-update">
-      <div class="toggle" data-text-on="Custom Subscribe" data-text-off="Custom Unsubscribe"></div>
-      <div class="counter" data-counter="10"></div>
-    </div>
-    <div class="spacer"></div>
-    <div class="subscriber" data-state="true" data-url="/subscriber-update">
-      <div class="toggle" data-text-on="Custom Subscribe" data-text-off="Custom Unsubscribe"></div>
-      <div class="counter" data-counter="10"></div>
-    </div>
-    <div class="spacer"></div>
-    <div class="subscriber" data-state="false" data-url="/subscriber-update">
-      <div class="toggle" data-text-on="Custom Subscribe" data-text-off="Custom Unsubscribe"></div>
-      <div class="counter" data-counter="10"></div>
-    </div>
-    <div class="spacer"></div>
-  </div>
-
-  <div class="subscriber" data-url="/subscriber-update">
-    <div class="toggle" data-icon="add"></div>
-    <div class="counter" data-counter="10"></div>
-  </div>
-
-  <div class="subscriber multiple joined" data-url="/subscriber-update">
-    <div class="toggle button bordered"></div>
-    <div class="counter label compact bordered pointing-left" data-counter="10"></div>
-  </div>
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">API</div>
-      </div>
-    
-
-  <div class="multiple">
-    <div class="button bordered" onclick="api ()">Init</div>
-    <div class="button bordered" onclick="api_get ()">Get</div>
-    <div class="multiple joined">
-      <div class="label bordered gray pointing-right">Set</div>
-      <div class="button bordered" onclick="api ( set">false</div>
-      <div class="button bordered" onclick="api ( set">true</div>
-      <div class="button bordered" onclick="api ( set">null</div>
-    </div>
-    <div class="button bordered" onclick="api ( reset">Reset</div>
-    <div class="button bordered" onclick="api ( toggle">Toggle</div>
-    <div class="button bordered" onclick="api ( subscribe">Subscribe</div>
-    <div class="button bordered" onclick="api ( unsubscribe">Unsubscribe</div>
-    <div class="button bordered" onclick="api ( destroy">Destroy</div>
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">Style</div>
-      </div>
-    
-
-  <div class="multiple actions">
-    
-      <div class="button checkbox right bordered" onclick="toggle_class ( no-icon">
-        <input type="checkbox" checked>
-        <label>No icon</label>
-      </div>
-    
-    
-      <div class="button checkbox right bordered" onclick="toggle_class ( no-label">
-        <input type="checkbox" checked>
-        <label>No label</label>
-      </div>
-    
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">State</div>
-      </div>
-    
-
-  <div class="multiple joined actions">
-    
-      <div class="button radio right bordered" onclick="api ( enable">
-        <input type="radio" name="state" checked>
-        <label>Enabled</label>
-      </div>
-    
-    
-      <div class="button radio right bordered" onclick="api ( disable">
-        <input type="radio" name="state" checked>
-        <label>Disabled</label>
-      </div>
-    
-  </div>
-
-  <script>
-    function api ( action, extra ) {
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Subscriber | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Subscriber</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">Subscriber</div></div><div class="subscriber" data-state="null" data-state-url="" data-url="/subscriber-update"><div class="toggle"></div><div class="counter" data-counter="0"></div></div><div class="subscriber" data-state="null" data-state-url="" data-url="/subscriber-update"><div class="toggle"></div><div class="counter" data-counter="10"></div></div><div class="subscriber" data-state="null" data-state-url="/subscriber-state" data-url="/subscriber-update"><div class="toggle"></div><div class="counter" data-counter="10"></div></div><div class="subscriber" data-state='"true"' data-state-url="" data-url="/subscriber-update"><div class="toggle"></div><div class="counter" data-counter="10"></div></div><div class="subscriber" data-state='"false"' data-state-url="" data-url="/subscriber-update"><div class="toggle"></div><div class="counter" data-counter="10"></div></div><div class="multiple"><div class="subscriber" data-url="/subscriber-update"><div class="toggle" data-text-on="Custom Subscribe" data-text-off="Custom Unsubscribe"></div><div class="counter" data-counter="10"></div></div><div class="spacer"></div><div class="subscriber" data-state="true" data-url="/subscriber-update"><div class="toggle" data-text-on="Custom Subscribe" data-text-off="Custom Unsubscribe"></div><div class="counter" data-counter="10"></div></div><div class="spacer"></div><div class="subscriber" data-state="false" data-url="/subscriber-update"><div class="toggle" data-text-on="Custom Subscribe" data-text-off="Custom Unsubscribe"></div><div class="counter" data-counter="10"></div></div><div class="spacer"></div></div><div class="subscriber" data-url="/subscriber-update"><div class="toggle" data-icon="add"></div><div class="counter" data-counter="10"></div></div><div class="subscriber multiple joined" data-url="/subscriber-update"><div class="toggle button bordered"></div><div class="counter label compact bordered pointing-left" data-counter="10"></div></div><div class="divider block"><div class="divider-content">API</div></div><div class="multiple"><div class="button bordered" onclick="api ()">Init</div><div class="button bordered" onclick="api_get ()">Get</div><div class="multiple joined"><div class="label bordered gray pointing-right">Set</div><div class="button bordered" onclick="api ( 'set', false )">false</div><div class="button bordered" onclick="api ( 'set', true )">true</div><div class="button bordered" onclick="api ( 'set', null )">null</div></div><div class="button bordered" onclick="api ( 'reset' )">Reset</div><div class="button bordered" onclick="api ( 'toggle' )">Toggle</div><div class="button bordered" onclick="api ( 'subscribe' )">Subscribe</div><div class="button bordered" onclick="api ( 'unsubscribe' )">Unsubscribe</div><div class="button bordered" onclick="api ( 'destroy' )">Destroy</div></div><div class="divider block"><div class="divider-content">Style</div></div><div class="multiple actions"><div class="button checkbox right bordered" onclick="toggle_class ( 'no-icon' )"><input type="checkbox"> <label>No icon</label></div><div class="button checkbox right bordered" onclick="toggle_class ( 'no-label' )"><input type="checkbox"> <label>No label</label></div></div><div class="divider block"><div class="divider-content">State</div></div><div class="multiple joined actions"><div class="button radio right bordered" onclick="api ( 'enable' )"><input type="radio" name="state" checked="checked"> <label>Enabled</label></div><div class="button radio right bordered" onclick="api ( 'disable' )"><input type="radio" name="state"> <label>Disabled</label></div></div><script>function api ( action, extra ) {
       $('.subscriber').subscriber ( action, extra );
     }
 
@@ -170,17 +11,7 @@
 
     function toggle_class ( name ) {
       $('.subscriber').toggleClass ( name );
-    }
-  </script>
-
-
-
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+    }</script></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -196,7 +27,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>

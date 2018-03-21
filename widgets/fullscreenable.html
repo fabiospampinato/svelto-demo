@@ -1,76 +1,6 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">Fullscreenable</div>
-      </div>
-    
-
-  <div class="container bordered fullscreenable">
-    <div class="multiple">
-      <div class="button bordered fullscreenable-requester">Request</div>
-      <div class="button bordered fullscreenable-exiter">Exit</div>
-      <div class="button bordered fullscreenable-toggler">Toggle</div>
-    </div>
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">Default target</div>
-      </div>
-    
-
-  <div class="multiple">
-    <div class="button bordered fullscreen-requester">Request</div>
-    <div class="button bordered fullscreen-exiter">Exit</div>
-    <div class="button bordered fullscreen-toggler">Toggle</div>
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">Custom target</div>
-      </div>
-    
-
-  <div class="multiple">
-    <div class="button bordered fullscreen-requester" data-target=".fullscreenable">Request</div>
-    <div class="button bordered fullscreen-exiter" data-target=".fullscreenable">Exit</div>
-    <div class="button bordered fullscreen-toggler" data-target=".fullscreenable">Toggle</div>
-  </div>
-
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Fullscreenable | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Fullscreenable</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">Fullscreenable</div></div><div class="container bordered fullscreenable"><div class="multiple"><div class="button bordered fullscreenable-requester">Request</div><div class="button bordered fullscreenable-exiter">Exit</div><div class="button bordered fullscreenable-toggler">Toggle</div></div></div><div class="divider block"><div class="divider-content">Default target</div></div><div class="multiple"><div class="button bordered fullscreen-requester">Request</div><div class="button bordered fullscreen-exiter">Exit</div><div class="button bordered fullscreen-toggler">Toggle</div></div><div class="divider block"><div class="divider-content">Custom target</div></div><div class="multiple"><div class="button bordered fullscreen-requester" data-target=".fullscreenable">Request</div><div class="button bordered fullscreen-exiter" data-target=".fullscreenable">Exit</div><div class="button bordered fullscreen-toggler" data-target=".fullscreenable">Toggle</div></div></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -86,7 +16,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>

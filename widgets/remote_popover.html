@@ -1,72 +1,6 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">Remote Popover</div>
-      </div>
-    
-
-  <div class="multiple">
-    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-1">Load remote</div>
-    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-2" data-body='{"color": "primary"}'>Load remote (Primary)</div>
-    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-2" data-body='{"color": "secondary"}'>Load remote (Secondary)</div>
-    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-fullscreen">Load remote (Fullscreen)</div>
-    <div class="button bordered remote-popover-trigger" data-url="/remote-popover-error">Load remote (Error)</div>
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">Helper</div>
-      </div>
-    
-
-  <div class="multiple">
-    <div class="helper anchor button bordered">Helper (anchor)</div>
-    <div class="helper point button bordered">Helper (point)</div>
-  </div>
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">API</div>
-      </div>
-    
-
-  <div class="multiple actions">
-    <div class="button bordered" onclick="api ()">Init</div>
-    <div class="button bordered" onclick="api ( destroy">Destroy</div>
-  </div>
-
-  <script>
-    function api ( action ) {
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Remote Popover | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Remote Popover</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">Remote Popover</div></div><div class="multiple"><div class="button bordered remote-popover-trigger" data-url="/remote-popover-basic">Basic</div><div class="button bordered remote-popover-trigger" data-url="/remote-popover-body" data-body='{"color": "primary"}'>Body (Primary)</div><div class="button bordered remote-popover-trigger" data-url="/remote-popover-body" data-body='{"color": "secondary"}'>Body (Secondary)</div><div class="button bordered remote-popover-trigger" data-url="/remote-popover-fullscreen">Fullscreen</div><div class="button bordered remote-popover-trigger" data-url="/remote-popover-error">Error</div></div><div class="divider block"><div class="divider-content">Helper</div></div><div class="multiple"><div class="helper anchor button bordered">Anchor</div><div class="helper point button bordered">Point</div></div><div class="divider block"><div class="divider-content">API</div></div><div class="multiple actions"><div class="button bordered" onclick="api ()">Init</div><div class="button bordered" onclick="api ( 'destroy' )">Destroy</div></div><script>function api ( action ) {
       $('.remote-popover-trigger').remotePopoverTrigger ( action );
     }
 
@@ -74,22 +8,12 @@
         $helperPoint = $('.helper.point');
 
     $helperAnchor.on ( Svelto.Pointer.tap, function () {
-      $.remotePopover ( { url: '/remote-popover-1' }, $helperAnchor );
+      $.remotePopover ( { url: '/remote-popover-basic' }, $helperAnchor );
     });
 
     $helperPoint.on ( Svelto.Pointer.tap, function () {
-      $.remotePopover ( { url: '/remote-popover-1' }, { x: 200, y: 200 } );
-    });
-  </script>
-
-
-
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+      $.remotePopover ( { url: '/remote-popover-basic' }, { x: 200, y: 200 } );
+    });</script></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -105,7 +29,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>

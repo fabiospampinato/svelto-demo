@@ -1,100 +1,6 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">Image</div>
-      </div>
-    
-
-  <img src="/static/sample/sample.png" class="centered"/>
-
-  
-      <div class="divider block">
-        <div class="divider-content">Sizes</div>
-      </div>
-    
-
-  <div class="container bordered">
-    <div class="multiple">
-      <img src="/static/sample/sample.png" class="xxxxsmall"/>
-      <img src="/static/sample/sample.png" class="xxxsmall"/>
-      <img src="/static/sample/sample.png" class="xxsmall"/>
-      <img src="/static/sample/sample.png" class="xsmall"/>
-      <img src="/static/sample/sample.png" class="small"/>
-      <img src="/static/sample/sample.png" class="medium"/>
-      <img src="/static/sample/sample.png" class="large"/>
-      <img src="/static/sample/sample.png" class="xlarge"/>
-      <img src="/static/sample/sample.png" class="xxlarge"/>
-      <img src="/static/sample/sample.png" class="xxxlarge"/>
-      <img src="/static/sample/sample.png" class="xxxxlarge"/>
-    </div>
-  </div>
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">Style</div>
-      </div>
-    
-
-  
-      <div class="button checkbox right bordered" onclick="toggle_class ( bordered">
-        <input type="checkbox" checked>
-        <label>Bordered</label>
-      </div>
-    
-
-  
-      <div class="divider block">
-        <div class="divider-content">State</div>
-      </div>
-    
-
-  <div class="multiple joined actions">
-    
-      <div class="button radio right bordered" onclick="enable ()">
-        <input type="radio" name="state" checked>
-        <label>Enabled</label>
-      </div>
-    
-    
-      <div class="button radio right bordered" onclick="disable ()">
-        <input type="radio" name="state" >
-        <label>Disabled</label>
-      </div>
-    
-  </div>
-
-  <script>
-    function toggle_class ( name ) {
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Image | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Image</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">Image</div></div><img src="/static/sample/sample.png" class="centered"><div class="divider block"><div class="divider-content">Sizes</div></div><div class="container bordered"><div class="multiple"><img src="/static/sample/sample.png" class="xxxxsmall"> <img src="/static/sample/sample.png" class="xxxsmall"> <img src="/static/sample/sample.png" class="xxsmall"> <img src="/static/sample/sample.png" class="xsmall"> <img src="/static/sample/sample.png" class="small"> <img src="/static/sample/sample.png" class="medium"> <img src="/static/sample/sample.png" class="large"> <img src="/static/sample/sample.png" class="xlarge"> <img src="/static/sample/sample.png" class="xxlarge"> <img src="/static/sample/sample.png" class="xxxlarge"> <img src="/static/sample/sample.png" class="xxxxlarge"></div></div><div class="divider block"><div class="divider-content">Style</div></div><div class="button checkbox right bordered" onclick="toggle_class ( 'bordered' )"><input type="checkbox"> <label>Bordered</label></div><div class="divider block"><div class="divider-content">State</div></div><div class="multiple joined actions"><div class="button radio right bordered" onclick="enable ()"><input type="radio" name="state" checked="checked"> <label>Enabled</label></div><div class="button radio right bordered" onclick="disable ()"><input type="radio" name="state"> <label>Disabled</label></div></div><script>function toggle_class ( name ) {
       $('img').toggleClass ( name );
     }
 
@@ -104,17 +10,7 @@
 
     function disable () {
       $('img').addClass ( 'disabled' );
-    }
-  </script>
-
-
-
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+    }</script></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -130,7 +26,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>

@@ -1,86 +1,12 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">Remote Action</div>
-      </div>
-    
-
-  <div class="multiple">
-    <div class="button bordered remote-action-trigger" data-url="/remote-action-1">Load remote</div>
-    <div class="button bordered remote-action-trigger" data-url="/remote-action-2" data-body='{"color": "primary"}'>Load remote (Primary)</div>
-    <div class="button bordered remote-action-trigger" data-url="/remote-action-2" data-body='{"color": "secondary"}'>Load remote (Secondary)</div>
-    <div class="button bordered remote-action-trigger" data-url="/remote-action-3">Load remote (Refresh)</div>
-    <div class="button bordered remote-action-trigger" data-url="/remote-action-4">Load remote (Redirect)</div>
-    <div class="button bordered remote-action-trigger" data-url="/remote-action-5">Load remote (Noop)</div>
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">Helper</div>
-      </div>
-    
-
-  <div class="helper point button bordered">Helper</div>
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">API</div>
-      </div>
-    
-
-  <div class="multiple actions">
-    <div class="button bordered" onclick="api ()">Init</div>
-    <div class="button bordered" onclick="api ( destroy">Destroy</div>
-  </div>
-
-  <script>
-    function api ( action ) {
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Remote Action | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Remote Action</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">Remote Action</div></div><div class="multiple"><div class="button bordered remote-action-trigger" data-url="/remote-action-basic">Basic</div><div class="button bordered remote-action-trigger" data-url="/remote-action-body" data-body='{"color": "primary"}'>Body (Primary)</div><div class="button bordered remote-action-trigger" data-url="/remote-action-body" data-body='{"color": "secondary"}'>Body (Secondary)</div><div class="button bordered remote-action-trigger" data-url="/remote-action-refresh">Refresh</div><div class="button bordered remote-action-trigger" data-url="/remote-action-redirect">Redirect</div><div class="button bordered remote-action-trigger" data-url="/remote-action-noop">Noop</div></div><div class="divider block"><div class="divider-content">Helper</div></div><div class="helper point button bordered">Helper</div><div class="divider block"><div class="divider-content">API</div></div><div class="multiple actions"><div class="button bordered" onclick="api ()">Init</div><div class="button bordered" onclick="api ( 'destroy' )">Destroy</div></div><script>function api ( action ) {
       $('.remote-action-trigger').remoteActionTrigger ( action );
     }
 
     $('.helper').on ( Svelto.Pointer.tap, function () {
-      $.remoteAction ({ url: '/remote-action-1' });
-    });
-  </script>
-
-
-
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+      $.remoteAction ({ url: '/remote-action-basic' });
+    });</script></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -96,7 +22,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>

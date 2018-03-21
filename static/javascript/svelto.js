@@ -310,8 +310,25 @@
   $.html = document.documentElement;
   $.$head = $(document.head);
   $.head = document.head;
-  $.$body = $(document.body);
-  $.body = document.body;
+
+  Object.defineProperty ( $, 'body', { // Body not avaiable yet inside `head`
+    enumerable: true,
+    get () {
+      return document.body;
+    }
+  });
+
+  let $body;
+
+  Object.defineProperty ( $, '$body', { // Body not avaiable yet inside `head`
+    enumerable: true,
+    get () {
+      if ( $body ) return $body;
+      let body = $.body;
+      if ( body ) return $body = $(body);
+      return $.$empty;
+    }
+  });
 
 }( window.__svelto_jquery ));
 
@@ -4300,12 +4317,9 @@
 
         let Widget = fn,
             ready = Widget.ready || Widget.__proto__.ready || Widgets.Widget.ready, //IE10 support -- static property
-            initReady = Widget._initReady || Widget.__proto__._initReady || Widgets.Widget._initReady, //IE10 support -- static property
             setReady = Widget._setReady || Widget.__proto__._setReady || Widgets.Widget._setReady; //IE10 support -- static property
 
-        initReady.bind ( Widget )();
-
-        ready.bind ( Widget )( setReady.bind ( Widget ) );
+        ready.call ( Widget, setReady.bind ( Widget ) );
 
       } else {
 
@@ -4961,6 +4975,10 @@
 
       ready ( Widget, config ) {
 
+        const initReady = Widget._initReady || Widget.__proto__._initReady || Widgets.Widget._initReady; //IE10 support -- static property
+
+        initReady.call ( Widget );
+
         Readify.add ( Widget, config.ready );
 
       },
@@ -5144,7 +5162,7 @@
 
       if ( isReady.bind ( this )() ) {
 
-        callback ();
+        return callback ();
 
       } else {
 
@@ -7631,6 +7649,8 @@
   let defaults = {
     // url: 'https://example.com',
     method: 'get',
+    methodCacheableRe: /^(get|head)$/i,
+    methodBodyableRe: /^(?!get|head)$/i,
     // body: {},
     cache: true,
     credentials: 'include', // Include cookies
@@ -7657,7 +7677,13 @@
 
     options = _.merge ( {}, fetch.defaults, options );
 
-    let isMethodCacheable = /^(get|head)$/i.test ( options.method );
+    let isMethodBodyable = options.methodBodyableRe.test ( options.method );
+
+    if ( options.body && !isMethodBodyable ) {
+      options.method = 'post';
+    }
+
+    let isMethodCacheable = options.methodCacheableRe.test ( options.method );
 
     if ( options.cache && isMethodCacheable && fetch.cache[url] ) {
       let response = fetch.cache[url];
@@ -8657,9 +8683,7 @@
 
       _.delay ( function () { // In order to better support client size rendering
 
-        let $layout = $('.layout, body').first (); // `body` is used as a fallback
-
-        $layout.append ( Toast.config.templates.queues );
+        $.$layout.append ( Toast.config.templates.queues );
 
         done ();
 
@@ -9476,7 +9500,7 @@
     /* VARIABLES */
 
     _raw: EmojiDataRaw,
-    _rawUrl: `/json/emoji.json?v=${Svelto.VERSION}`,
+    _rawUrl: `/static/json/emoji.json?v=${Svelto.VERSION}`,
     _data: undefined,
 
     /* UTILITIES */
@@ -10063,6 +10087,9 @@
         stateUrl: 'state-url',
         stateBatchUrl: 'state-batch-url',
         url: 'url'
+      },
+      classes: {
+        noRemoteState: 'no-remote-state'
       }
     }
   };
@@ -10088,7 +10115,11 @@
 
       this._update ();
 
-      this.___remoteState ();
+      if ( !this.$reaction.hasClass ( this.options.classes.noRemoteState ) ) {
+
+        this.___remoteState ();
+
+      }
 
     }
 
@@ -13388,6 +13419,7 @@
 // Accordion to ISO-8601 the first day of the week is Monday
 
 //FIXME: When using the arrows the prev day still remains hovered even if it's not below the cursor (chrome) //TODO: Make a SO question, maybe we can workaround it
+//FIXME: `today` button doesn't work when the same month is active but the wrong day is selected
 
 (function ( $, _, Svelto, Widgets, Factory, Pointer ) {
 
@@ -18756,7 +18788,7 @@ this.marked = marked;
 
         } else {
 
-          return this.open ( anchor ); //FIXME: What is this for???
+          return this.open ( anchor ); //FIXME: What is this for??? (it actually gets called, if an error gets thrown the first time)
 
         }
 
@@ -22561,7 +22593,7 @@ Prism.languages.js = Prism.languages.javascript;
     _init () {
 
       this.options.ajax.url = this.$trigger.data ( this.options.datas.url ) || this.$trigger.attr ( this.options.attributes.href ) || this.options.ajax.url;
-      this.options.ajax.body = this.$trigger.data ( this.options.datas.body ) || this.options.ajax.data;
+      this.options.ajax.body = this.$trigger.data ( this.options.datas.body ) || this.options.ajax.body;
       this.options.ajax.method = this.$trigger.data ( this.options.datas.method ) || this.options.ajax.method;
 
     }
@@ -27581,7 +27613,7 @@ Prism.languages.js = Prism.languages.javascript;
           ids = this._getIds ();
 
       ajax.url = ajax.url.replace ( this.options.placeholders.id, ids.join ( this.options.characters.separator ) );
-      ajax.data = _.extend ( ajax.data, {ids} );
+      ajax.body = _.extend ( ajax.body, {ids} );
 
       return ajax;
 
@@ -29437,7 +29469,7 @@ Prism.languages.js = Prism.languages.javascript;
 
     /* TOAST */
 
-    return new Toast ( options );
+    return Toast.whenReady.call ( Toast, () => new Toast ( options ) );
 
   };
 

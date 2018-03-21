@@ -1,112 +1,6 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">HEX</div>
-      </div>
-    
-
-  <div class="multiple joined">
-    <div class="label compact bordered pointing-right hex"></div>
-    <input name="hex_r" placeholder="Red..." class="bordered">
-    <input name="hex_g" placeholder="Green..." class="bordered">
-    <input name="hex_b" placeholder="Blue..." class="bordered">
-    <div class="label compact bordered">
-      <i class="icon">arrow_forward</i>
-    </div>
-    <div class="button bordered" onclick="hex2rgb ()">RGB</div>
-    <div class="button bordered" onclick="hex2hsv ()">HSV</div>
-    <div class="button bordered" onclick="hex2hsl ()">HSL</div>
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">RGB</div>
-      </div>
-    
-
-  <div class="multiple joined">
-    <div class="label compact bordered pointing-right rgb"></div>
-    <input name="rgb_r" placeholder="Red..." class="bordered">
-    <input name="rgb_g" placeholder="Green..." class="bordered">
-    <input name="rgb_b" placeholder="Blue..." class="bordered">
-    <div class="label compact bordered">
-      <i class="icon">arrow_forward</i>
-    </div>
-    <div class="button bordered" onclick="rgb2hex ()">HEX</div>
-    <div class="button bordered" onclick="rgb2hsv ()">HSV</div>
-    <div class="button bordered" onclick="rgb2hsl ()">HSL</div>
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">HSV</div>
-      </div>
-    
-
-  <div class="multiple joined">
-    <div class="label compact bordered pointing-right hsv">
-      <i class="icon">block</i>
-    </div>
-    <input name="hsv_h" placeholder="Hue..." class="bordered">
-    <input name="hsv_s" placeholder="Saturation..." class="bordered">
-    <input name="hsv_v" placeholder="Value..." class="bordered">
-    <div class="label compact bordered">
-      <i class="icon">arrow_forward</i>
-    </div>
-    <div class="button bordered" onclick="hsv2hex ()">HEX</div>
-    <div class="button bordered" onclick="hsv2rgb ()">RGB</div>
-    <div class="button bordered" onclick="hsv2hsl ()">HSL</div>
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">HSL</div>
-      </div>
-    
-
-  <div class="multiple joined">
-    <div class="label compact bordered pointing-right hsl"></div>
-    <input name="hsl_h" placeholder="Hue..." class="bordered">
-    <input name="hsl_s" placeholder="Saturation..." class="bordered">
-    <input name="hsl_l" placeholder="Lightness..." class="bordered">
-    <div class="label compact bordered">
-      <i class="icon">arrow_forward</i>
-    </div>
-    <div class="button bordered" onclick="hsl2hex ()">HEX</div>
-    <div class="button bordered" onclick="hsl2rgb ()">RGB</div>
-    <div class="button bordered" onclick="hsl2hsv ()">HSV</div>
-  </div>
-
-  <script>
-    function getValue ( name ) {
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Color | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Color</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">HEX</div></div><div class="multiple joined"><div class="label compact bordered pointing-right hex"></div><input name="hex_r" placeholder="Red..." class="bordered"> <input name="hex_g" placeholder="Green..." class="bordered"> <input name="hex_b" placeholder="Blue..." class="bordered"><div class="label compact bordered"><i class="icon">arrow_forward</i></div><div class="button bordered" onclick="hex2rgb ()">RGB</div><div class="button bordered" onclick="hex2hsv ()">HSV</div><div class="button bordered" onclick="hex2hsl ()">HSL</div></div><div class="divider block"><div class="divider-content">RGB</div></div><div class="multiple joined"><div class="label compact bordered pointing-right rgb"></div><input name="rgb_r" placeholder="Red..." class="bordered"> <input name="rgb_g" placeholder="Green..." class="bordered"> <input name="rgb_b" placeholder="Blue..." class="bordered"><div class="label compact bordered"><i class="icon">arrow_forward</i></div><div class="button bordered" onclick="rgb2hex ()">HEX</div><div class="button bordered" onclick="rgb2hsv ()">HSV</div><div class="button bordered" onclick="rgb2hsl ()">HSL</div></div><div class="divider block"><div class="divider-content">HSV</div></div><div class="multiple joined"><div class="label compact bordered pointing-right hsv"><i class="icon">block</i></div><input name="hsv_h" placeholder="Hue..." class="bordered"> <input name="hsv_s" placeholder="Saturation..." class="bordered"> <input name="hsv_v" placeholder="Value..." class="bordered"><div class="label compact bordered"><i class="icon">arrow_forward</i></div><div class="button bordered" onclick="hsv2hex ()">HEX</div><div class="button bordered" onclick="hsv2rgb ()">RGB</div><div class="button bordered" onclick="hsv2hsl ()">HSL</div></div><div class="divider block"><div class="divider-content">HSL</div></div><div class="multiple joined"><div class="label compact bordered pointing-right hsl"></div><input name="hsl_h" placeholder="Hue..." class="bordered"> <input name="hsl_s" placeholder="Saturation..." class="bordered"> <input name="hsl_l" placeholder="Lightness..." class="bordered"><div class="label compact bordered"><i class="icon">arrow_forward</i></div><div class="button bordered" onclick="hsl2hex ()">HEX</div><div class="button bordered" onclick="hsl2rgb ()">RGB</div><div class="button bordered" onclick="hsl2hsv ()">HSV</div></div><script>function getValue ( name ) {
       return $('[name="' + name + '"]').val ();
     }
 
@@ -244,14 +138,14 @@
     function hsl2hsv () {
       setHsv ( Svelto.Color.hsl2hsv ( getHsl () ) );
     }
-  </script>
 
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+    function init () {
+      setHex ({ r: 'ff', g: '00', b: '00' });
+      hex2rgb ();
+      hex2hsv ();
+      hex2hsl ();
+    }
+    init ();</script></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -267,7 +161,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>

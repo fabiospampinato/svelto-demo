@@ -1,117 +1,6 @@
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <title>Svelto - Demo</title>
-    <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
-    <script src="/static/javascript/svelto.js"></script>
-  </head>
-  <body class="layout">
-    <header class="layout-header sticky toolbar primary z-depth-4">
-      <div class="multiple center-y">
-        <div class="label compact transparent">
-          <i class="icon">code</i>
-        </div>
-        <a href="/" class="large">Svelto - Demo</a>
-        <div class="spacer"></div>
-        <a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a><!-- //TODO: Link to the relative website page, not always the homepage-->
-      </div>
-    </header>
-    <main class="layout-content">
-
-  
-      <div class="divider block">
-        <div class="divider-content">Colors</div>
-      </div>
-    
-
-  <div class="multiple">
-    <div class="label primary">Primary</div>
-    <div class="label secondary">Secondary</div>
-    <div class="label tertiary">Tertiary</div>
-    <div class="label quaternary">Quaternary</div>
-    <div class="label black">Black</div>
-    <div class="label blue">Blue</div>
-    <div class="label brown">Brown</div>
-    <div class="label gray">Gray</div>
-    <div class="label green">Green</div>
-    <div class="label olive">Olive</div>
-    <div class="label orange">Orange</div>
-    <div class="label pink">Pink</div>
-    <div class="label purple">Purple</div>
-    <div class="label red">Red</div>
-    <div class="label teal">Teal</div>
-    <div class="label violet">Violet</div>
-    <div class="label white">White</div>
-    <div class="label yellow">Yellow</div>
-    <div class="label error">Error</div>
-    <div class="label success">Success</div>
-    <div class="label warning">Warning</div>
-    <div class="label base">Base</div>
-    <div class="label inherit">Inherit</div>
-    <div class="label transparent">Transparent</div>
-  </div>
-
-  
-
-  
-      <div class="divider block">
-        <div class="divider-content">Style</div>
-      </div>
-    
-
-  <div class="multiple actions">
-    
-      <div class="button checkbox right bordered" onclick="toggle_class ( bordered">
-        <input type="checkbox" checked>
-        <label>Bordered</label>
-      </div>
-    
-    
-      <div class="button checkbox right bordered" onclick="toggle_class ( inverted">
-        <input type="checkbox" checked>
-        <label>Inverted</label>
-      </div>
-    
-  </div>
-
-  
-      <div class="divider block">
-        <div class="divider-content">State</div>
-      </div>
-    
-
-  <div class="multiple joined actions">
-    
-      <div class="button radio right bordered" onclick="set_state ()">
-        <input type="radio" name="state" checked>
-        <label>Base</label>
-      </div>
-    
-    
-      <div class="button radio right bordered" onclick="set_state ( hover">
-        <input type="radio" name="state" checked>
-        <label>Hover</label>
-      </div>
-    
-    
-      <div class="button radio right bordered" onclick="set_state ( active">
-        <input type="radio" name="state" checked>
-        <label>Active</label>
-      </div>
-    
-  </div>
-
-  <script>
-    function toggle_class ( name ) {
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Colors | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Colors</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">Colors</div></div><div class="multiple"><div class="label primary">Primary</div><div class="label secondary">Secondary</div><div class="label tertiary">Tertiary</div><div class="label quaternary">Quaternary</div><div class="label black">Black</div><div class="label blue">Blue</div><div class="label brown">Brown</div><div class="label gray">Gray</div><div class="label green">Green</div><div class="label olive">Olive</div><div class="label orange">Orange</div><div class="label pink">Pink</div><div class="label purple">Purple</div><div class="label red">Red</div><div class="label teal">Teal</div><div class="label violet">Violet</div><div class="label white">White</div><div class="label yellow">Yellow</div><div class="label error">Error</div><div class="label success">Success</div><div class="label warning">Warning</div><div class="label base">Base</div><div class="label inherit">Inherit</div><div class="label transparent">Transparent</div></div><div class="divider block"><div class="divider-content">Style</div></div><div class="multiple actions"><div class="button checkbox right bordered" onclick="toggle_class ( 'bordered' )"><input type="checkbox"> <label>Bordered</label></div><div class="button checkbox right bordered" onclick="toggle_class ( 'inverted' )"><input type="checkbox"> <label>Inverted</label></div></div><div class="divider block"><div class="divider-content">State</div></div><div class="multiple joined actions"><div class="button radio right bordered" onclick="set_state ()"><input type="radio" name="state" checked="checked"> <label>Base</label></div><div class="button radio right bordered" onclick="set_state ( 'hover' )"><input type="radio" name="state"> <label>Hover</label></div><div class="button radio right bordered" onclick="set_state ( 'active' )"><input type="radio" name="state"> <label>Active</label></div></div><script>function toggle_class ( name ) {
       $('.layout-content .label').toggleClass ( name );
     }
 
@@ -120,52 +9,7 @@
       for ( var i = 0, l = states.length; i < l; i++ ) {
         $('.layout-content .label').removeClass ( states[i] ).addClass ( state );
       }
-    }
-  </script>
-
-
-
-  
-      <div class="divider block">
-        <div class="divider-content">Text colors</div>
-      </div>
-    
-
-  <div class="container bordered">
-    <div class="multiple">
-      <p class="text-primary">Primary</p>
-      <p class="text-secondary">Secondary</p>
-      <p class="text-tertiary">Tertiary</p>
-      <p class="text-quaternary">Quaternary</p>
-      <p class="text-black">Black</p>
-      <p class="text-blue">Blue</p>
-      <p class="text-brown">Brown</p>
-      <p class="text-gray">Gray</p>
-      <p class="text-green">Green</p>
-      <p class="text-olive">Olive</p>
-      <p class="text-orange">Orange</p>
-      <p class="text-pink">Pink</p>
-      <p class="text-purple">Purple</p>
-      <p class="text-red">Red</p>
-      <p class="text-teal">Teal</p>
-      <p class="text-violet">Violet</p>
-      <p class="text-white">White</p>
-      <p class="text-yellow">Yellow</p>
-      <p class="text-error">Error</p>
-      <p class="text-success">Success</p>
-      <p class="text-warning">Warning</p>
-      <p class="text-base">Base</p>
-      <p class="text-inherit">Inherit</p>
-      <p class="text-transparent">Transparent</p>
-    </div>
-  </div>
-
-</main>
-    <footer class="layout-footer">
-      <p class="text-center">Svelto, the modular web framework</p>
-    </footer>
-    <script>
-      /* ERROR NOTIFIER */
+    }</script><div class="divider block"><div class="divider-content">Text colors</div></div><div class="container bordered"><div class="multiple"><p class="text-primary">Primary</p><p class="text-secondary">Secondary</p><p class="text-tertiary">Tertiary</p><p class="text-quaternary">Quaternary</p><p class="text-black">Black</p><p class="text-blue">Blue</p><p class="text-brown">Brown</p><p class="text-gray">Gray</p><p class="text-green">Green</p><p class="text-olive">Olive</p><p class="text-orange">Orange</p><p class="text-pink">Pink</p><p class="text-purple">Purple</p><p class="text-red">Red</p><p class="text-teal">Teal</p><p class="text-violet">Violet</p><p class="text-white">White</p><p class="text-yellow">Yellow</p><p class="text-error">Error</p><p class="text-success">Success</p><p class="text-warning">Warning</p><p class="text-base">Base</p><p class="text-inherit">Inherit</p><p class="text-transparent">Transparent</p></div></div></main><footer class="layout-footer"><p class="text-center">Svelto, the modular web framework</p></footer><script>/* ERROR NOTIFIER */
       var prevErrorId = '';
       window.onerror = function ( message, file, line ) {
         var errorId = message + file + line;
@@ -181,7 +25,4 @@
             alert ( file + ':' + line + '\n\n' + message );
           }
         }
-      };
-    </script>
-  </body>
-</html>
+      };</script></body></html>
