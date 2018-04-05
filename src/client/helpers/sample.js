@@ -86,10 +86,10 @@ const sample = {
 
   },
 
-  select: ( name = '' ) => {
+  select: ( name = '', multiple = false ) => {
 
     return `
-      <select name="${name}" placeholder="Select a color...">
+      <select name="${name}" placeholder="Select a color..." ${multiple ? 'multiple' : ''}>
         <option value="red" selected="selected">Red</option>
         <option value="green">Green</option>
         <option value="blue">Blue</option>
