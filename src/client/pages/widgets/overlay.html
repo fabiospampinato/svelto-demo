@@ -135,7 +135,10 @@
 
   {{{widget.divider "Style"}}}
 
-  {{{widget.checkAction "Dimmer" "toggle_class ( 'dimmer' )"}}}
+  <div class="multiple">
+    {{{widget.checkAction "Dimmer" "toggle_class ( 'dimmer' )"}}}
+    {{{widget.checkAction "Blurrer" "toggle_class ( 'blurrer' )"}}}
+  </div>
 
   <script>
     function toggle_class ( name ) {

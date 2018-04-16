@@ -54,4 +54,40 @@
     </div>
   </div>
 
+  {{{> icons_actions }}}
+
+</template>
+
+<!-- ACTIONS -->
+
+<template name="icons_actions">
+
+  {{{widget.divider "Style"}}}
+
+  <div class="multiple actions">
+    {{{widget.checkAction "Actionable" "toggle_class ( 'actionable' )"}}}
+    {{{widget.checkAction "Disabled" "toggle_class ( 'disabled' )"}}}
+  </div>
+
+  {{{widget.divider "State"}}}
+
+  <div class="multiple joined actions">
+    {{{widget.radioAction "Base" "state" "set_state ()" true}}}
+    {{{widget.radioAction "Hover" "state" "set_state ( 'hover' )"}}}
+    {{{widget.radioAction "Active" "state" "set_state ( 'active' )"}}}
+  </div>
+
+  <script>
+    function toggle_class ( name ) {
+      $('.container .icons').toggleClass ( name );
+    }
+
+    function set_state ( state ) {
+      var states = ['hover', 'active'];
+      for ( var i = 0, l = states.length; i < l; i++ ) {
+        $('.container .icons').removeClass ( states[i] ).addClass ( state );
+      }
+    }
+  </script>
+
 </template>

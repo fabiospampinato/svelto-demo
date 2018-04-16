@@ -23,15 +23,20 @@
     {{{widget.checkAction "Obscured" "toggle_obscured ()"}}}
     {{{widget.checkAction "Obscured (Show)" "toggle_class ( 'obscured-show' )"}}}
     {{{widget.checkAction "Obscured (Open)" "toggle_class ( 'obscured-open' )"}}}
+    {{{widget.checkAction "Blurred (Children)" "toggle_blur_children ()"}}}
   </div>
 
   <script>
     function toggle_obscured () {
-      $('.container').obscured();
+      $('.container').obscured ();
     }
 
     function toggle_class ( name ) {
       $('.container').toggleClass ( name );
+    }
+
+    function toggle_blur_children () {
+      $('.container').toggleClass ( 'blurred-children' );
     }
   </script>
 

@@ -19,11 +19,23 @@
 
   {{{widget.divider "Actions"}}}
 
-  {{{widget.checkAction "Blurred" "toggle_blur ()"}}}
+  <div class="multiple">
+    {{{widget.checkAction "Blurred" "toggle_blur ()"}}}
+    {{{widget.checkAction "Blurred (Children)" "toggle_blur_children ()"}}}
+    {{{widget.checkAction "Blurred (Next)" "toggle_blur_next ()"}}}
+  </div>
 
   <script>
     function toggle_blur () {
       $('.container').blurred ();
+    }
+
+    function toggle_blur_children () {
+      $('.container').toggleClass ( 'blurred-children' );
+    }
+
+    function toggle_blur_next () {
+      $('.container .placeholder:nth-child(3)').toggleClass ( 'blurred-next' );
     }
   </script>
 

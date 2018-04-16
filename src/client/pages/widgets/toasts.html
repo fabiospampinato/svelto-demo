@@ -1,0 +1,48 @@
+
+<!-- TOAST -->
+
+<template name="toasts">
+
+  {{{widget.divider "Init"}}}
+
+  <div class="multiple">
+    {{{widget.action "Init" "toasts_init ()"}}}
+  </div>
+
+  {{{widget.divider "API"}}}
+
+  <div class="multiple">
+    {{{widget.action "Open" "toasts_open ()"}}}
+    {{{widget.action "Close" "toasts_close ()"}}}
+    {{{widget.action "Pause" "toasts_pause ()"}}}
+    {{{widget.action "Resume" "toasts_resume ()"}}}
+  </div>
+
+  <script>
+    function toasts_init () {
+      Svelto.Widgets.Toasts.toasts = [
+        new Svelto.Widgets.Toast ({ autoplay: false, body: 'First' }),
+        new Svelto.Widgets.Toast ({ autoplay: false, body: 'Second' }),
+        new Svelto.Widgets.Toast ({ autoplay: false, body: 'Third' }),
+        new Svelto.Widgets.Toast ({ autoplay: false, body: 'Fourth' })
+      ];
+    }
+
+    function toasts_open () {
+      Svelto.Widgets.Toasts.open ();
+    }
+
+    function toasts_close () {
+      Svelto.Widgets.Toasts.close ();
+    }
+
+    function toasts_pause () {
+      Svelto.Widgets.Toasts.pause ();
+    }
+
+    function toasts_resume () {
+      Svelto.Widgets.Toasts.resume ();
+    }
+  </script>
+
+</template>

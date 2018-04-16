@@ -33,8 +33,7 @@
 <template name="pointer_init">
 
   <script>
-    function pointer_handler ( event, data ) {
-      var name = event.data.name;
+    function pointer_handler ( name ) {
       if ( name === 'down' ) {
         pointer_uncheck_all ();
       }
@@ -45,9 +44,9 @@
       $('input[type="checkbox"]').prop ( 'checked', false );
     }
 
-    for ( var prop in Svelto.Pointer ) {
+    for ( let prop in Svelto.Pointer ) {
       if ( !_.isString ( Svelto.Pointer[prop] ) ) continue;
-      $('.target').on ( Svelto.Pointer[prop], { name: prop }, pointer_handler );
+      $('.target').on ( Svelto.Pointer[prop], _.wrap ( prop, pointer_handler ) );
     }
   </script>
 

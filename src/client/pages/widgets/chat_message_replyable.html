@@ -1,0 +1,55 @@
+
+<!-- CHAT MESSAGE REPLYABLE -->
+
+<template name="chat_message_replyable">
+
+  {{{widget.divider "Chat Message Replyable"}}}
+
+  <div class="chat-message replyable" data-reply-url="/chat-message-replyable">
+    {{{sample.image "chat-message-img"}}}
+    <div class="chat-message-content card bordered">
+      <div class="card-header bordered compact">
+        <div class="sections center-y">
+          <div class="section-left">
+            <a href="#" title="Fabio">Fabio</a>
+          </div>
+          <div class="section-right">
+            <div class="button xsmall bordered compact chat-message-replyable-reply" title="Reply">
+              <i class="icon">reply</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-block">
+        <p>This is the message, do you like it?</p>
+      </div>
+    </div>
+  </div>
+
+  {{{> chat_message_replyable_actions}}}
+
+</template>
+
+<template name="chat_message_replyable_actions">
+
+  {{{widget.divider "API"}}}
+
+  <div class="multiple actions">
+    {{{widget.action "Reply" "api ( 'reply' )"}}}
+    {{{widget.action "Unreply" "api ( 'unreply' )"}}}
+  </div>
+
+  {{{widget.divider "State"}}}
+
+  <div class="multiple joined actions">
+    {{{widget.radioAction "Enabled" "state" "api ( 'enable' )" true}}}
+    {{{widget.radioAction "Disabled" "state" "api ( 'disable' )"}}}
+  </div>
+
+  <script>
+    function api ( action ) {
+      return $('.chat-message.replyable').chatMessageReplyable ( action );
+    }
+  </script>
+
+</template>

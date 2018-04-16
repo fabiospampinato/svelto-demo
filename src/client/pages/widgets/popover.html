@@ -21,6 +21,8 @@
     <div class="button popover-toggler bordered" data-target="#fullscreen">Fullscreen</div>
     <div class="button popover-toggler bordered" data-target="#size_change">Size change</div>
     <div class="button popover-toggler bordered" data-target="#size_change_2">Size change 2</div>
+    <div class="button popover-toggler bordered" data-target="#size_change_3">Size change 3</div>
+    <div class="button popover-toggler bordered" data-target="#size_change_4">Size change 4</div>
     <div class="button modal-toggler bordered" data-target="#modal">Nested</div>
   </div>
 
@@ -95,21 +97,39 @@
 
   <div id="size_change" class="popover container bordered">
     <input value="Horizontally..." class="autogrow bordered">
-    <textarea class="autogrow bordered">Vertically...</textarea>
+    <textarea class="autogrow bordered">Vertically (Autogrow)...</textarea>
+    <textarea class="bordered">Vertically (Manual)...</textarea>
     <div class="tagbox bordered">
       <input name="name" value="this,est,tagbox" class="hidden">
       <div class="tagbox-tags">
         <input name="partial_name" placeholder="Add tag..." class="tagbox-partial autogrow compact">
       </div>
     </div>
-    <!-- //TODO: datepicker:change -->
-    <!-- //TODO: tabs:change -->
-    <!-- //TODO: tablehelper:change -->
-    <!-- //TODO: textarea increase in dimensions -->
   </div>
 
   <div id="size_change_2" class="popover container bordered">
     <span class="timeago" data-timestamp="{{{widget.nowSecs}}}"></span>
+  </div>
+
+  <div id="size_change_3" class="popover container bordered">
+    {{{widget.datepicker}}}
+  </div>
+
+  <div id="size_change_4" class="popover container bordered">
+    <div class="tabs">
+      <div class="tabs-triggers">
+        <div class="button bordered">First</div>
+        <div class="button bordered">Second</div>
+      </div>
+      <div class="tabs-containers">
+        <div class="container bordered">
+          <p>Short...</p>
+        </div>
+        <div class="container bordered">
+          {{{sample.paragraph}}}
+        </div>
+      </div>
+    </div>
   </div>
 
   <div id="fullscreen" class="popover fullscreen container">

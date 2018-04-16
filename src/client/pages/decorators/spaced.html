@@ -27,20 +27,41 @@
     </p>
   </div>
 
+  {{{widget.divider "Picture"}}}
+
+  <div class="container bordered">
+    <div>
+      <picture class="spaced right" style="display: inline-block">
+        {{{sample.image "xxxxsmall"}}}
+      </picture>
+      {{{sample.text 35}}}
+      <picture class="spaced" style="display: inline-block">
+        {{{sample.image "xxxxsmall"}}}
+      </picture>
+      {{{sample.text 35}}}
+      <picture class="spaced left" style="display: inline-block">
+        {{{sample.image "xxxxsmall"}}}
+      </picture>
+    </div>
+  </div>
+
   {{{widget.divider "Figure"}}}
 
   <div class="container bordered">
     <div>
       <figure class="spaced right" style="display: inline-block">
         {{{sample.image "xxxxsmall"}}}
+        <figcaption>Caption...</figcaption>
       </figure>
       {{{sample.text 35}}}
       <figure class="spaced" style="display: inline-block">
         {{{sample.image "xxxxsmall"}}}
+        <figcaption>Caption...</figcaption>
       </figure>
       {{{sample.text 35}}}
       <figure class="spaced left" style="display: inline-block">
         {{{sample.image "xxxxsmall"}}}
+        <figcaption>Caption...</figcaption>
       </figure>
     </div>
   </div>
@@ -59,7 +80,7 @@
 
   <script>
     function toggle_class ( name ) {
-      $('.avatar, img, figure').not ( 'figure img' ).toggleClass ( name );
+      $('.avatar, img, picture, figure').not ( 'figure img' ).toggleClass ( name );
     }
   </script>
 

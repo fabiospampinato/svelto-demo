@@ -10,6 +10,10 @@
   {{{> expander_rotating_icon}}}
   {{{> expander_open}}}
 
+  {{{widget.divider "Horizontal"}}}
+
+  {{{> expander_horizontal}}}
+
   {{{> expander_actions}}}
 
 </template>
@@ -89,6 +93,24 @@
         <div class="button xsmall compact">
           <i class="icon">keyboard_arrow_down</i>
         </div>
+      </div>
+    </div>
+    <div class="card-block expander-content">
+      {{{sample.paragraph}}}
+    </div>
+  </div>
+
+</template>
+
+
+<!-- ROTATING ICON -->
+
+<template name="expander_horizontal">
+
+  <div class="card bordered expander horizontal">
+    <div class="card-header bordered primary">
+      <div class="button xsmall compact expander-toggler">
+        <i class="icon expander-icon">keyboard_arrow_right</i>
       </div>
     </div>
     <div class="card-block expander-content">

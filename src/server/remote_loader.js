@@ -9,7 +9,7 @@ const requests = {
     html: '<span>JSON-loaded content</span>'
   }),
 
-  '/remote-loader-widget': () => '<div class="button ripple ripple-primary">Rippable</div>',
+  '/remote-loader-widget': () => '<div class="button ripple ripple-primary">Ripples</div>',
 
   '/remote-loader-no-wrap': () => '<span>Not wrapped content</span>',
 

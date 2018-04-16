@@ -8,11 +8,13 @@
     <title>{{{title "Svelto" "[title] | Svelto"}}}</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="/static/css/svelto.css" media="all">
-    <script src="/static/vendor/lodash.js"></script>
-    <script src="/static/vendor/jquery.js"></script>
-    <script src="/static/vendor/Chart.js"></script>
-    <script src="/static/vendor/datatables.js"></script>
-    <script src="/static/vendor/marked.js"></script>
+    {{{vendor "lodash"}}}
+    {{{vendor "jquery"}}}
+    {{{vendor "cash"}}}
+    {{{vendor "chart"}}}
+    {{{vendor "datatables"}}}
+    <!-- {{{vendor "marked"}}} -->
+    <!-- {{{vendor "polyfill"}}} -->
     <script src="/static/javascript/svelto.js"></script>
     <script>
       if ( 'serviceWorker' in navigator ) {

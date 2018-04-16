@@ -53,10 +53,10 @@ const widget = {
 
   },
 
-  datepicker: ( date = '' ) => {
+  datepicker: ( date = '', cls = '' ) => {
 
     return `
-      <div class="datepicker">
+      <div class="datepicker ${cls}">
         <input name="datepicker" value="${date}">
         <div class="datepicker-navigation">
           <div class="button previous" title="Previous month">
@@ -166,6 +166,14 @@ const widget = {
               <div class="button compact small bordered" title="Ordered list" data-action="list_ordered">
                 <i class="icon">format_list_numbered</i>
               </div>
+            </div>
+            <div class="multiple joined">
+              <div class="label compact small bordered pointing-right" title="Header">
+                <i class="icon">format_size</i>
+              </div>
+              <div class="button compact small bordered" title="Header big" data-action="header_1">1</div>
+              <div class="button compact small bordered" title="Header medium" data-action="header_2">2</div>
+              <div class="button compact small bordered" title="Header small" data-action="header_3">3</div>
             </div>
             <div class="multiple joined">
               <div class="button compact small bordered emojipicker-popover-trigger" title="Emoji">

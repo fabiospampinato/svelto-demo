@@ -1,11 +1,4 @@
 
-/* =========================================================================
- * Svelto - _ - Rotation (Keyframes)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* ROTATION */
 
 @keyframes rotate {
@@ -18,13 +11,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - Decorators - Target (Keyframes)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* KEYFRAMES */
 
 @keyframes target {
@@ -34,13 +20,6 @@
   }
 }
 
-
-/* =========================================================================
- * Svelto - Widgets - Progressbar - Indeterminate (Keyframes)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* KEYFRAMES */
 
@@ -60,13 +39,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - Widgets - Progressbar - Striped (Keyframes)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* KEYFRAMES */
 
 @keyframes progressbar-stripes-move {
@@ -79,14 +51,24 @@
 }
 
 
-/* =========================================================================
- * Svelto - Widgets - Spinner (Keyframes)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * =========================================================================
- * @require _/rotation/keyframes.scss
- * ========================================================================= */
+/* RIPPLE */
+
+@keyframes ripple {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  30% {
+    opacity: .2;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+
+// @require _/rotation/keyframes.scss
 
 /* KEYFRAMES */
 
@@ -105,13 +87,6 @@
   }
 }
 
-
-/* =========================================================================
- * Svelto - Widgets - Spinner - Multicolor (Keyframes)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* KEYFRAMES */
 

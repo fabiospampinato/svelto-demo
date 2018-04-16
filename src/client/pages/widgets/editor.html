@@ -43,7 +43,7 @@
     <div class="multiple joined">
       <div class="label compact bordered gray pointing-right">Get</div>
       {{{widget.action "Plain" "api ( 'get' )"}}}
-      {{{widget.action "Parsed" "api ( 'get', true )"}}} <!-- //FIXME: Not working, test again -->
+      {{{widget.action "Parsed" "api ( 'get', true )"}}}
     </div>
     <div class="multiple joined">
       <input name="set" placeholder="Set..." class="bordered">
@@ -95,6 +95,7 @@
     function api ( action, extra ) {
       var result = $('.editor').first ().editor ( action, extra );
       if ( _.isBoolean ( result ) || _.isNumber ( result ) || _.isString ( result ) ) $.toast ( result );
+      if ( result instanceof Promise ) result.then ( $.toast );
     }
   </script>
 

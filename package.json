@@ -24,13 +24,13 @@
     "website:build": "statico build",
     "website:watch": "statico watch",
     "website:serve": "statico serve",
+    "website:deploy": "npm run svelto:build:prod && npm run website:clean && npm run website:build && statico deploy",
     "svelto:build:dev": "svelto build -d src/static -e development",
     "svelto:watch:dev": "svelto watch -d src/static -e development",
     "svelto:dev": "npm run svelto:build:dev && npm run svelto:watch:dev",
     "svelto:build:prod": "svelto build -d src/static",
     "svelto:watch:prod": "svelto watch -d src/static",
-    "svelto:prod": "npm run svelto:build:prod && npm run svelto:watch:prod",
-    "ghpage": "npm run svelto:build:prod && npm run website:clean && npm run website:build"
+    "svelto:prod": "npm run svelto:build:prod && npm run svelto:watch:prod"
   },
   "devDependencies": {
     "lodash": "^4.17.5"

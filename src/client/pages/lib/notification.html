@@ -21,6 +21,8 @@
   </div>
 
   <script>
+    $.toast ({ body: 'Trigger a delayed notification and unfocus the tab', ttl: Infinity });
+
     function notification_simple () {
       $.notification ( 'Test title' );
     }

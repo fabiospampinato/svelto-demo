@@ -1,0 +1,71 @@
+
+<!-- CHAT MESSAGE EDITABLE -->
+
+<template name="chat_message_editable">
+
+  {{{widget.divider "Chat Message Editable"}}}
+
+  <div class="chat-message editable">
+    {{{sample.image "chat-message-img"}}}
+    <div class="chat-message-content editable-hide card bordered">
+      <div class="card-header bordered compact">
+        <div class="sections center-y">
+          <div class="section-left">
+            <a href="#" title="Fabio">Fabio</a>
+          </div>
+          <div class="section-right">
+            <div class="button xsmall bordered compact chat-message-editable-toggler" title="Toggle Edit">
+              <i class="icon">edit</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-block">
+        <p>This is the message, do you like it?</p>
+      </div>
+    </div>
+    <form action="/chat-message-editable" method="post" class="chat-message-content editable-show ajax validate card bordered">
+      <textarea placeholder="" class="card-block autofocus" name="message" data-validations="required">This is the message, do you like it?</textarea>
+      <div class="card-block form-validate-output bordered"></div>
+      <div class="card-footer bordered">
+        <div class="multiple center-x">
+          <div class="button chat-message-editable-toggler" title="Cancel">Cancel</div>
+          <button class="button secondary" type="submit" title="Edit">Edit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  {{{> chat_message_editable_actions}}}
+
+</template>
+
+<template name="chat_message_editable_actions">
+
+  {{{widget.divider "API"}}}
+
+  <div class="multiple actions">
+    {{{widget.action "isEditing" "api_is_editing ()"}}}
+    {{{widget.action "Edit" "api ( 'edit' )"}}}
+    {{{widget.action "Unedit" "api ( 'unedit' )"}}}
+    {{{widget.action "Toggle" "api ( 'toggle' )"}}}
+  </div>
+
+  {{{widget.divider "State"}}}
+
+  <div class="multiple joined actions">
+    {{{widget.radioAction "Enabled" "state" "api ( 'enable' )" true}}}
+    {{{widget.radioAction "Disabled" "state" "api ( 'disable' )"}}}
+  </div>
+
+  <script>
+    function api_is_editing () {
+      $.toast ( api ( 'isEditing' ) );
+    }
+
+    function api ( action ) {
+      return $('.chat-message.editable').chatMessageEditable ( action );
+    }
+  </script>
+
+</template>

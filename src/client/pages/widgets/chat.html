@@ -167,6 +167,7 @@
   {{{widget.divider "Style"}}}
 
   <div class="multiple actions">
+      {{{widget.checkAction "Fullscreen" "toggle_wrp_class ( 'fullscreen' )"}}}
     {{{widget.checkAction "No tip" "toggle_class ( 'no-tip' )"}}}
     {{{widget.checkAction "No img" "toggle_class ( 'no-img' )"}}}
     <div class="multiple joined">
@@ -182,7 +183,7 @@
     <div class="multiple joined">
       <div class="label bordered gray pointing-right">Width</div>
       {{{widget.radioAction "100%" "width" "limit_width ( '100%' )" true}}}
-      {{{widget.radioAction "300px" "width" "limit_width ( 300 )"}}}
+      {{{widget.radioAction "500px" "width" "limit_width ( 500 )"}}}
     </div>
   </div>
 
@@ -194,6 +195,10 @@
   </div>
 
   <script>
+    function toggle_wrp_class ( class_name ) {
+      $('.chat').toggleClass ( class_name );
+    }
+
     function toggle_class ( class_name ) {
       $('.chat-message').toggleClass ( class_name );
     }

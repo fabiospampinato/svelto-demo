@@ -10,6 +10,8 @@
     {{{widget.action "Open" "toast_api_open ()"}}}
     {{{widget.action "Close" "toast_api_close ()"}}}
     {{{widget.action "isOpen" "toast_api_isOpen ()"}}}
+    {{{widget.action "Pause" "toast_api_pause ()"}}}
+    {{{widget.action "Resume" "toast_api_resume ()"}}}
   </div>
 
   {{{widget.divider "Text"}}}
@@ -46,16 +48,19 @@
   <div class="multiple">
     {{{widget.action "Icon + Body" "toast_icon ()"}}}
     {{{widget.action "Icon + Title + Body" "toast_icon_title ()"}}}
-    {{{widget.action "Icon + Title + Body + Buttons" "toast_icon_adv ()"}}}
+    {{{widget.action "Icon + Title + Body + Button" "toast_icon_adv_one ()"}}}
+    {{{widget.action "Icon + Title + Body + Buttons" "toast_icon_adv_two ()"}}}
   </div>
 
   {{{widget.divider "Advanced"}}}
 
   <div class="multiple">
     {{{widget.action "Title + Body" "toast_adv_one ()"}}}
-    {{{widget.action "Title + Body + Image" "toast_adv_two ()"}}}
-    {{{widget.action "Title + Body + Image + Buttons" "toast_adv_three ()"}}}
-    {{{widget.action "Title + Custom body + Image + Buttons" "toast_adv_four ()"}}}
+    {{{widget.action "Title + Body + Button" "toast_adv_two ()"}}}
+    {{{widget.action "Title + Body + Image" "toast_adv_three ()"}}}
+    {{{widget.action "Title + Body + Image + Button" "toast_adv_four ()"}}}
+    {{{widget.action "Title + Body + Image + Buttons" "toast_adv_five ()"}}}
+    {{{widget.action "Title + Custom body + Image + Buttons" "toast_adv_six ()"}}}
   </div>
 
   {{{widget.divider "Colors"}}}
@@ -144,11 +149,32 @@
       $.toast ({
         title: 'Test title',
         body: 'This is just an example body',
-        img: '{{sample.imageUrl}}'
+        buttons: [{
+          text: 'Foo'
+        }]
       });
     }
 
     function toast_adv_three () {
+      $.toast ({
+        title: 'Test title',
+        body: 'This is just an example body',
+        img: '{{sample.imageUrl}}'
+      });
+    }
+
+    function toast_adv_four () {
+      $.toast ({
+        title: 'Test title',
+        body: 'This is just an example body',
+        img: '{{sample.imageUrl}}',
+        buttons: [{
+          text: 'Foo'
+        }]
+      });
+    }
+
+    function toast_adv_five () {
       $.toast ({
         title: 'Test title',
         body: 'This is just an example body',
@@ -161,7 +187,7 @@
       });
     }
 
-    function toast_adv_four () {
+    function toast_adv_six () {
       $.toast ({
         title: 'Test title',
         body: '<sub>sub</sub>Something<sup>sup</sup>',
@@ -189,7 +215,18 @@
       });
     }
 
-    function toast_icon_adv () {
+    function toast_icon_adv_one () {
+      $.toast ({
+        title: 'Test title',
+        body: 'This is just an example body',
+        icon: 'person',
+        buttons: [{
+          text: 'Foo'
+        }]
+      });
+    }
+
+    function toast_icon_adv_two () {
       $.toast ({
         title: 'Test title',
         body: 'This is just an example body',
@@ -244,6 +281,22 @@
     function toast_api_isOpen () {
       if ( created_toast ) {
         $.toast ( created_toast.isOpen () );
+      } else {
+        $.toast ( 'You should `Create` it before...' );
+      }
+    }
+
+    function toast_api_pause () {
+      if ( created_toast ) {
+        created_toast.pause ();
+      } else {
+        $.toast ( 'You should `Create` it before...' );
+      }
+    }
+
+    function toast_api_resume () {
+      if ( created_toast ) {
+        created_toast.resume ();
       } else {
         $.toast ( 'You should `Create` it before...' );
       }

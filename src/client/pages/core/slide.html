@@ -1,0 +1,36 @@
+
+<!-- SLIDE -->
+
+<template name="slide">
+
+  {{{widget.divider "Paragraph"}}}
+
+  <div class="container bordered">
+    {{{sample.paragraph}}}
+  </div>
+
+  {{{> slide_actions}}}
+
+</template>
+
+<!-- ACTIONS -->
+
+<template name="slide_actions">
+
+  {{{widget.divider "Actions"}}}
+
+  <div class="multiple">
+    {{{widget.action "slideDown" "api ( 'slideDown' )"}}}
+    {{{widget.action "slideUp" "api ( 'slideUp' )"}}}
+    {{{widget.action "slideLeft" "api ( 'slideLeft' )"}}}
+    {{{widget.action "slideRight" "api ( 'slideRight' )"}}}
+    {{{widget.action "slideToggle" "api ( 'slideToggle' )"}}}
+  </div>
+
+  <script>
+    function api ( method ) {
+      $('.container')[method] ();
+    }
+  </script>
+
+</template>

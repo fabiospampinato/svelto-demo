@@ -29,6 +29,23 @@
     </p>
   </div>
 
+  {{{widget.divider "Picture"}}}
+
+  <div class="container bordered clearfix">
+    <p>
+      <picture class="floated">
+        {{{sample.image "small"}}}
+      </picture>
+      {{sample.text 75}}
+    </p>
+    <p>
+      <picture class="floated right">
+        {{{sample.image "small"}}}
+      </picture>
+      {{sample.text 75}}
+    </p>
+  </div>
+
   {{{widget.divider "Figure"}}}
 
   <div class="container bordered clearfix">
@@ -62,7 +79,7 @@
 
   <script>
     function toggle_class ( name ) {
-      $('.avatar, img, figure').not ( 'figure img' ).toggleClass ( name );
+      $('.avatar, img, picture, figure').not ( 'figure img' ).toggleClass ( name );
     }
   </script>
 

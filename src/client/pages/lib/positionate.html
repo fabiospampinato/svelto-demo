@@ -55,10 +55,10 @@
 
     $('.checkbox input').on ( 'change', function () {
       if ( $('.checkbox input').prop ( 'checked' ) ) {
-        positionateLive();
-        $anchor.on ( 'draggable:move', positionateLive );
+        positionate();
+        $anchor.on ( 'draggable:move', positionate );
       } else {
-        $anchor.off ( 'draggable:move', positionateLive );
+        $anchor.off ( 'draggable:move', positionate );
       }
     });
 
@@ -121,7 +121,7 @@
       });
     }
 
-    function positionateLive () {
+    function positionate () {
       $positionable.positionate ({
         alignment: {
           x: alignment_x,
@@ -151,9 +151,11 @@
     var pointer = false;
     function pointer_auto () {
       pointer = 'auto';
+      positionate ();
     }
     function pointer_disable () {
       pointer = false;
+      positionate ();
     }
   </script>
 
@@ -186,10 +188,12 @@
 
     function set_x_alignment ( new_alignment ) {
       alignment_x = new_alignment;
+      positionate ();
     }
 
     function set_y_alignment ( new_alignment ) {
       alignment_y = new_alignment;
+      positionate ();
     }
   </script>
 
@@ -212,6 +216,7 @@
 
     function set_strict ( new_strict ) {
       strict = new_strict;
+      positionate ();
     }
   </script>
 
@@ -235,6 +240,7 @@
       for ( var i = 0, l = sizes.length; i < l; i++ ) {
         $positionable.removeClass ( sizes[i] ).addClass ( size );
       }
+      positionate ();
     }
   </script>
 

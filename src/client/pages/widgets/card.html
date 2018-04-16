@@ -35,7 +35,7 @@
     </div>
   </div>
 
-  {{{widget.divider "With image/figure"}}}
+  {{{widget.divider "With image/picture/figure"}}}
 
   <div class="multiple">
     <div class="card xs-12 sm-6 md-3">
@@ -81,7 +81,9 @@
     </div>
     <div class="card xs-12 sm-6 md-3">
       <div class="card-header">Header</div>
-      {{{sample.imageWide}}}
+      <picture>
+        {{{sample.imageWide}}}
+      </picture>
       <div class="card-block">Block</div>
     </div>
   </div>
@@ -166,6 +168,7 @@
   {{{widget.divider "Others"}}}
 
   <div class="multiple actions">
+    {{{widget.checkAction "Horizontal" "toggle_class ( '.card', 'horizontal' )"}}}
     {{{widget.checkAction "Fixed height (Advanced)" "toggle_fixed_height ()"}}}
     {{{widget.checkAction "Fullscreen (Advanced)" "toggle_fullscreen ()"}}}
   </div>

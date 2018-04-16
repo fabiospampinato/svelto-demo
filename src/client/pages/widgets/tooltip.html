@@ -32,6 +32,8 @@
     </div>
   </div>
 
+  {{{> tooltip_init}}}
+
   {{{> tooltip_tooltips}}}
 
   {{{> tooltip_actions}}}
@@ -39,6 +41,12 @@
 </template>
 
 <!-- TOOLTIPS -->
+
+<template name="tooltip_init">
+  <script>
+    $.toast ({ body: 'Tooltips can open on hover', ttl: Infinity });
+  </script>
+</template>
 
 <template name="tooltip_tooltips">
 
