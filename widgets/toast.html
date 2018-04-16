@@ -1,6 +1,6 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Toast | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/jquery.js"></script><script src="/static/vendor/Chart.js"></script><script src="/static/vendor/datatables.js"></script><script src="/static/vendor/marked.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
-        navigator.serviceWorker.register ( '/server.js?v=1521653442' );
-      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Toast</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">API</div></div><div class="multiple"><div class="button bordered" onclick="toast_api_create ()">Create</div><div class="button bordered" onclick="toast_api_open ()">Open</div><div class="button bordered" onclick="toast_api_close ()">Close</div><div class="button bordered" onclick="toast_api_isOpen ()">isOpen</div></div><div class="divider block"><div class="divider-content">Text</div></div><div class="multiple"><div class="button bordered" onclick="toast_short ()">Short</div><div class="button bordered" onclick="toast_medium ()">Medium</div><div class="button bordered" onclick="toast_long ()">Long</div></div><div class="divider block"><div class="divider-content">Anchors</div></div><div class="multiple"><div class="button bordered" onclick="toast_anchor ({ y: 'top', x: 'left' })">Top-Left</div><div class="button bordered" onclick="toast_anchor ({ y: 'top', x: 'center' })">Top-Center</div><div class="button bordered" onclick="toast_anchor ({ y: 'top', x: 'expanded' })">Top-Expanded</div><div class="button bordered" onclick="toast_anchor ({ y: 'top', x: 'right' })">Top-Right</div><div class="button bordered" onclick="toast_anchor ({ y: 'bottom', x: 'left' })">Bottom-Left</div><div class="button bordered" onclick="toast_anchor ({ y: 'bottom', x: 'center' })">Bottom-Center</div><div class="button bordered" onclick="toast_anchor ({ y: 'bottom', x: 'expanded' })">Bottom-Expanded</div><div class="button bordered" onclick="toast_anchor ({ y: 'bottom', x: 'right' })">Bottom-Right</div></div><div class="divider block"><div class="divider-content">Buttons</div></div><div class="multiple"><div class="button bordered" onclick="toast_btns_one ()">One</div><div class="button bordered" onclick="toast_btns_two ()">Two</div><div class="button bordered" onclick="toast_btns_three ()">Three</div></div><div class="divider block"><div class="divider-content">Icon</div></div><div class="multiple"><div class="button bordered" onclick="toast_icon ()">Icon + Body</div><div class="button bordered" onclick="toast_icon_title ()">Icon + Title + Body</div><div class="button bordered" onclick="toast_icon_adv ()">Icon + Title + Body + Buttons</div></div><div class="divider block"><div class="divider-content">Advanced</div></div><div class="multiple"><div class="button bordered" onclick="toast_adv_one ()">Title + Body</div><div class="button bordered" onclick="toast_adv_two ()">Title + Body + Image</div><div class="button bordered" onclick="toast_adv_three ()">Title + Body + Image + Buttons</div><div class="button bordered" onclick="toast_adv_four ()">Title + Custom body + Image + Buttons</div></div><div class="divider block"><div class="divider-content">Colors</div></div><div class="multiple"><div class="button bordered" onclick="toast_colored ( 'primary' )">Primary</div><div class="button bordered" onclick="toast_colored ( 'secondary' )">Secondary</div><div class="button bordered" onclick="toast_colored ( 'tertiary' )">Tertiary</div><div class="button bordered" onclick="toast_colored ( 'quaternary' )">Quaternary</div><div class="button bordered" onclick="toast_colored ( 'black' )">Black</div><div class="button bordered" onclick="toast_colored ( 'blue' )">Blue</div><div class="button bordered" onclick="toast_colored ( 'brown' )">Brown</div><div class="button bordered" onclick="toast_colored ( 'gray' )">Gray</div><div class="button bordered" onclick="toast_colored ( 'green' )">Green</div><div class="button bordered" onclick="toast_colored ( 'olive' )">Olive</div><div class="button bordered" onclick="toast_colored ( 'orange' )">Orange</div><div class="button bordered" onclick="toast_colored ( 'pink' )">Pink</div><div class="button bordered" onclick="toast_colored ( 'purple' )">Purple</div><div class="button bordered" onclick="toast_colored ( 'red' )">Red</div><div class="button bordered" onclick="toast_colored ( 'teal' )">Teal</div><div class="button bordered" onclick="toast_colored ( 'violet' )">Violet</div><div class="button bordered" onclick="toast_colored ( 'white' )">White</div><div class="button bordered" onclick="toast_colored ( 'yellow' )">Yellow</div><div class="button bordered" onclick="toast_colored ( 'error' )">Error</div><div class="button bordered" onclick="toast_colored ( 'success' )">Success</div><div class="button bordered" onclick="toast_colored ( 'warning' )">Warning</div><div class="button bordered" onclick="toast_colored ( 'base' )">Base</div><div class="button bordered" onclick="toast_colored ( 'inherit' )">Inherit</div><div class="button bordered" onclick="toast_colored ( 'transparent' )">Transparent</div></div><script>function toast_short () {
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no"><title>Toast | Svelto</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/static/css/svelto.css" media="all"><script src="/static/vendor/lodash.js"></script><script src="/static/vendor/cash.js"></script><script src="/static/javascript/svelto.js"></script><script>if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register ( '/server.js?v=1523913652' );
+      }</script></head><body class="layout"><header class="layout-header sticky toolbar primary z-depth-4"><div class="multiple center-y"><div class="label compact transparent"><i class="icon">code</i></div><a href="/" class="large">Svelto - Toast</a><div class="spacer"></div><a href="https://github.com/svelto/svelto" title="Visit the GitHub repository" class="button compact">GITHUB</a></div></header><main class="layout-content"><div class="divider block"><div class="divider-content">API</div></div><div class="multiple"><div class="button bordered" onclick="toast_api_create ()">Create</div><div class="button bordered" onclick="toast_api_open ()">Open</div><div class="button bordered" onclick="toast_api_close ()">Close</div><div class="button bordered" onclick="toast_api_isOpen ()">isOpen</div><div class="button bordered" onclick="toast_api_pause ()">Pause</div><div class="button bordered" onclick="toast_api_resume ()">Resume</div></div><div class="divider block"><div class="divider-content">Text</div></div><div class="multiple"><div class="button bordered" onclick="toast_short ()">Short</div><div class="button bordered" onclick="toast_medium ()">Medium</div><div class="button bordered" onclick="toast_long ()">Long</div></div><div class="divider block"><div class="divider-content">Anchors</div></div><div class="multiple"><div class="button bordered" onclick="toast_anchor ({ y: 'top', x: 'left' })">Top-Left</div><div class="button bordered" onclick="toast_anchor ({ y: 'top', x: 'center' })">Top-Center</div><div class="button bordered" onclick="toast_anchor ({ y: 'top', x: 'expanded' })">Top-Expanded</div><div class="button bordered" onclick="toast_anchor ({ y: 'top', x: 'right' })">Top-Right</div><div class="button bordered" onclick="toast_anchor ({ y: 'bottom', x: 'left' })">Bottom-Left</div><div class="button bordered" onclick="toast_anchor ({ y: 'bottom', x: 'center' })">Bottom-Center</div><div class="button bordered" onclick="toast_anchor ({ y: 'bottom', x: 'expanded' })">Bottom-Expanded</div><div class="button bordered" onclick="toast_anchor ({ y: 'bottom', x: 'right' })">Bottom-Right</div></div><div class="divider block"><div class="divider-content">Buttons</div></div><div class="multiple"><div class="button bordered" onclick="toast_btns_one ()">One</div><div class="button bordered" onclick="toast_btns_two ()">Two</div><div class="button bordered" onclick="toast_btns_three ()">Three</div></div><div class="divider block"><div class="divider-content">Icon</div></div><div class="multiple"><div class="button bordered" onclick="toast_icon ()">Icon + Body</div><div class="button bordered" onclick="toast_icon_title ()">Icon + Title + Body</div><div class="button bordered" onclick="toast_icon_adv_one ()">Icon + Title + Body + Button</div><div class="button bordered" onclick="toast_icon_adv_two ()">Icon + Title + Body + Buttons</div></div><div class="divider block"><div class="divider-content">Advanced</div></div><div class="multiple"><div class="button bordered" onclick="toast_adv_one ()">Title + Body</div><div class="button bordered" onclick="toast_adv_two ()">Title + Body + Button</div><div class="button bordered" onclick="toast_adv_three ()">Title + Body + Image</div><div class="button bordered" onclick="toast_adv_four ()">Title + Body + Image + Button</div><div class="button bordered" onclick="toast_adv_five ()">Title + Body + Image + Buttons</div><div class="button bordered" onclick="toast_adv_six ()">Title + Custom body + Image + Buttons</div></div><div class="divider block"><div class="divider-content">Colors</div></div><div class="multiple"><div class="button bordered" onclick="toast_colored ( 'primary' )">Primary</div><div class="button bordered" onclick="toast_colored ( 'secondary' )">Secondary</div><div class="button bordered" onclick="toast_colored ( 'tertiary' )">Tertiary</div><div class="button bordered" onclick="toast_colored ( 'quaternary' )">Quaternary</div><div class="button bordered" onclick="toast_colored ( 'black' )">Black</div><div class="button bordered" onclick="toast_colored ( 'blue' )">Blue</div><div class="button bordered" onclick="toast_colored ( 'brown' )">Brown</div><div class="button bordered" onclick="toast_colored ( 'gray' )">Gray</div><div class="button bordered" onclick="toast_colored ( 'green' )">Green</div><div class="button bordered" onclick="toast_colored ( 'olive' )">Olive</div><div class="button bordered" onclick="toast_colored ( 'orange' )">Orange</div><div class="button bordered" onclick="toast_colored ( 'pink' )">Pink</div><div class="button bordered" onclick="toast_colored ( 'purple' )">Purple</div><div class="button bordered" onclick="toast_colored ( 'red' )">Red</div><div class="button bordered" onclick="toast_colored ( 'teal' )">Teal</div><div class="button bordered" onclick="toast_colored ( 'violet' )">Violet</div><div class="button bordered" onclick="toast_colored ( 'white' )">White</div><div class="button bordered" onclick="toast_colored ( 'yellow' )">Yellow</div><div class="button bordered" onclick="toast_colored ( 'error' )">Error</div><div class="button bordered" onclick="toast_colored ( 'success' )">Success</div><div class="button bordered" onclick="toast_colored ( 'warning' )">Warning</div><div class="button bordered" onclick="toast_colored ( 'base' )">Base</div><div class="button bordered" onclick="toast_colored ( 'inherit' )">Inherit</div><div class="button bordered" onclick="toast_colored ( 'transparent' )">Transparent</div></div><script>function toast_short () {
       $.toast ( 'Short toast' );
     }
 
@@ -56,11 +56,32 @@
       $.toast ({
         title: 'Test title',
         body: 'This is just an example body',
-        img: '/static/sample/sample.png'
+        buttons: [{
+          text: 'Foo'
+        }]
       });
     }
 
     function toast_adv_three () {
+      $.toast ({
+        title: 'Test title',
+        body: 'This is just an example body',
+        img: '/static/sample/sample.png'
+      });
+    }
+
+    function toast_adv_four () {
+      $.toast ({
+        title: 'Test title',
+        body: 'This is just an example body',
+        img: '/static/sample/sample.png',
+        buttons: [{
+          text: 'Foo'
+        }]
+      });
+    }
+
+    function toast_adv_five () {
       $.toast ({
         title: 'Test title',
         body: 'This is just an example body',
@@ -73,7 +94,7 @@
       });
     }
 
-    function toast_adv_four () {
+    function toast_adv_six () {
       $.toast ({
         title: 'Test title',
         body: '<sub>sub</sub>Something<sup>sup</sup>',
@@ -101,7 +122,18 @@
       });
     }
 
-    function toast_icon_adv () {
+    function toast_icon_adv_one () {
+      $.toast ({
+        title: 'Test title',
+        body: 'This is just an example body',
+        icon: 'person',
+        buttons: [{
+          text: 'Foo'
+        }]
+      });
+    }
+
+    function toast_icon_adv_two () {
       $.toast ({
         title: 'Test title',
         body: 'This is just an example body',
@@ -156,6 +188,22 @@
     function toast_api_isOpen () {
       if ( created_toast ) {
         $.toast ( created_toast.isOpen () );
+      } else {
+        $.toast ( 'You should `Create` it before...' );
+      }
+    }
+
+    function toast_api_pause () {
+      if ( created_toast ) {
+        created_toast.pause ();
+      } else {
+        $.toast ( 'You should `Create` it before...' );
+      }
+    }
+
+    function toast_api_resume () {
+      if ( created_toast ) {
+        created_toast.resume ();
       } else {
         $.toast ( 'You should `Create` it before...' );
       }

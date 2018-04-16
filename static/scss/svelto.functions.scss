@@ -1,11 +1,4 @@
 
-/* =========================================================================
- * Svelto - _ - Color (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* COLOR */
 
 // Based on the compute of `sRGB Luma`
@@ -28,13 +21,6 @@
 
 }
 
-
-/* =========================================================================
- * Svelto - _ - Map (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* MAP */
 
@@ -129,13 +115,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Math - Angle (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 //SOURCE: http://thesassway.com/advanced/inverse-trigonometric-functions-with-sass
 
 //TODO: Implement 2 ways conversion, from unit to unit, so that we can use it in the trigonometric functions and support a wider range of parameters
@@ -164,13 +143,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Math - Factorial (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* FACTORIAL */
 
 @function fact ( $number ) {
@@ -189,13 +161,6 @@
 
 }
 
-
-/* =========================================================================
- * Svelto - _ - Math - Power (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 //TODO: Add logarithm and exp support (not really the right place for this comment but creating a file just for it seems overkilling)
 
@@ -244,13 +209,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Selector - Quantity (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 //SOURCE: https://github.com/danielguillan/quantity-queries
 
 /* QUANTITY */
@@ -286,13 +244,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Unit (Fuctions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* UNIT */
 
 @function unit-strip ( $num ) {
@@ -302,16 +253,9 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Math - Trigonometry (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * =========================================================================
- * @require _/math/factorial/functions.scss
- * @require _/math/power/functions.scss
- * @require _/unit/functions.scss
- * ========================================================================= */
+// @require _/math/factorial/functions.scss
+// @require _/math/power/functions.scss
+// @require _/unit/functions.scss
 
 //SOURCE: https://unindented.org/articles/trigonometry-in-sass
 
@@ -352,16 +296,9 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Math - Trigonometry - Inverse (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * =========================================================================
- * @require _/math/angle/functions.scss
- * @require _/math/power/functions.scss
- * @require _/math/trigonometry/functions.scss
- * ========================================================================= */
+// @require _/math/angle/functions.scss
+// @require _/math/power/functions.scss
+// @require _/math/trigonometry/functions.scss
 
 //SOURCE: http://thesassway.com/advanced/inverse-trigonometric-functions-with-sass
 
@@ -414,13 +351,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - Core - Animations (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* CLASSES */
 
 @function animations-get-classes () {
@@ -444,15 +374,8 @@
 }
 
 
-/* =========================================================================
- * Svelto - Core - Breakpoints (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * =========================================================================
- * @require _/map/functions.scss
- * @require _/unit/functions.scss
- * ========================================================================= */
+// @require _/map/functions.scss
+// @require _/unit/functions.scss
 
 /* BREAKPOINTS */
 
@@ -533,13 +456,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - Core - Colors (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* SELECTOR */
 
 @function colors-get-undefined-selector () {
@@ -579,13 +495,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - Core - Gradients (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* GRADIENT */
 
 @function gradient-get-start-end-from-color ( $color ) {
@@ -599,13 +508,6 @@
 
 }
 
-
-/* =========================================================================
- * Svelto - Core - Sizes (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* SIZES */
 
@@ -648,13 +550,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - Core - Unit (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* UNIT */
 
 @function px ( $length ) {
@@ -665,11 +560,11 @@
 
     @return $length;
 
-  } @elseif $unit == 'em' {
+  } @else if $unit == 'em' {
 
     @return $length / 1em * $font-size;
 
-  } @elseif $unit == 'rem' {
+  } @else if $unit == 'rem' {
 
     @return $length / 1rem * $font-size;
 
@@ -689,11 +584,11 @@
 
     @return $length;
 
-  } @elseif $unit == 'rem' {
+  } @else if $unit == 'rem' {
 
     @return $length / 1rem * 1em;
 
-  } @elseif $unit == 'px' {
+  } @else if $unit == 'px' {
 
     @return $length / $font-size * 1em;
 
@@ -713,11 +608,11 @@
 
     @return $length;
 
-  } @elseif $unit == 'em' {
+  } @else if $unit == 'em' {
 
     @return $length / 1em * 1rem;
 
-  } @elseif $unit == 'px' {
+  } @else if $unit == 'px' {
 
     @return $length / $font-size * 1rem;
 
@@ -729,13 +624,6 @@
 
 }
 
-
-/* =========================================================================
- * Svelto - Core - Z-Depths (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* SELECTOR */
 
@@ -768,13 +656,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - Decorators - Raisable (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* RAISABLE */
 
 @function raisable-next ( $depth: 0 ) {
@@ -786,13 +667,6 @@
 
 }
 
-
-/* =========================================================================
- * Svelto - Widgets - Typography - Link - Colors (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* SELECTOR */
 

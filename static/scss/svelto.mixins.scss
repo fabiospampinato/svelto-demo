@@ -1,11 +1,4 @@
 
-/* =========================================================================
- * Svelto - _ - Assert (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* ASSERT */
 
 // Values in a map are in ascending order
@@ -31,7 +24,7 @@
 
     }
 
-  } @elseif $type == 'map' {
+  } @else if $type == 'map' {
 
     @each $key, $value in $obj {
 
@@ -76,7 +69,7 @@
 
     }
 
-  } @elseif $type == 'map' {
+  } @else if $type == 'map' {
 
     @each $key, $value in $obj {
 
@@ -98,13 +91,6 @@
 
 }
 
-
-/* =========================================================================
- * Svelto - _ - Border (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* BORDER RADIUS */
 
@@ -129,13 +115,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Clearfix (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* CLEARFIX */
 
 @mixin clearfix () {
@@ -148,13 +127,6 @@
 
 }
 
-
-/* =========================================================================
- * Svelto - _ - Dimension (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* DIMENSION */
 
@@ -172,13 +144,6 @@
   max-height: $height;
 }
 
-
-/* =========================================================================
- * Svelto - _ - Gradient (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* GRADIENT */
 
@@ -203,13 +168,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - List (Functions)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* LIST */
 
 @function first ( $list ) {
@@ -220,13 +178,6 @@
   @return nth( $list, length( $list ) );
 }
 
-
-/* =========================================================================
- * Svelto - _ - Margin (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* MARGIN */
 
@@ -241,13 +192,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Padding (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* PADDING */
 
 @mixin padding-x ( $padding ) {
@@ -260,13 +204,6 @@
   padding-bottom: $padding;
 }
 
-
-/* =========================================================================
- * Svelto - _ - Position (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* PRIVATE */
 
@@ -361,15 +298,8 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Fill (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * =========================================================================
- * @require _/dimension/mixins.scss
- * @require _/position/mixins.scss
- * ========================================================================= */
+// @require _/dimension/mixins.scss
+// @require _/position/mixins.scss
 
 /* FILL */
 
@@ -390,15 +320,8 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Center (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * =========================================================================
- * @require _/fill/mixins.scss
- * @require _/margin/mixins.scss
- * ========================================================================= */
+// @require _/fill/mixins.scss
+// @require _/margin/mixins.scss
 
 /* CENTER */
 
@@ -489,13 +412,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Screen - HDPI (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* HDPI */
 
 @mixin media-hdpi ( $ratio: 2 ) {
@@ -516,14 +432,7 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Image (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * =========================================================================
- * @require _/screen/hdpi/mixins.scss
- * ========================================================================= */
+// @require _/screen/hdpi/mixins.scss
 
 /* IMAGE */
 
@@ -551,7 +460,7 @@
 
     }
 
-  } @elseif $type == 'map' {
+  } @else if $type == 'map' {
 
     @each $hdpi, $image in $images {
 
@@ -570,13 +479,6 @@
 
 }
 
-
-/* =========================================================================
- * Svelto - _ - Screen - Height (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* HEIGHT */
 
@@ -613,13 +515,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Screen - Width (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* WIDTH */
 
 @mixin media-width-up ( $width ) {
@@ -655,13 +550,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Screen Reader (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 //SOURCE: https://github.com/twbs/bootstrap/blob/v4-dev/scss/mixins/_screen-reader.scss
 
 /* SCREEN READER */
@@ -691,13 +579,6 @@
 
 }
 
-
-/* =========================================================================
- * Svelto - _ - Selector - Quantity (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 //SOURCE: https://github.com/danielguillan/quantity-queries
 
@@ -796,13 +677,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - _ - Text - Others (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* OTHERS */
 
 @mixin text-wrap () {
@@ -836,13 +710,6 @@
   border: 0;
 }
 
-
-/* =========================================================================
- * Svelto - Core - Breakpoints (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* BREAKPOINTS */
 
@@ -932,14 +799,7 @@
 }
 
 
-/* =========================================================================
- * Svelto - Core - Gradients (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * =========================================================================
- * @require _/gradient/mixins.scss
- * ========================================================================= */
+// @require _/gradient/mixins.scss
 
 /* GRADIENT */
 
@@ -953,13 +813,6 @@
   @include gradient-y ( nth( $start-end, 1 ), nth( $start-end, 2 ), 0%, 100% );
 }
 
-
-/* =========================================================================
- * Svelto - Core - Gutter (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* GUTTER */
 
@@ -990,12 +843,13 @@
 }
 
 
-/* =========================================================================
- * Svelto - Decorators - Colors (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
+/* ACTIONABLE */
+
+@mixin actionable-inline () {
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
 
 /* COLOR */
 
@@ -1009,11 +863,19 @@
 
       @if not $basic {
 
-        @extend %color-#{$color};
+        @if $svelto-development { // For performance reasons
+          @include color-inline ( $color, 'full' );
+        } @else {
+          @extend %color-#{$color};
+        }
 
       } @else {
 
-        @extend %color-#{$color}-base;
+        @if $svelto-development { // For performance reasons
+          @include color-inline ( $color, 'base' );
+        } @else {
+          @extend %color-#{$color}-base;
+        }
 
       }
 
@@ -1035,13 +897,48 @@
 
 }
 
+@mixin color-inline ( $color, $type ) {
 
-/* =========================================================================
- * Svelto - Decorators - Sizes (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
+  $datas: map-get( $colors, $color );
+
+  $bg: nth( $datas, 1 );
+  $bg-hover: nth( $datas, 2 );
+  $bg-active: nth( $datas, 3 );
+  $border: nth( $datas, 4 );
+  $text: nth( $datas, 6 );
+
+  @if $type == 'base' {
+
+    background-color: $bg;
+    border-color: $border;
+    color: $text;
+
+  } @else if $type == 'hover' {
+
+    background-color: $bg-hover;
+
+  } @else if $type == 'active' {
+
+    background-color: $bg-active;
+
+  } @else if $type == 'full' {
+
+    @include color-inline ( $color, 'base' );
+
+    &.hover,
+    &:hover {
+      @include color-inline ( $color, 'hover' );
+    }
+
+    &.active,
+    &:active {
+      @include color-inline ( $color, 'active' );
+    }
+
+  }
+
+}
+
 
 /* SIZE */
 
@@ -1090,13 +987,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - Decorators - Z-Depths (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* Z-DEPTH */
 
 @mixin z-depth ( $depth, $force: false, $basic: false ) {
@@ -1144,14 +1034,7 @@
 }
 
 
-/* =========================================================================
- * Svelto - Decorators - Raisable (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * =========================================================================
- * @require decorators/z_depths/mixins.scss
- * ========================================================================= */
+// @require decorators/z_depths/mixins.scss
 
 /* RAISABLE */
 
@@ -1186,13 +1069,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - Widgets - Shape - Circle (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* CIRCLE */
 
 @mixin circle ( $size: 1em ) {
@@ -1202,13 +1078,6 @@
 }
 
 
-/* =========================================================================
- * Svelto - Widgets - Shape - Square (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
-
 /* SQUARE */
 
 @mixin square ( $size: 1em ) {
@@ -1216,13 +1085,6 @@
   height: $size;
 }
 
-
-/* =========================================================================
- * Svelto - Widgets - Shape - Triangle (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* TRIANGLE */
 
@@ -1281,14 +1143,7 @@
 }
 
 
-/* =========================================================================
- * Svelto - Widgets - Toast - Queue (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * =========================================================================
- * @require decorators/z_depths/mixins.scss
- * ========================================================================= */
+// @require decorators/z_depths/mixins.scss
 
 /* QUEUE */
 
@@ -1312,13 +1167,6 @@
 
 }
 
-
-/* =========================================================================
- * Svelto - Widgets - Typography - Link - Colors (Mixins)
- * =========================================================================
- * Copyright (c) 2015-2017 Fabio Spampinato
- * Licensed under MIT (https://github.com/svelto/svelto/blob/master/LICENSE)
- * ========================================================================= */
 
 /* COLOR */
 
@@ -1352,6 +1200,42 @@
 
       @extend %color-#{$color}-link-base;
 
+    }
+
+  }
+
+}
+
+@mixin color-link-inline ( $color, $type ) {
+
+  $datas: map-get( $colors, $color );
+
+  $bg: nth( $datas, 1 );
+  $bg-hover: nth( $datas, 2 );
+  $bg-active: nth( $datas, 3 );
+
+  @if $type == 'base' {
+
+    color: $bg;
+
+  } @else if $type == 'hover' {
+
+    color: $bg-hover;
+
+  } @else if $type == 'active' {
+
+    color: $bg-active;
+
+  } @else if $type == 'full' {
+
+    @include color-link-inline ( $color, 'base' );
+
+    &:hover {
+      @include color-link-inline ( $color, 'hover' );
+    }
+
+    &:active {
+      @include color-link-inline ( $color, 'active' );
     }
 
   }
