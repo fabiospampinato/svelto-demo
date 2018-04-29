@@ -33,6 +33,12 @@
     <i class="icon">access_time</i>
   </div>
 
+  {{{widget.divider "Time Ago - Template"}}}
+
+  <div class="label bordered compact timeago" data-template="The thing happened: [timeago]" data-timestamp="{{{widget.nowSecs}}}" data-options='{"title":true}'>
+    <i class="icon">access_time</i>
+  </div>
+
   {{{> time_ago_actions}}}
 
 </template>

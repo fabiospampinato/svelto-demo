@@ -6,15 +6,46 @@
   {{{widget.divider "Chart"}}}
 
   <div class="container bordered">
-    <canvas class="chart" width="1" height="300" data-datas='[[2,8,6,14,10,18,24]]'></canvas>
+    <canvas class="chart" width="1" height="200" data-ticks='[6,5,4,3,2,1,0]' data-tooltips='["Sei","Cinque","Quattro","Tre","Due","Uno","Zero"]' data-datas='[2,8,6,14,10,18,24]'></canvas>
   </div>
 
   <div class="container bordered">
-    <canvas class="chart" width="1" height="300" data-type="bar" data-labels='["Dataset #1", "Dataset #2"]' data-datas='[[2,8,6,14,10],[3,5,4,20,16]]' data-colors='["#1565c0","#ef6c00"]'></canvas>
+    <canvas class="chart" width="1" height="200" data-type="bar" data-labels='["Dataset #1", "Dataset #2", "Dataset #3"]' data-datas='[[2,8,6,14,10],[3,5,4,20,16],[4,7,12,4,21]]' data-colors='["#1565c0","#ef6c00","#6a1b9a"]' data-visibilities='[true,true,false]'></canvas>
   </div>
 
   <script>
     $.toast ({ body: 'Documentation at <a href="https://chartjs.org" title="Chart.js Documentation">chartjs.org</a>', ttl: Infinity });
+  </script>
+
+  {{{> chart_actions}}}
+
+</template>
+
+<!-- ACTIONS -->
+
+<template name="chart_actions">
+
+  {{{widget.divider "API"}}}
+
+  <div class="multiple actions">
+    {{{widget.action "Update" "update ()"}}}
+  </div>
+
+  {{{widget.divider "State"}}}
+
+  <div class="multiple joined actions">
+    {{{widget.radioAction "Enabled" "state" "api ( 'enable' )" true}}}
+    {{{widget.radioAction "Disabled" "state" "api ( 'disable' )"}}}
+  </div>
+
+  <script>
+    function update () {
+      var $chart = $('canvas.chart').first (),
+          datas = $chart.data ( 'datas' ),
+          newDatas = datas.map ( () => _.random ( 0, 50 ) );
+      $chart.attr ( 'data-datas', JSON.stringify ( newDatas ) );
+      $chart.chart ( 'update' );
+    }
   </script>
 
 </template>

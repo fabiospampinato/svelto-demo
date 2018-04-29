@@ -469,11 +469,11 @@ const widget = {
 
   },
 
-  progressbar: ( value = 0, decimals = 0 ) => {
+  progressbar: ( value = 0, decimals = 0, label ) => {
 
     return `
       <div data-value="${value}" data-decimals="${decimals}" class="progressbar">
-        <div data-value="${value}%" style="min-width:${value}%;" class="progressbar-highlight"></div>
+        <div data-value="${value}%" ${label ? `data-label="${label}"` : ''} style="min-width:${value}%;" class="progressbar-highlight"></div>
       </div>
     `;
 
