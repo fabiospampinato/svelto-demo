@@ -2436,7 +2436,7 @@ $gutter-half: $gutter / 2;
 
 /* STICKY */
 
-$layout-sticky-header-height: 57px !default; //FIXME: Shouldn't exist, or should be calculated automatically // Unfortunately `position: sticky` is almost totally unsupported atm
+$layout-sticky-header-height: 56px !default; //FIXME: Shouldn't exist, or should be calculated automatically // Unfortunately `position: sticky` is almost totally unsupported atm
 $layout-sticky-header-z-index: 1100 !default;
 
 
@@ -2480,7 +2480,9 @@ $body-color: 'base' !default;
 
 /* HEADER */
 
-$layout-header-bg-color: darken( nth( map-get( $colors, $body-color ), 1 ), 10 ) !default;
+$layout-header-bg-color: darken( nth( map-get( $colors, $body-color ), 1 ), 70 ) !default;
+$layout-header-border-color: darken( $layout-header-bg-color, $color-border-darken-amount ) !default;
+$layout-header-color: $color-black-text !default; // The bg color is quite a bit darkened
 
 /* CONTENT */
 
@@ -2490,12 +2492,14 @@ $layout-content-padding-y: $layout-content-padding-x !default;
 /* FOOTER */
 
 $layout-footer-bg-color: $layout-header-bg-color !default;
+$layout-footer-border-color: $layout-header-border-color !default;
+$layout-footer-color: $layout-header-color !default;
 
 
 /* SVELTO */
 
 $svelto-version: '1.0.0' !default;
-$svelto-environment: 'production' !default;
+$svelto-environment: 'development' !default;
 $svelto-development: $svelto-environment == 'development' !default;
 
 
@@ -2796,12 +2800,6 @@ $highlighted-colors: map-keys( $colors ) !default;
 $highlighted-colors-directions: ( 'top', 'right', 'bottom', 'left' ) !default;
 
 
-/* HIGHLIGHTED */
-
-$highlight-width: 2px !default;
-$highlight-style: solid !default;
-
-
 // @require core/breakpoints/variables.scss
 
 /* LIMITED */
@@ -2894,6 +2892,13 @@ $avatar-img-hover-opacity: 0.8 !default;
 /* ANIMATION */
 
 $avatar-animation-duration: $animation-normal !default;
+
+
+// @require core/colors/variables.scss
+
+/* BACKGROUND GENERATOR */
+
+$background-generator-bg-color: $color-black !default;
 
 
 // @require core/animations/variables.scss
@@ -3063,6 +3068,18 @@ $container-border-radius: $rounded-border-radius !default;
 
 $container-padding-x: $gutter !default;
 $container-padding-y: $container-padding-x !default;
+
+
+
+// @require core/colors/variables.scss
+// @require decorators/bordered/variables.scss
+// @require widgets/container/variables.scss
+
+/* HIGHLIGHTED */
+
+$highlight-width: $border-width * 2 !default;
+$highlight-bordered-width: $border-width !default;
+$highlight-color: nth( map-get( $colors, $container-color ), 5 ) !default;
 
 
 // @require widgets/container/variables.scss
@@ -4956,10 +4973,23 @@ $radio-icon-on: icon( 'radiobox-on' ) !default;
 $radio-icon-off: icon( 'radiobox-off' ) !default;
 
 
+// @require core/animations/variables.scss
+// @require core/colors/variables.scss
+// @require widgets/container/variables.scss
+
 /* RAILS */
 
 $rails-extra-padding: 30px !default; // Ensuring that even if are using overlay scrollbars we have an extra margin to be confident enough that they won't be visible
-$rails-scrollbar-sizes: 0, 12px, 15px, 16px, 17px !default; // Possible scrollbars' sizes that we are supporting
+$rails-scrollbar-sizes: 0px, 12px, 15px, 16px, 17px !default; // Possible scrollbars' sizes that we are supporting
+
+/* SHADOW */
+
+$rails-shadow-width: 5em !default;
+$rails-shadow-color: nth( map-get( $colors, $container-color ), 1 ) !default;
+
+/* ANIMATION */
+
+$rails-animation-duration: $animation-fast !default;
 
 
 // @require core/colors/variables.scss
@@ -5862,6 +5892,21 @@ $zoomable-animation-duration: $animation-normal !default;
 }
 
 
+/* CONTENT */
+
+.content-start {
+  justify-content: flex-start !important;
+}
+
+.content-center {
+  justify-content: center !important;
+}
+
+.content-end {
+  justify-content: flex-end !important;
+}
+
+
 /* GROW */
 
 .grow {
@@ -5870,6 +5915,21 @@ $zoomable-animation-duration: $animation-normal !default;
 
 .no-grow {
   flex-grow: 0 !important;
+}
+
+
+/* ITEMS */
+
+.items-start {
+  align-items: flex-start !important;
+}
+
+.items-center {
+  align-items: center !important;
+}
+
+.items-end {
+  align-items: flex-end !important;
 }
 
 
@@ -6535,6 +6595,8 @@ script:last-child {
 
   &-header {
     background-color: $layout-header-bg-color;
+    border-color: $layout-header-border-color;
+    color: $layout-header-color;
   }
 
   /* CONTENT */
@@ -6548,6 +6610,8 @@ script:last-child {
 
   &-footer {
     background-color: $layout-footer-bg-color;
+    border-color: $layout-footer-border-color;
+    color: $layout-footer-color;
   }
 
 }
@@ -6630,7 +6694,7 @@ script:last-child {
     > .layout-header.sticky {
 
       @include position ( fixed, 0 0 false 0 );
-      z-index: $layout-sticky-header-z-index;
+      z-index: $layout-sticky-header-z-index !important;
 
       + .layout-content {
         margin-top: $layout-sticky-header-height;
@@ -6648,7 +6712,7 @@ script:last-child {
 
         position: relative;
         position: sticky; // Unfortunately not well supported at the moment (FF >= 32, Safari >= 6.1)
-        z-index: $layout-sticky-header-z-index - 1;
+        z-index: $layout-sticky-header-z-index - 1 !important;
 
         + .layout-content {
           margin-top: 0;
@@ -8130,27 +8194,55 @@ body {
 }
 
 
-// @optional decorators/bordered/bordered.scss
-
 /* HIGHLIGHTED */
 
-.highlighted {}
+// It looks kind of ugly for `.bordered` stuff, especially when zomming in
+//FIXME: Avoiding animating `box-shadow` (at least when adding the class), while still supporting `.blurred` and `.disabled`
+
+.highlighted {
+  transition: opacity $disabled-animation-duration,
+              filter $blurred-animation-duration;
+}
 
 
 // @require ../highlighted.scss
 
 /* COLORS */
 
+$offsets: (
+  'top': ( 0 $highlight-width ),
+  'right': ( #{-$highlight-width} 0 ),
+  'bottom': ( 0 #{-$highlight-width} ),
+  'left': ( $highlight-width 0 )
+);
+
+$offsets-bordered: (
+  'top': ( 0 $highlight-bordered-width ),
+  'right': ( #{-$highlight-bordered-width} 0 ),
+  'bottom': ( 0 #{-$highlight-bordered-width} ),
+  'left': ( $highlight-bordered-width 0 )
+);
+
 @each $direction in $highlighted-colors-directions {
+
+  $offset: map-get( $offsets, $direction );
+  $offset-bordered: map-get( $offsets-bordered, $direction );
 
   @each $name, $datas in $colors {
 
     @if index( $highlighted-colors, $name ) {
 
-      $accent: nth( $datas, 5 );
+      $color: nth( $datas, 5 );
 
       %color-#{$name}.highlight-#{$direction}.highlighted {
-        border-#{$direction}-color: $accent;
+
+        border-#{$direction}-color: $color !important;
+        box-shadow: inset #{$offset} 0 0 $color !important;
+
+        &.bordered {
+          box-shadow: inset #{$offset-bordered} 0 0 $color !important;
+        }
+
       }
 
     }
@@ -8165,8 +8257,14 @@ body {
 /* BOTTOM */
 
 .highlight-bottom {
-  border-bottom-width: $highlight-width;
-  border-bottom-style: $highlight-style;
+
+  border-bottom-color: $highlight-color !important;
+  box-shadow: inset 0 #{-$highlight-width} 0 0 $highlight-color !important;
+
+  &.bordered {
+    box-shadow: inset 0 #{-$highlight-bordered-width} 0 0 $highlight-color !important;
+  }
+
 }
 
 
@@ -8175,8 +8273,14 @@ body {
 /* LEFT */
 
 .highlight-left {
-  border-left-width: $highlight-width;
-  border-left-style: $highlight-style;
+
+  border-left-color: $highlight-color !important;
+  box-shadow: inset $highlight-width 0 0 0 $highlight-color !important;
+
+  &.bordered {
+    box-shadow: inset $highlight-bordered-width 0 0 0 $highlight-color !important;
+  }
+
 }
 
 
@@ -8185,8 +8289,14 @@ body {
 /* RIGHT */
 
 .highlight-right {
-  border-right-width: $highlight-width;
-  border-right-style: $highlight-style;
+
+  border-right-color: $highlight-color !important;
+  box-shadow: inset #{-$highlight-width} 0 0 0 $highlight-color !important;
+
+  &.bordered {
+    box-shadow: inset #{-$highlight-bordered-width} 0 0 0 $highlight-color !important;
+  }
+
 }
 
 
@@ -8195,8 +8305,14 @@ body {
 /* TOP */
 
 .highlight-top {
-  border-top-width: $highlight-width;
-  border-top-style: $highlight-style;
+
+  border-top-color: $highlight-color !important;
+  box-shadow: inset 0 $highlight-width 0 0 $highlight-color !important;
+
+  &.bordered {
+    box-shadow: inset 0 $highlight-bordered-width 0 0 $highlight-color !important;
+  }
+
 }
 
 
@@ -8840,6 +8956,17 @@ html.clip-path-url {
 }
 
 
+// @require core/widget/widget.scss
+
+/* BACKGROUND GENERATOR */
+
+canvas.background-generator {
+  @extend %widget;
+  display: block;
+  background-color: $background-generator-bg-color;
+}
+
+
 /* BADGE */
 
 .badge {
@@ -8851,7 +8978,7 @@ html.clip-path-url {
   align-items: center;
   justify-content: center;
   line-height: 1em;
-  z-index: $badge-z-index;
+  z-index: $badge-z-index !important;
   font-weight: $badge-font-weight;
   border-radius: $badge-border-radius;
   padding: $badge-padding-y $badge-padding-x;
@@ -8987,7 +9114,7 @@ html.clip-path-url {
   /* INDICATORS */
 
   &-indicators {
-    z-index: $carousel-indicators-z-index;
+    z-index: $carousel-indicators-z-index !important;
     display: flex;
     position: absolute;
     bottom: $gutter;
@@ -9670,7 +9797,7 @@ canvas.chart {
     max-height: none;
     width: 100% !important;
     height: 100% !important;
-    z-index: $card-fullscreen-z-index;
+    z-index: $card-fullscreen-z-index !important;
   }
 
 }
@@ -9706,7 +9833,7 @@ canvas.chart {
   width: 100%;
   max-height: none;
   min-height: 100%;
-  z-index: $card-fullscreen-z-index;
+  z-index: $card-fullscreen-z-index !important;
 }
 
 /* VERTICAL SHRINKING FIX (IE-10/11) */
@@ -10294,7 +10421,7 @@ html.clip-path-url {
 
 %hr-base {
   display: flex;
-  z-index: $hr-z-index;
+  z-index: $hr-z-index !important;
   background-color: $hr-bg-color;
   margin-top: 0;
 }
@@ -10538,7 +10665,7 @@ html.flexbox-tweener {
 .editor.fullscreen,
 .editor.fullscreen-request {
   @include fill-fixed ();
-  z-index: $editor-fullscreen-z-index;
+  z-index: $editor-fullscreen-z-index !important;
   border-radius: 0;
   max-width: none; // Since the editor may as well be `.limited`
   width: auto; // Since the editor may have some `size-columns` classes set
@@ -10859,6 +10986,10 @@ i.emoji {
 
   /* CONTENT */
 
+  > .expander-content:not([class*="slide"]) {
+    overflow: hidden;
+  }
+
   &:not(.horizontal) { //TODO: Move direction-related styles to their own files
 
     > .expander-content:not([class*="slide"]) {
@@ -10916,6 +11047,12 @@ i.emoji {
   min-height: 1px; // It fixes a bug in IE11 where the images are stretched vertically
   padding: $figure-padding-y $figure-padding-x;
   border-radius: $figure-border-radius;
+
+  /* CHILDREN */
+
+  > * {
+    max-width: 100%; // Otherwise the content might overflow
+  }
 
   /* IMAGE */
 
@@ -11264,6 +11401,7 @@ footer {
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
+    font-display: block;
     src: url(#{$icon-path-fonts}MaterialIcons-Regular.woff2#{$revision}) format('woff2'),
          url(#{$icon-path-fonts}MaterialIcons-Regular.woff#{$revision}) format('woff'),
          url(#{$icon-path-fonts}MaterialIcons-Regular.ttf#{$revision}) format('truetype'),
@@ -11276,6 +11414,7 @@ footer {
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
+    font-display: block;
     src: url(#{$icon-font-cdn-woff2}) format('woff2'),
          url(#{$icon-font-cdn-woff}) format('woff'),
          url(#{$icon-font-cdn-eot}) format('eot'),
@@ -11352,7 +11491,7 @@ i.icon {
   .carousel-next {
 
     @include absolute ( 0 false 0 false );
-    z-index: $carousel-inset-previous-next-z-index;
+    z-index: $carousel-inset-previous-next-z-index !important;
     display: flex;
     align-items: center;
     font-size: $carousel-inset-previous-next-font-size;
@@ -11452,6 +11591,7 @@ input[type="checkbox"] {
 
     min-height: 1em * $icon-scale-factor;
     min-width: 1em * $icon-scale-factor;
+    flex-grow: 1;
     cursor: pointer;
 
     /* BEFORE / AFTER */
@@ -12112,8 +12252,11 @@ input[type="file"] {
   @include color ( $label-color, $label-color-force, $label-color-basic );
   @include text-no-wrap ();
   font-weight: $label-font-weight;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  line-height: 1 * $icon-scale-factor;
   border-radius: $label-border-radius;
   padding: $label-padding-y $label-padding-x;
   min-width: $line-height-em + ( $label-padding-x * 2 ); // In order to always maintain a reasonable aspect ratio
@@ -12196,7 +12339,7 @@ input[type="file"] {
 .label.corner {
 
   @include dimension ( $label-corner-size );
-  z-index: $label-corner-z-index;
+  z-index: $label-corner-z-index !important;
   margin: 0 !important;
   border-width: 0 !important;
   background-color: transparent !important;
@@ -12366,7 +12509,7 @@ input[type="file"] {
 .label.floating {
   @include z-depth ( $label-floating-z-depth, $label-floating-z-depth-force, $label-floating-z-depth-basic );
   position: fixed;
-  z-index: $label-floating-z-index;
+  z-index: $label-floating-z-index !important;
   right: $label-floating-offset;
   bottom: $label-floating-offset;
   margin-bottom: 0;
@@ -12901,7 +13044,7 @@ input[type="file"] {
   @include center-transform ();
   @include z-depth ( $modal-z-depth, $modal-z-depth-force, $modal-z-depth-basic );
   position: fixed;
-  z-index: $modal-z-index;
+  z-index: $modal-z-index !important;
   max-width: $modal-max-width;
   max-height: $modal-max-height;
   margin: 0;
@@ -13047,7 +13190,7 @@ html.flexbox-tweener {
 .overlay {
 
   @include absolute ( 0 );
-  z-index: $overlay-z-index;
+  z-index: $overlay-z-index !important;
   margin: 0 !important;
   transition: opacity $overlay-animation-duration;
   border-radius: inherit;
@@ -13068,6 +13211,7 @@ html.flexbox-tweener {
 
 
 // @require ../overlay.scss
+// @require decorators/blurred/blurred.scss
 
 /* BLURRER */
 
@@ -13157,7 +13301,7 @@ html.flexbox-tweener {
 .panel {
   @include z-depth ( $panel-z-depth, $panel-z-depth-force, $panel-z-depth-basic );
   position: fixed;
-  z-index: $panel-z-index;
+  z-index: $panel-z-index !important;
   margin: 0;
   border-radius: 0 !important;
   transition: transform $panel-animation-duration;
@@ -13745,7 +13889,7 @@ html.flexbox-tweener {
 
   @include fixed ( 0 false false 0 );
   @include z-depth ( $popover-z-depth, $popover-z-depth-force, $popover-z-depth-basic );
-  z-index: $popover-z-index;
+  z-index: $popover-z-index !important;
   overflow: visible;
   max-width: $popover-max-width;
   margin: 0;
@@ -13997,6 +14141,12 @@ html.flexbox-tweener {
     font-size: $progressbar-label-font-size;
   }
 
+  /* AFTER (CUSTOM LABEL) */
+
+  .progressbar-highlight[data-label]:after {
+    content: attr(data-label);
+  }
+
 }
 
 
@@ -14158,34 +14308,68 @@ input[type=radio] {
     flex-shrink: 0;
   }
 
-  /* CONTENT */
+  /* SHADOW */
 
-  $max-scrollbar-size: last( $rails-scrollbar-sizes );
+  &-shadow {
+
+    position: relative;
+    overflow: hidden;
+    flex-grow: 1;
+
+    /* LEFT & RIGHT */
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 1;
+      pointer-events: none;
+      width: $rails-shadow-width;
+      opacity: 0;
+      transition: opacity $rails-animation-duration;
+    }
+
+    &-left:before,
+    &-right:after {
+      opacity: 1;
+    }
+
+    /* LEFT */
+
+    &:before {
+      @include gradient-x( $rails-shadow-color, transparent );
+      left: 0;
+    }
+
+    /* RIGHT */
+
+    &:after {
+      @include gradient-x( transparent, $rails-shadow-color );
+      right: 0;
+    }
+
+  }
+
+  /* CONTENT */
 
   &-content {
 
     flex: 1 1 auto;
     overflow-x: scroll;
     overflow-y: hidden;
-    padding-bottom: $rails-extra-padding;
-    margin-bottom: calc( ( #{$rails-extra-padding} + #{$max-scrollbar-size} ) * -1 );
+
+    /* READY */
+
+    html[class*="scrollbar-size-"] & {
+      padding-bottom: $rails-extra-padding;
+    }
 
     /* CHILDREN */
 
     > * {
       flex: 1 0 auto;
-    }
-
-    /* NOT MULTIPLE */
-
-    &:not(.multiple) {
-      padding-bottom: calc( #{$rails-extra-padding} + #{$max-scrollbar-size} );
-    }
-
-    /* MULTIPLE */
-
-    &.multiple {
-      margin-bottom: calc( ( #{$rails-extra-padding} + #{$max-scrollbar-size} + #{$gutter} ) * -1 );
     }
 
   }
@@ -14527,7 +14711,7 @@ input[type=radio] {
     position: absolute;
     pointer-events: none;
     margin: 0 !important;
-    z-index: $ripple-circle-z-index;
+    z-index: $ripple-circle-z-index !important;
 
     &:before {
       @include absolute ( ( - 50% ) false false ( - 50% ) );
@@ -14706,7 +14890,7 @@ optgroup {
     opacity: 0;
     border: 0;
     border-radius: inherit;
-    z-index: $select-z-index;
+    z-index: $select-z-index !important;
 
     /* BORDERED */
 
@@ -14723,6 +14907,7 @@ optgroup {
       padding-right: ( 1em * $icon-scale-factor ) + $select-inner-gutter;
       min-height: 1em * $icon-scale-factor;
       min-width: 1em * $icon-scale-factor;
+      flex-grow: 1;
       cursor: pointer;
 
       /* EMPTY */
@@ -15420,6 +15605,7 @@ svg.spinner {
   @extend %widget;
   @include children-no-gutter ();
   text-align: center;
+  flex-direction: column;
 
   /* VALUE */
 
@@ -16650,7 +16836,7 @@ table th.sortable { // In order to better support datatables
 .emojipicker.popover {
 
   width: $emojipicker-popover-width;
-  z-index: $emojipicker-popover-z-index;
+  z-index: $emojipicker-popover-z-index !important;
 
   /* CONTAINERS */
 
@@ -17269,7 +17455,7 @@ html.flexbox-tweener {
 .toast-queues {
 
   @include fixed ( false 0 false 0 );
-  z-index: $toast-queues-z-index;
+  z-index: $toast-queues-z-index !important;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -17932,7 +18118,7 @@ span {
 
 .zoomable.show {
 
-  z-index: $zoomable-show-z-index;
+  z-index: $zoomable-show-z-index !important;
   cursor: zoom-out;
 
   /* UNZOOMED */

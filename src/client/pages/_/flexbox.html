@@ -3,12 +3,32 @@
 
 <template name="flexbox">
 
+  {{{widget.divider "Content"}}}
+
+  <div class="container bordered">
+    <div class="multiple vertical joined">
+      <div class="label fluid bordered content-start">Start</div>
+      <div class="label fluid bordered content-center">Center</div>
+      <div class="label fluid bordered content-end">End</div>
+    </div>
+  </div>
+
   {{{widget.divider "Grow"}}}
 
   <div class="container bordered">
     <div class="multiple">
       <div class="container bordered grow">Grow</div>
       <div class="container bordered no-grow">No grow</div>
+    </div>
+  </div>
+
+  {{{widget.divider "Items"}}}
+
+  <div class="container bordered">
+    <div class="multiple joined">
+      <div class="label fluid bordered items-start" style="height: 100px">Start</div>
+      <div class="label fluid bordered items-center" style="height: 100px">Center</div>
+      <div class="label fluid bordered items-end" style="height: 100px">End</div>
     </div>
   </div>
 

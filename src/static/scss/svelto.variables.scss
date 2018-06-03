@@ -480,7 +480,7 @@ $gutter-half: $gutter / 2;
 
 /* STICKY */
 
-$layout-sticky-header-height: 57px !default; //FIXME: Shouldn't exist, or should be calculated automatically // Unfortunately `position: sticky` is almost totally unsupported atm
+$layout-sticky-header-height: 56px !default; //FIXME: Shouldn't exist, or should be calculated automatically // Unfortunately `position: sticky` is almost totally unsupported atm
 $layout-sticky-header-z-index: 1100 !default;
 
 
@@ -524,7 +524,9 @@ $body-color: 'base' !default;
 
 /* HEADER */
 
-$layout-header-bg-color: darken( nth( map-get( $colors, $body-color ), 1 ), 10 ) !default;
+$layout-header-bg-color: darken( nth( map-get( $colors, $body-color ), 1 ), 70 ) !default;
+$layout-header-border-color: darken( $layout-header-bg-color, $color-border-darken-amount ) !default;
+$layout-header-color: $color-black-text !default; // The bg color is quite a bit darkened
 
 /* CONTENT */
 
@@ -534,12 +536,14 @@ $layout-content-padding-y: $layout-content-padding-x !default;
 /* FOOTER */
 
 $layout-footer-bg-color: $layout-header-bg-color !default;
+$layout-footer-border-color: $layout-header-border-color !default;
+$layout-footer-color: $layout-header-color !default;
 
 
 /* SVELTO */
 
 $svelto-version: '1.0.0' !default;
-$svelto-environment: 'production' !default;
+$svelto-environment: 'development' !default;
 $svelto-development: $svelto-environment == 'development' !default;
 
 
@@ -840,12 +844,6 @@ $highlighted-colors: map-keys( $colors ) !default;
 $highlighted-colors-directions: ( 'top', 'right', 'bottom', 'left' ) !default;
 
 
-/* HIGHLIGHTED */
-
-$highlight-width: 2px !default;
-$highlight-style: solid !default;
-
-
 // @require core/breakpoints/variables.scss
 
 /* LIMITED */
@@ -938,6 +936,13 @@ $avatar-img-hover-opacity: 0.8 !default;
 /* ANIMATION */
 
 $avatar-animation-duration: $animation-normal !default;
+
+
+// @require core/colors/variables.scss
+
+/* BACKGROUND GENERATOR */
+
+$background-generator-bg-color: $color-black !default;
 
 
 // @require core/animations/variables.scss
@@ -1107,6 +1112,18 @@ $container-border-radius: $rounded-border-radius !default;
 
 $container-padding-x: $gutter !default;
 $container-padding-y: $container-padding-x !default;
+
+
+
+// @require core/colors/variables.scss
+// @require decorators/bordered/variables.scss
+// @require widgets/container/variables.scss
+
+/* HIGHLIGHTED */
+
+$highlight-width: $border-width * 2 !default;
+$highlight-bordered-width: $border-width !default;
+$highlight-color: nth( map-get( $colors, $container-color ), 5 ) !default;
 
 
 // @require widgets/container/variables.scss
@@ -3000,10 +3017,23 @@ $radio-icon-on: icon( 'radiobox-on' ) !default;
 $radio-icon-off: icon( 'radiobox-off' ) !default;
 
 
+// @require core/animations/variables.scss
+// @require core/colors/variables.scss
+// @require widgets/container/variables.scss
+
 /* RAILS */
 
 $rails-extra-padding: 30px !default; // Ensuring that even if are using overlay scrollbars we have an extra margin to be confident enough that they won't be visible
-$rails-scrollbar-sizes: 0, 12px, 15px, 16px, 17px !default; // Possible scrollbars' sizes that we are supporting
+$rails-scrollbar-sizes: 0px, 12px, 15px, 16px, 17px !default; // Possible scrollbars' sizes that we are supporting
+
+/* SHADOW */
+
+$rails-shadow-width: 5em !default;
+$rails-shadow-color: nth( map-get( $colors, $container-color ), 1 ) !default;
+
+/* ANIMATION */
+
+$rails-animation-duration: $animation-fast !default;
 
 
 // @require core/colors/variables.scss

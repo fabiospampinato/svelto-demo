@@ -1,114 +1,59 @@
-"use strict";
-
-// @optional attributes/index.js
-// @optional collection/index.js
-// @optional css/index.js
-// @optional data/index.js
-// @optional dimensions/index.js
-// @optional events/index.js
-// @optional forms/index.js
-// @optional manipulation/index.js
-// @optional offset/index.js
-// @optional traversal/index.js
-// @require core/index.js
-(function () {
-  // @concat-content
-  var specialRegExpCharactersRe = /[-[\]{}()*+?.,\\^$|#\s]/g;
-
-  function escapeRegExp(str) {
-    return str.replace(specialRegExpCharactersRe, '\\$&');
-  } // @require ./escape_regexp.js
-
-
-  function hasClass(ele, cls) {
-    return ele.classList ? ele.classList.contains(cls) : new RegExp("(^| )" + escapeRegExp(cls) + "( |$)", 'gi').test(ele.className);
-  } // @require ./has_class.js
-
-
-  function addClass(ele, cls) {
-    if (ele.classList) {
-      ele.classList.add(cls);
-    } else if (!hasClass(ele, cls)) {
-      ele.className += " " + cls;
-    }
-  }
-
-  function removeClass(ele, cls) {
-    if (ele.classList) {
-      ele.classList.remove(cls);
-    } else {
-      ele.className = ele.className.replace(cls, '');
-    }
-  }
+/* MIT https://github.com/kenwheeler/cash */
+(function(){
+  "use strict";
 
   var doc = document,
-      docEl = doc.documentElement,
       win = window,
       _Array$prototype = Array.prototype,
       filter = _Array$prototype.filter,
+      indexOf = _Array$prototype.indexOf,
       map = _Array$prototype.map,
       push = _Array$prototype.push,
       slice = _Array$prototype.slice;
   var idRe = /^#[\w-]*$/,
       classRe = /^\.[\w-]*$/,
       htmlRe = /<.+>/,
-      tagRe = /^\w+$/,
-      notWhitespaceRe = /\S+/g,
-      eventsSeparatorRe = /[,\s]+/g,
-      querySpaceRe = /%20/g;
-  var eventsNamespacesSeparator = '.';
-  var datasNamespace = '__cash_datas__',
-      eventsNamespace = '__cash_events__'; // @require ./variables.js
+      tagRe = /^\w+$/; // @require ./variables.js
 
   function Cash(selector, context) {
-    if (!selector) return this;
-    if (selector.cash && selector !== win) return selector;
+    if (!selector) return;
+    if (selector.__cash) return selector;
     var eles = selector;
 
     if (isString(selector)) {
       eles = idRe.test(selector) ? doc.getElementById(selector.slice(1)) : htmlRe.test(selector) ? parseHTML(selector) : find(selector, context);
+      if (!eles) return;
     } else if (isFunction(selector)) {
       return this.ready(selector); //FIXME: `fn.ready` is not included in `core`, but it's actually a core functionality
     }
 
-    if (!eles) return this;
+    if (eles.nodeType || eles === win) eles = [eles];
+    this.length = eles.length;
 
-    if (eles.nodeType || eles === win) {
-      this[0] = eles;
-      this.length = 1;
-    } else {
-      this.length = eles.length;
-
-      for (var i = 0, l = this.length; i < l; i++) {
-        this[i] = eles[i];
-      }
+    for (var i = 0, l = this.length; i < l; i++) {
+      this[i] = eles[i];
     }
-
-    return this;
   }
 
-  function cash(selector, context) {
+  win.cash = win.$ = function cash(selector, context) {
     return new Cash(selector, context);
-  }
+  };
   /* PROTOTYPE */
 
 
   var fn = cash.fn = cash.prototype = Cash.prototype = {
-    init: Cash,
-    cash: true,
+    constructor: cash,
+    __cash: true,
     length: 0
-  };
-  Object.defineProperty(fn, 'constructor', {
-    value: cash
-  }); // @require ./cash.js
+  }; // @require ./cash.js
 
-  var camelRe = /(?:^\w|[A-Z]|\b\w)/g,
-      camelWhitespaceRe = /[\s-_]+/g;
+  var camelCaseRe = /(?:^\w|[A-Z]|\b\w)/g,
+      camelCaseWhitespaceRe = /[\s-_]+/g;
 
   function camelCase(str) {
-    return str.replace(camelRe, function (letter, index) {
+    return str.replace(camelCaseRe, function (letter, index) {
       return letter[!index ? 'toLowerCase' : 'toUpperCase']();
-    }).replace(camelWhitespaceRe, '');
+    }).replace(camelCaseWhitespaceRe, '');
   }
 
   ;
@@ -204,11 +149,18 @@
   function getCompareFunction(selector) {
     return isString(selector) ? function (i, ele) {
       return matches(ele, selector);
-    } : selector.cash ? function (i, ele) {
+    } : selector.__cash ? function (i, ele) {
       return selector.is(ele);
     } : function (i, ele, selector) {
       return ele === selector;
     };
+  } // @require ./type_checking.js
+
+
+  var splitValuesRe = /\S+/g;
+
+  function getSplitValues(str) {
+    return isString(str) ? str.match(splitValuesRe) || [] : [];
   } // @require ./cash.js
 
 
@@ -218,24 +170,20 @@
     });
   }
 
-  cash.unique = unique; // @require ./camel_case.js
+  cash.unique = unique; // @optional ./camel_case.js
+  // @optional ./each.js
+  // @optional ./extend.js
+  // @optional ./get_compare_function.js
+  // @optional ./get_split_values.js
+  // @optional ./matches.js
+  // @optional ./unique.js
+  // @optional ./guid.js
   // @require ./cash.js
-  // @require ./each.js
-  // @require ./extend.js
   // @require ./find.js
-  // @require ./get_compare_function.js
-  // @require ./guid.js
-  // @require ./matches.js
   // @require ./parse_html.js
   // @require ./type_checking.js
-  // @require ./unique.js
   // @require ./variables.js
   // @require core/index.js
-
-  function getClasses(cls) {
-    return isString(cls) && cls.match(notWhitespaceRe);
-  } // @require core/index.js
-
 
   fn.add = function (selector, context) {
     return cash(unique(this.get().concat(cash(selector, context).get())));
@@ -248,35 +196,15 @@
     });
     return this;
   }; // @require collection/each.js
-  // @require ./helpers/get_classes.js
-  // @require ./helpers/add_class.js
-
-
-  fn.addClass = function (cls) {
-    var classes = getClasses(cls);
-    if (!classes) return this;
-    return this.each(function (i, ele) {
-      each(classes, function (c) {
-        return addClass(ele, c);
-      });
-    });
-  }; // @require collection/each.js
 
 
   fn.attr = function (attr, value) {
-    if (!attr || !this[0]) return;
+    if (!attr) return;
 
     if (isString(attr)) {
-      if (value === undefined) {
-        return this[0].getAttribute ? this[0].getAttribute(attr) : this[0][attr];
-      }
-
+      if (arguments.length < 2) return this[0] && this[0].getAttribute(attr);
       return this.each(function (i, ele) {
-        if (ele.setAttribute) {
-          ele.setAttribute(attr, value);
-        } else {
-          ele[attr] = value;
-        }
+        ele.setAttribute(attr, value);
       });
     }
 
@@ -286,25 +214,29 @@
 
     return this;
   }; // @require collection/each.js
-  // @require ./helpers/get_classes.js
-  // @require ./helpers/has_class.js
 
 
   fn.hasClass = function (cls) {
-    var classes = getClasses(cls);
-    if (!classes || !classes.length) return false;
+    var classes = getSplitValues(cls);
     var check = false;
-    this.each(function (i, ele) {
-      check = hasClass(ele, classes[0]);
-      return !check;
-    });
+
+    if (classes.length) {
+      this.each(function (i, ele) {
+        check = ele.classList.contains(classes[0]);
+        return !check;
+      });
+    }
+
     return check;
   }; // @require collection/each.js
 
 
   fn.prop = function (prop, value) {
+    if (!prop) return;
+
     if (isString(prop)) {
-      return value === undefined ? this[0] ? this[0][prop] : undefined : this.each(function (i, ele) {
+      if (arguments.length < 2) return this[0] && this[0][prop];
+      return this.each(function (i, ele) {
         ele[prop] = value;
       });
     }
@@ -319,26 +251,7 @@
 
   fn.removeAttr = function (attr) {
     return this.each(function (i, ele) {
-      if (ele.removeAttribute) {
-        ele.removeAttribute(attr);
-      } else {
-        delete ele[attr];
-      }
-    });
-  }; // @require collection/each.js
-  // @require ./helpers/get_classes.js
-  // @require ./helpers/remove_class.js
-  // @require ./attr.js
-
-
-  fn.removeClass = function (cls) {
-    if (cls === undefined) return this.attr('class', '');
-    var classes = getClasses(cls);
-    if (!classes) return this;
-    return this.each(function (i, ele) {
-      each(classes, function (c) {
-        return removeClass(ele, c);
-      });
+      ele.removeAttribute(attr);
     });
   }; // @require collection/each.js
 
@@ -348,27 +261,33 @@
       delete ele[prop];
     });
   }; // @require collection/each.js
-  // @require ./helpers/add_class.js
-  // @require ./helpers/get_classes.js
-  // @require ./helpers/has_class.js
-  // @require ./helpers/remove_class.js
-  // @require ./add_class.js
-  // @require ./remove_class.js
+  // @require ./attr.js
 
 
   fn.toggleClass = function (cls, force) {
-    if (force !== undefined) return this[force ? 'addClass' : 'removeClass'](cls);
-    var classes = getClasses(cls);
-    if (!classes) return this;
+    var classes = getSplitValues(cls),
+        isForce = force !== undefined;
+    if (!classes.length) return this;
     return this.each(function (i, ele) {
       each(classes, function (c) {
-        if (hasClass(ele, c)) {
-          removeClass(ele, c);
+        if (isForce) {
+          force ? ele.classList.add(c) : ele.classList.remove(c);
         } else {
-          addClass(ele, c);
+          ele.classList.toggle(c);
         }
       });
     });
+  }; // @require ./toggle_class.js
+
+
+  fn.addClass = function (cls) {
+    return this.toggleClass(cls, true);
+  }; // @require ./attr.js
+  // @require ./toggle_class.js
+
+
+  fn.removeClass = function (cls) {
+    return !arguments.length ? this.attr('class', '') : this.toggleClass(cls, false);
   }; // @optional ./add_class.js
   // @optional ./attr.js
   // @optional ./has_class.js
@@ -382,7 +301,7 @@
 
   fn.get = function (index) {
     if (index === undefined) return slice.call(this);
-    return index < 0 ? this[index + this.length] : this[index];
+    return this[index < 0 ? index + this.length : index];
   }; // @require ./get.js
 
 
@@ -392,7 +311,7 @@
 
 
   fn.filter = function (selector) {
-    if (!selector) return this;
+    if (!selector) return cash();
     var comparator = isFunction(selector) ? selector : getCompareFunction(selector);
     return cash(filter.call(this, function (ele, i) {
       return comparator.call(ele, i, ele, selector);
@@ -435,30 +354,30 @@
 
 
   var prefixedProps = {},
-      div = doc.createElement('div'),
-      style = div.style,
-      stylePrefixes = ['webkit', 'moz', 'ms', 'o'];
+      _doc$createElement = doc.createElement('div'),
+      style = _doc$createElement.style,
+      vendorsPrefixes = ['webkit', 'moz', 'ms', 'o'];
 
-  function prefixedProp(prop) {
-    prop = camelCase(prop);
-    if (prefixedProps[prop]) return prefixedProps[prop];
-    var ucProp = prop.charAt(0).toUpperCase() + prop.slice(1),
-        props = (prop + " " + stylePrefixes.join(ucProp + " ") + ucProp).split(' ');
-    each(props, function (prop) {
-      if (prop in style) {
-        prefixedProps[prop] = prop = prefixedProps[prop] = prop;
-        return false;
-      }
-    });
+  function getPrefixedProp(prop) {
+    if (!prefixedProps[prop]) {
+      var propCC = camelCase(prop),
+          propUC = "" + propCC.charAt(0).toUpperCase() + propCC.slice(1),
+          props = (propCC + " " + vendorsPrefixes.join(propUC + " ") + propUC).split(' ');
+      each(props, function (p) {
+        if (p in style) {
+          prefixedProps[prop] = p;
+          return false;
+        }
+      });
+    }
+
     return prefixedProps[prop];
   }
 
   ;
-  cash.prefixedProp = prefixedProp;
-  var numberProps = {
-    animationIterationCount: true,
+  cash.prefixedProp = getPrefixedProp;
+  var numericProps = {
     columnCount: true,
-    fillOpacity: true,
     flexGrow: true,
     flexShrink: true,
     fontWeight: true,
@@ -467,24 +386,25 @@
     order: true,
     orphans: true,
     widows: true,
-    zIndex: true,
-    zoom: true
+    zIndex: true
   };
 
   function getSuffixedValue(prop, value) {
-    return !numberProps[prop] && isNumeric(value) ? value + "px" : value;
+    return !numericProps[prop] && isNumeric(value) ? value + "px" : value;
   } // @require collection/each.js
+  // @require ./helpers/compute_style.js
   // @require ./helpers/get_prefixed_prop.js
   // @require ./helpers/get_suffixed_value.js
 
 
   fn.css = function (prop, value) {
     if (isString(prop)) {
-      prop = prefixedProp(prop);
-      value = arguments.length > 1 ? getSuffixedValue(prop, value) : value;
-      return arguments.length > 1 ? this.each(function (i, ele) {
+      prop = getPrefixedProp(prop);
+      if (arguments.length < 2) return this[0] && computeStyle(this[0], prop);
+      value = getSuffixedValue(prop, value);
+      return this.each(function (i, ele) {
         ele.style[prop] = value;
-      }) : this[0] ? win.getComputedStyle(this[0])[prop] : undefined;
+      });
     }
 
     for (var key in prop) {
@@ -495,8 +415,10 @@
   }; // @optional ./css.js
 
 
+  var dataNamespace = '__cashData'; // @require ./variables.js
+
   function getDataCache(ele) {
-    return ele[datasNamespace] = ele[datasNamespace] || {};
+    return ele[dataNamespace] = ele[dataNamespace] || {};
   } // @require attributes/attr.js
   // @require ./get_data_cache.js
 
@@ -515,27 +437,21 @@
     }
 
     return cache[key];
-  } // @require attributes/remove_attr.js
+  } // @require ./variables.js
   // @require ./get_data_cache.js
 
 
   function removeData(ele, key) {
-    var cache = getDataCache(ele);
-
-    if (key in cache) {
-      cache[key] = undefined;
+    if (key === undefined) {
+      delete ele[dataNamespace];
     } else {
-      if (ele.dataset) {
-        delete ele.dataset[key];
-      } else {
-        cash(ele).removeAttr("data-" + key);
-      }
+      delete getDataCache(ele)[key];
     }
   } // @require ./get_data_cache.js
 
 
   function setData(ele, key, value) {
-    return getDataCache(ele)[key] = value;
+    getDataCache(ele)[key] = value;
   } // @require collection/each.js
   // @require ./helpers/get_data.js
   // @require ./helpers/set_data.js
@@ -543,8 +459,9 @@
 
   fn.data = function (name, value) {
     if (isString(name)) {
-      return value === undefined ? this[0] ? getData(this[0], name) : undefined : this.each(function (i, ele) {
-        setData(ele, name, value);
+      if (value === undefined) return this[0] && getData(this[0], name);
+      return this.each(function (i, ele) {
+        return setData(ele, name, value);
       });
     }
 
@@ -567,13 +484,13 @@
 
 
   function getExtraSpace(ele, xAxis) {
-    return computeStyleInt(ele, "border" + (xAxis ? 'Left' : 'Top')) + computeStyleInt(ele, "padding" + (xAxis ? 'Left' : 'Top')) + computeStyleInt(ele, "padding" + (xAxis ? 'Right' : 'Bottom')) + computeStyleInt(ele, "border" + (xAxis ? 'Right' : 'Bottom'));
+    return computeStyleInt(ele, "border" + (xAxis ? 'Left' : 'Top') + "Width") + computeStyleInt(ele, "padding" + (xAxis ? 'Left' : 'Top')) + computeStyleInt(ele, "padding" + (xAxis ? 'Right' : 'Bottom')) + computeStyleInt(ele, "border" + (xAxis ? 'Right' : 'Bottom') + "Width");
   } // @require core/index.js
 
 
   each(['Width', 'Height'], function (prop) {
     fn["inner" + prop] = function () {
-      return this[0] ? this[0]["client" + prop] : undefined;
+      return this[0] && this[0]["client" + prop];
     };
   }); // @require css/helpers/compute_style.js
   // @require css/helpers/get_suffixed_value.js
@@ -600,49 +517,6 @@
   }); // @optional ./inner.js
   // @optional ./normal.js
   // @optional ./outer.js
-  // @require core/index.js
-  // @require data/helpers/get_data.js
-  // @require data/helpers/set_data.js
-
-  function addEvent(ele, name, namespaces, callback) {
-    callback.guid = callback.guid || guid++;
-    var eventCache = getData(ele, eventsNamespace) || setData(ele, eventsNamespace, {});
-    eventCache[name] = eventCache[name] || [];
-    eventCache[name].push([namespaces, callback]);
-    ele.addEventListener(name, callback);
-  }
-
-  var returnFalse = function returnFalse() {
-    return false;
-  },
-      returnTrue = function returnTrue() {
-    return true;
-  };
-
-  function addEventMethods(event) {
-    if (event.isDefaultPrevented) return;
-
-    event.isDefaultPrevented = function () {
-      return this.defaultPrevented;
-    };
-
-    event.isPropagationStopped = returnFalse;
-    var stopPropagation = event.stopPropagation;
-
-    event.stopPropagation = function () {
-      event.isPropagationStopped = returnTrue;
-      return stopPropagation.call(this);
-    };
-
-    event.isImmediatePropagationStopped = returnFalse;
-    var stopImmediatePropagation = event.stopImmediatePropagation;
-
-    event.stopImmediatePropagation = function () {
-      event.isPropagationStopped = returnTrue;
-      event.isImmediatePropagationStopped = returnTrue;
-      return stopImmediatePropagation.call(this);
-    };
-  }
 
   function hasNamespaces(ns1, ns2) {
     for (var i = 0, l = ns2.length; i < l; i++) {
@@ -650,47 +524,64 @@
     }
 
     return true;
-  }
-
-  function parseEventName(eventFullName) {
-    var parts = eventFullName.split(eventsNamespacesSeparator);
-    return [parts[0], parts.slice(1).sort()]; // [name, namespaces]
   } // @require core/index.js
 
 
-  function removeEventListeners(events, ele, name) {
-    each(events[name], function (_ref) {
+  function removeEventListeners(cache, ele, name) {
+    each(cache[name], function (_ref) {
       var namespaces = _ref[0],
           callback = _ref[1];
       ele.removeEventListener(name, callback);
     });
-    delete events[name];
+    delete cache[name];
+  }
+
+  var eventsNamespace = '__cashEvents',
+      eventsNamespacesSeparator = '.'; // @require ./variables.js
+
+  function getEventsCache(ele) {
+    return ele[eventsNamespace] = ele[eventsNamespace] || {};
   } // @require core/index.js
-  // @require data/helpers/get_data.js
+  // @require events/helpers/get_events_cache.js
+
+
+  function addEvent(ele, name, namespaces, callback) {
+    callback.guid = callback.guid || guid++;
+    var eventCache = getEventsCache(ele);
+    eventCache[name] = eventCache[name] || [];
+    eventCache[name].push([namespaces, callback]);
+    ele.addEventListener(name, callback);
+  } // @require ./variables.js
+
+
+  function parseEventName(eventName) {
+    var parts = eventName.split(eventsNamespacesSeparator);
+    return [parts[0], parts.slice(1).sort()]; // [name, namespaces]
+  } // @require core/index.js
+  // @require ./get_events_cache.js
   // @require ./has_namespaces.js
   // @require ./parse_event_name.js
   // @require ./remove_event_listeners.js
 
 
   function removeEvent(ele, name, namespaces, callback) {
-    var events = getData(ele, eventsNamespace);
-    if (!events) return;
+    var cache = getEventsCache(ele);
 
     if (!name) {
       if (!namespaces || !namespaces.length) {
-        for (name in events) {
-          removeEventListeners(events, ele, name);
+        for (name in cache) {
+          removeEventListeners(cache, ele, name);
         }
       } else {
-        for (name in events) {
+        for (name in cache) {
           removeEvent(ele, name, namespaces, callback);
         }
       }
     } else {
-      var eventCache = events[name];
+      var eventCache = cache[name];
       if (!eventCache) return;
       if (callback) callback.guid = callback.guid || guid++;
-      events[name] = eventCache.filter(function (_ref2) {
+      cache[name] = eventCache.filter(function (_ref2) {
         var ns = _ref2[0],
             cb = _ref2[1];
         if (callback && cb.guid !== callback.guid || !hasNamespaces(ns, namespaces)) return true;
@@ -710,7 +601,7 @@
         return removeEvent(ele);
       });
     } else {
-      each(eventFullName.split(eventsSeparatorRe), function (eventFullName) {
+      each(getSplitValues(eventFullName), function (eventFullName) {
         var _parseEventName = parseEventName(eventFullName),
             name = _parseEventName[0],
             namespaces = _parseEventName[1];
@@ -723,8 +614,8 @@
 
     return this;
   }; // @require collection/each.js
+  // @require ./helpers/variables.js
   // @require ./helpers/add_event.js
-  // @require ./helpers/add_event_methods.js
   // @require ./helpers/has_namespaces.js
   // @require ./helpers/parse_event_name.js
   // @require ./helpers/remove_event.js
@@ -743,14 +634,10 @@
 
     if (isFunction(selector)) {
       callback = selector;
-      selector = null;
+      selector = false;
     }
 
-    if (eventFullName === 'ready') {
-      return this.ready(callback);
-    }
-
-    each(eventFullName.split(eventsSeparatorRe), function (eventFullName) {
+    each(getSplitValues(eventFullName), function (eventFullName) {
       var _parseEventName2 = parseEventName(eventFullName),
           name = _parseEventName2[0],
           namespaces = _parseEventName2[1];
@@ -765,11 +652,11 @@
             while (!matches(target, selector)) {
               if (target === ele) return;
               target = target.parentNode;
+              if (!target) return;
             }
           }
 
           event.namespace = event.namespace || '';
-          addEventMethods(event);
           callback.call(ele, event, event.data);
 
           if (_one) {
@@ -799,7 +686,7 @@
 
     return this;
   }; // @require collection/each.js
-  // @require ./helpers/add_event_methods.js
+  // @require ./helpers/variables.js
   // @require ./helpers/parse_event_name.js
 
 
@@ -812,15 +699,14 @@
           namespaces = _parseEventName3[1];
 
       evt = doc.createEvent('HTMLEvents');
-      evt.initEvent(name, true, false);
+      evt.initEvent(name, true, true);
       evt.namespace = namespaces.join(eventsNamespacesSeparator);
     }
 
     evt.data = data;
-    addEventMethods(evt);
     return this.each(function (i, ele) {
       ele.dispatchEvent(evt);
-    }); //FIXME: Maybe the return value of `dispatchEvent` is actually useful here?
+    });
   }; // @optional ./off.js
   // @optional ./on.js
   // @optional ./one.js
@@ -828,20 +714,14 @@
   // @optional ./trigger.js
 
 
+  var selectOneRe = /select-one/i,
+      selectMultipleRe = /select-multiple/i;
+
   function getValue(ele) {
     var type = ele.type;
-    if (!type) return undefined;
-
-    switch (type.toLowerCase()) {
-      case 'select-one':
-        return getValueSelectSingle(ele);
-
-      case 'select-multiple':
-        return getValueSelectMultiple(ele);
-
-      default:
-        return ele.value;
-    }
+    if (selectOneRe.test(type)) return getValueSelectSingle(ele);
+    if (selectMultipleRe.test(type)) return getValueSelectMultiple(ele);
+    return ele.value;
   }
 
   function getValueSelectMultiple(ele) {
@@ -855,61 +735,51 @@
   }
 
   function getValueSelectSingle(ele) {
-    var selectedIndex = ele.selectedIndex;
-    return selectedIndex >= 0 ? ele.options[selectedIndex].value : null;
+    return ele.selectedIndex < 0 ? null : ele.options[ele.selectedIndex].value;
   } // @require core/index.js
 
 
+  var queryEncodeSpaceRe = /%20/g;
+
   function queryEncode(prop, value) {
-    return "&" + encodeURIComponent(prop) + "=" + encodeURIComponent(value).replace(querySpaceRe, '+');
+    return "&" + encodeURIComponent(prop) + "=" + encodeURIComponent(value).replace(queryEncodeSpaceRe, '+');
   } // @require core/index.js
   // @require ./helpers/get_value.js
   // @require ./helpers/query_encode.js
 
 
+  var skippableRe = /file|reset|submit|button/i,
+      checkableRe = /radio|checkbox/i;
+
   fn.serialize = function () {
-    if (!this[0]) return '';
     var query = '';
-    each(this[0].elements || this, function (ele) {
-      if (ele.disabled || ele.tagName === 'FIELDSET') return;
 
-      switch (ele.type.toLowerCase()) {
-        case 'file':
-        case 'reset':
-        case 'submit':
-        case 'button':
-          break;
+    if (this[0]) {
+      each(this[0].elements || this, function (ele) {
+        if (ele.disabled || ele.tagName === 'FIELDSET') return;
+        if (skippableRe.test(ele.type)) return;
+        if (checkableRe.test(ele.type) && !ele.checked) return;
+        var value = getValue(ele);
 
-        case 'radio':
-        case 'checkbox':
-          if (!ele.checked) break;
+        if (value) {
+          var values = isArray(value) ? value : [value];
+          each(values, function (value) {
+            query += queryEncode(ele.name, value);
+          });
+        }
+      });
+    }
 
-        default:
-          var value = getValue(ele);
-
-          if (value) {
-            var name = ele.name;
-            var values = isArray(value) ? value : [value];
-            each(values, function (value) {
-              query += queryEncode(name, value);
-            });
-          }
-
-      }
-    });
     return query.substr(1);
   }; // @require collection/each.js
   // @require ./helpers/get_value.js
 
 
   fn.val = function (value) {
-    if (value === undefined) {
-      return this[0] ? getValue(this[0]) : undefined;
-    } else {
-      return this.each(function (i, ele) {
-        ele.value = value;
-      }); //TODO: Does it work for select[multiple] too?
-    }
+    if (value === undefined) return this[0] && getValue(this[0]);
+    return this.each(function (i, ele) {
+      ele.value = value;
+    }); //TODO: Does it work for select[multiple] too?
   }; // @optional ./serialize.js
   // @optional ./val.js
   // @require core/index.js
@@ -947,7 +817,7 @@
       });
     } else {
       each(parent, isStr ? function (ele) {
-        return ele.insertAdjacentHTML(prepend ? 'afterbegin' : 'beforeend', child);
+        ele.insertAdjacentHTML(prepend ? 'afterbegin' : 'beforeend', child);
       } : function (ele, index) {
         return insertElement(ele, !index ? child : child.cloneNode(true), prepend);
       });
@@ -968,10 +838,10 @@
 
 
   fn.html = function (content) {
-    if (content === undefined) return this[0] ? this[0].innerHTML : undefined;
+    if (content === undefined) return this[0] && this[0].innerHTML;
     var source = content.nodeType ? content[0].outerHTML : content;
     return this.each(function (i, ele) {
-      return ele.innerHTML = source;
+      ele.innerHTML = source;
     });
   }; // @require ./html.js
 
@@ -985,11 +855,10 @@
     var _this3 = this;
 
     cash(content).each(function (index, ele) {
-      var parent = ele.parentNode,
-          sibling = ele.nextSibling;
+      var parent = ele.parentNode;
 
       _this3.each(function (i, e) {
-        parent.insertBefore(!index ? e : e.cloneNode(true), sibling);
+        parent.insertBefore(!index ? e : e.cloneNode(true), ele.nextSibling);
       });
     });
     return this;
@@ -1092,19 +961,21 @@
   // @require core/index.js
 
 
+  var docEle = doc.documentElement;
+
   fn.offset = function () {
     var ele = this[0];
     if (!ele) return;
     var rect = ele.getBoundingClientRect();
     return {
-      top: rect.top + win.pageYOffset - docEl.clientTop,
-      left: rect.left + win.pageXOffset - docEl.clientLeft
+      top: rect.top + win.pageYOffset - docEle.clientTop,
+      left: rect.left + win.pageXOffset - docEle.clientLeft
     };
   }; // @require core/index.js
 
 
   fn.offsetParent = function () {
-    return cash(this[0] ? this[0].offsetParent : null);
+    return cash(this[0] && this[0].offsetParent);
   }; // @require core/index.js
 
 
@@ -1146,7 +1017,7 @@
       }
     }
 
-    return cash(result.length ? unique(result) : null);
+    return cash(result.length && unique(result));
   }; // @require collection/filter.js
 
 
@@ -1163,17 +1034,17 @@
   fn.is = function (selector) {
     if (!selector || !this[0]) return false;
     var comparator = getCompareFunction(selector);
-    var match = false;
+    var check = false;
     this.each(function (i, ele) {
-      match = comparator(i, ele, selector);
-      return !match;
+      check = comparator(i, ele, selector);
+      return !check;
     });
-    return match;
+    return check;
   }; // @require core/index.js
 
 
   fn.next = function () {
-    return cash(this[0] ? this[0].nextElementSibling : null);
+    return cash(this[0] && this[0].nextElementSibling);
   }; // @require collection/filter.js
 
 
@@ -1203,7 +1074,7 @@
   fn.index = function (ele) {
     var child = ele ? cash(ele)[0] : this[0],
         collection = ele ? this : cash(child).parent().children();
-    return collection.get().indexOf(child);
+    return indexOf.call(collection, child);
   }; // @optional ./add.js
   // @optional ./each.js
   // @optional ./eq.js
@@ -1245,7 +1116,7 @@
 
 
   fn.prev = function () {
-    return cash(this[0] ? this[0].previousElementSibling : null);
+    return cash(this[0] && this[0].previousElementSibling);
   }; // @require collection/filter.js
   // @require ./children.js
   // @require ./parent.js
@@ -1267,7 +1138,15 @@
   // @optional ./parents.js
   // @optional ./prev.js
   // @optional ./siblings.js
-
-
-  window.cash = window.$ = cash;
-})();
+  // @optional attributes/index.js
+  // @optional collection/index.js
+  // @optional css/index.js
+  // @optional data/index.js
+  // @optional dimensions/index.js
+  // @optional events/index.js
+  // @optional forms/index.js
+  // @optional manipulation/index.js
+  // @optional offset/index.js
+  // @optional traversal/index.js
+  // @require core/index.js
+  })();
