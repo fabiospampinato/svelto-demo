@@ -332,7 +332,8 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
   return this;
 }() || Function("return this")()); // @priority 1000000000
 
-'use strict'; // @optional ./vendor/jquery.js
+'use strict'; // @optional ./vendor/cash.js
+// @optional ./vendor/jquery.js
 
 
 (function () {
@@ -658,6 +659,15 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 
 (function ($) {
+  /* IS DEFAULT PREVENTED */
+  // In order to support non-jQuery DOM libraries like cash
+  $.isDefaultPrevented = function (event) {
+    return 'isDefaultPrevented' in event ? event.isDefaultPrevented : event.defaultPrevented;
+  };
+})(window.$); // @require ../init.js
+
+
+(function ($) {
   /* IS EVENT */
   // Checks if a variable is an event
   $.isEvent = function (x) {
@@ -921,12 +931,15 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 (function (_) {
   /* PROP */
   // Tiny, limited (doesn't support arrays), not very fast, alternative to `get` and `set`
-  _.prop = _.get = _.set = function (obj, selector, value) {
+  _.get = function (obj, selector, value, _isGet) {
+    if (_isGet === void 0) {
+      _isGet = true;
+    }
+
     if (!selector) return;
-    var get = arguments.length === 2;
     var result = selector.split('.').filter(_.identity).reduce(function (obj, key, keyIndex, keys) {
-      if (get) {
-        return obj && obj[key];
+      if (_isGet) {
+        return obj && (obj[key] !== undefined ? obj[key] : value);
       } else {
         if (obj) {
           if (keyIndex === keys.length - 1) {
@@ -937,7 +950,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
         }
       }
     }, obj);
-    return get ? result : obj;
+    return _isGet ? result : obj;
+  };
+
+  _.set = function (obj, selector, value) {
+    return _.get(obj, selector, value, false);
   };
 })(window._); // @require ../init.js
 
@@ -2827,7 +2844,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
       event.type = name;
     } else {
       event = document.createEvent('HTMLEvents');
-      event.initEvent(name, true, false);
+      event.initEvent(name, true, true);
       event.originalEvent = originalEvent;
     }
 
@@ -2964,6 +2981,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 // @optional ./has_attribute.js
 // @optional ./hsl.js
 // @optional ./is_attached.js
+// @optional ./is_default_prevented.js
 // @optional ./is_editable.js
 // @optional ./is_event.js
 // @optional ./is_focused.js
@@ -3465,7 +3483,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 //FIXME: We actually `require` Widget, but requiring it creates a circular dependency...
 
 
-(function ($, _, Svelto, Widgets) {
+(function ($, _, Svelto) {
   /* READIFY */
   var Readify =
   /*#__PURE__*/
@@ -3513,9 +3531,9 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     _proto.worker = function worker(fn) {
       if ($.isWidget(fn)) {
         var Widget = fn,
-            ready = Widget.ready || Widget.__proto__.ready || Widgets.Widget.ready,
+            ready = Widget.ready || Widget.__proto__.ready || Svelto.Widget.ready,
             //IE10 support -- static property
-        setReady = Widget._setReady || Widget.__proto__._setReady || Widgets.Widget._setReady; //IE10 support -- static property
+        setReady = Widget._setReady || Widget.__proto__._setReady || Svelto.Widget._setReady; //IE10 support -- static property
 
         ready.call(Widget, setReady.bind(Widget));
       } else {
@@ -3534,7 +3552,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
   if (!Svelto.Readify.isReady()) {
     $(Svelto.Readify.ready.bind(Svelto.Readify));
   }
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets); // @require core/breakpoints/breakpoints.js
+})(Svelto.$, Svelto._, Svelto); // @require core/breakpoints/breakpoints.js
 // @require core/readify/readify.js
 
 
@@ -3587,7 +3605,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 (function ($, _, Svelto, Readify) {
   /* LAYOUT */
   Readify.add(function () {
-    $.$layout = $('.layout, body').first();
+    $.$layout = $.$layout || $('.layout, body').first();
   });
 
   $.getLayoutOf = function (ele) {
@@ -3717,7 +3735,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 //FIXME: We actually `require` Widget, but requiring it creates a circular dependency...
 
 
-(function ($, _, Svelto, Widgets, Readify) {
+(function ($, _, Svelto, Readify) {
   /* WIDGETIZE */
   var Widgetize =
   /*#__PURE__*/
@@ -3742,7 +3760,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
       if (_.isObject(selector)) {
         var Widget = selector;
         if (!Widget.config.plugin || !_.isString(Widget.config.selector)) return;
-        var widgetize = Widget.widgetize || Widget.__proto__.widgetize || Widgets.Widget.widgetize; //IE10 support -- static property
+        var widgetize = Widget.widgetize || Widget.__proto__.widgetize || Svelto.Widget.widgetize; //IE10 support -- static property
 
         return this.add(Widget.config.selector, widgetize, Widget, widgetizer);
       }
@@ -3763,7 +3781,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
       if (_.isObject(selector)) {
         var Widget = selector;
         if (!Widget.config.plugin || !_.isString(Widget.config.selector)) return;
-        var widgetize = Widget.widgetize || Widget.__proto__.widgetize || Widgets.Widget.widgetize; //IE10 support -- static property
+        var widgetize = Widget.widgetize || Widget.__proto__.widgetize || Svelto.Widget.widgetize; //IE10 support -- static property
 
         return this.remove(Widget.config.selector, widgetize);
       }
@@ -3829,7 +3847,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
   if (!Readify.isReady()) {
     Readify.add(Svelto.Widgetize.ready.bind(Svelto.Widgetize));
   }
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Readify); // @require core/plugin/plugin.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Readify); // @require core/plugin/plugin.js
 // @require core/readify/readify.js
 // @require core/widgetize/widgetize.js
 
@@ -3902,7 +3920,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
         Plugin.make(Widget);
       },
       ready: function ready(Widget, config) {
-        var initReady = Widget._initReady || Widget.__proto__._initReady || Widgets.Widget._initReady; //IE10 support -- static property
+        var initReady = Widget._initReady || Widget.__proto__._initReady || Svelto.Widget._initReady; //IE10 support -- static property
 
         initReady.call(Widget);
         Readify.add(Widget, config.ready);
@@ -3953,7 +3971,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
       },
       widgetize: function widgetize(Widget) {
         //TODO: Code duplication, look at `Widgetize.add`
-        var widgetize = Widget.widgetize || Widget.__proto__.widgetize || Widgets.Widget.widgetize,
+        var widgetize = Widget.widgetize || Widget.__proto__.widgetize || Svelto.Widget.widgetize,
             //IE10 support -- static property
         $widgets = $.$html.findAll(Widget.config.selector);
         Widgetize.worker([[widgetize, Widget]], $widgets);
@@ -4492,7 +4510,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
       /* TRIGGERING */
 
       this.$element.trigger(event, data);
-      return !(this.options.callbacks[type].apply(this.element, [event].concat(data)) === false || event.isDefaultPrevented());
+      return !(this.options.callbacks[type].apply(this.element, [event].concat(data)) === false || $.isDefaultPrevented(event));
     };
     /* ROUTE */
 
@@ -4688,8 +4706,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
     return Widget;
   }();
-  /* FACTORY */
+  /* EXPORT */
 
+
+  Svelto.Widget = Widget;
+  /* FACTORY */
 
   Factory.make(Widget, config);
 })(Svelto.$, Svelto._, Svelto, Svelto.Instances, Svelto.Templates, Svelto.Widgets, Svelto.Factory, Svelto.Pointer, Svelto.Keyboard, Svelto.Breakpoints, Svelto.Breakpoint); // @priority 800
@@ -4697,7 +4718,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 //TODO: Maybe rename it
 
 
-(function ($, _, Svelto, Widgets, Factory, Breakpoints, Breakpoint) {
+(function ($, _, Svelto, Factory, Breakpoints, Breakpoint) {
   /* CONFIG */
   var config = {
     name: 'classSwitch',
@@ -4716,11 +4737,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var ClassSwitch =
   /*#__PURE__*/
-  function (_Widgets$Widget) {
-    _inheritsLoose(ClassSwitch, _Widgets$Widget);
+  function (_Svelto$Widget) {
+    _inheritsLoose(ClassSwitch, _Svelto$Widget);
 
     function ClassSwitch() {
-      return _Widgets$Widget.apply(this, arguments) || this;
+      return _Svelto$Widget.apply(this, arguments) || this;
     }
 
     var _proto4 = ClassSwitch.prototype;
@@ -4867,12 +4888,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return ClassSwitch;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(ClassSwitch, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Breakpoints, Svelto.Breakpoint); // @require core/svelto/svelto.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Breakpoints, Svelto.Breakpoint); // @require core/svelto/svelto.js
 //TODO: limit ultra portrait images height
 
 
@@ -5271,7 +5292,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 // @require core/widget/widget.js
 
 
-(function ($, _, Svelto, Widgets, Widgetize, Factory, calculator) {
+(function ($, _, Svelto, Widgetize, Factory, calculator) {
   /* CONFIG */
   var config = {
     name: 'justifiedLayout',
@@ -5314,11 +5335,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var JustifiedLayout =
   /*#__PURE__*/
-  function (_Widgets$Widget2) {
-    _inheritsLoose(JustifiedLayout, _Widgets$Widget2);
+  function (_Svelto$Widget2) {
+    _inheritsLoose(JustifiedLayout, _Svelto$Widget2);
 
     function JustifiedLayout() {
-      return _Widgets$Widget2.apply(this, arguments) || this;
+      return _Svelto$Widget2.apply(this, arguments) || this;
     }
 
     var _proto5 = JustifiedLayout.prototype;
@@ -5566,7 +5587,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
             to = _ref3[1];
         $(_this5.$boxes[from]).after(_this5.$boxes[to]);
 
-        _.move(_this5.$boxes, from, to);
+        var boxes = _this5.$boxes.get();
+
+        _.move(boxes, from, to);
+
+        _this5.$boxes = $(boxes);
 
         _.move(_this5._images, from, to);
 
@@ -5593,7 +5618,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
       });
 
       if (!options.row.widows.show && layout.widows !== this.$widows.length) {
-        var $nextWidows = $(_.takeRight(this.$boxes.get(), layout.widows)),
+        var $nextWidows = $(this.$boxes.get().slice(-layout.widows)),
             $changed = $(_.xor(this.$widows.get(), $nextWidows.get()));
         $changed.toggleClass(this.options.classes.hidden);
         this.$widows = $nextWidows;
@@ -5610,12 +5635,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return JustifiedLayout;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(JustifiedLayout, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Widgetize, Svelto.Factory, Svelto.justifiedLayoutCalculator); // @require core/svelto/svelto.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Widgetize, Svelto.Factory, Svelto.justifiedLayoutCalculator); // @require core/svelto/svelto.js
 
 
 (function ($, _, Svelto) {
@@ -5797,7 +5822,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 // @require ./worker.js
 
 
-(function ($, _, Svelto, Widgets, Factory, LazyWorker) {
+(function ($, _, Svelto, Factory, LazyWorker) {
   /* CONFIG */
   var config = {
     name: 'lazy',
@@ -5814,11 +5839,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Lazy =
   /*#__PURE__*/
-  function (_Widgets$Widget3) {
-    _inheritsLoose(Lazy, _Widgets$Widget3);
+  function (_Svelto$Widget3) {
+    _inheritsLoose(Lazy, _Svelto$Widget3);
 
     function Lazy() {
-      return _Widgets$Widget3.apply(this, arguments) || this;
+      return _Svelto$Widget3.apply(this, arguments) || this;
     }
 
     var _proto7 = Lazy.prototype;
@@ -5841,12 +5866,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Lazy;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Lazy, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.LazyWorker); // @priority 700
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.LazyWorker); // @priority 700
 // @require ../lazy.js
 //TODO: Add <picture/> support
 
@@ -5925,7 +5950,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 // @require ../worker.js
 
 
-(function ($, _, Svelto, Widgets, Factory, LazyWorker) {
+(function ($, _, Svelto, Factory, LazyWorker) {
   /* CONFIG */
   var config = {
     name: 'lazyGroup',
@@ -5941,11 +5966,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Lazy =
   /*#__PURE__*/
-  function (_Widgets$Widget4) {
-    _inheritsLoose(Lazy, _Widgets$Widget4);
+  function (_Svelto$Widget4) {
+    _inheritsLoose(Lazy, _Svelto$Widget4);
 
     function Lazy() {
-      return _Widgets$Widget4.apply(this, arguments) || this;
+      return _Svelto$Widget4.apply(this, arguments) || this;
     }
 
     var _proto9 = Lazy.prototype;
@@ -5969,12 +5994,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Lazy;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Lazy, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.LazyWorker); // @require core/svelto/svelto.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.LazyWorker); // @require core/svelto/svelto.js
 
 
 (function ($, _, Svelto) {
@@ -6588,7 +6613,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 // @require lib/autofocus/autofocus.js
 
 
-(function ($, _, Svelto, Widgets, Factory, Autofocus) {
+(function ($, _, Svelto, Factory, Autofocus) {
   /* CONFIG */
   var config = {
     name: 'autofocusable'
@@ -6597,11 +6622,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Autofocusable =
   /*#__PURE__*/
-  function (_Widgets$Widget5) {
-    _inheritsLoose(Autofocusable, _Widgets$Widget5);
+  function (_Svelto$Widget5) {
+    _inheritsLoose(Autofocusable, _Svelto$Widget5);
 
     function Autofocusable() {
-      return _Widgets$Widget5.apply(this, arguments) || this;
+      return _Svelto$Widget5.apply(this, arguments) || this;
     }
 
     var _proto11 = Autofocusable.prototype;
@@ -6616,16 +6641,16 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Autofocusable;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Autofocusable, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Autofocus); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Autofocus); // @require core/widget/widget.js
 // @require lib/storage/storage.js
 
 
-(function ($, _, Svelto, Widgets, Factory, Storage) {
+(function ($, _, Svelto, Factory, Storage) {
   /* CONFIG */
   var config = {
     name: 'storable',
@@ -6635,11 +6660,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Storable =
   /*#__PURE__*/
-  function (_Widgets$Widget6) {
-    _inheritsLoose(Storable, _Widgets$Widget6);
+  function (_Svelto$Widget6) {
+    _inheritsLoose(Storable, _Svelto$Widget6);
 
     function Storable() {
-      return _Widgets$Widget6.apply(this, arguments) || this;
+      return _Svelto$Widget6.apply(this, arguments) || this;
     }
 
     var _proto12 = Storable.prototype;
@@ -6664,12 +6689,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Storable;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Storable, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Storage); // @require lib/fetch/fetch.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Storage); // @require lib/fetch/fetch.js
 // @require widgets/storable/storable.js
 //TODO: Add locking capabilities
 
@@ -7173,7 +7198,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
         this.___breakpoint();
       } else if (this.options.autoplay) {
-        var whenReady = Toast.whenReady || Toast.__proto__.whenReady || Widgets.Widget.whenReady; //IE10 support -- static property
+        var whenReady = Toast.whenReady || Toast.__proto__.whenReady || Svelto.Widget.whenReady; //IE10 support -- static property
 
         whenReady.bind(Toast)(this.open.bind(this));
       }
@@ -7785,7 +7810,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 // @require core/widget/widget.js
 
 
-(function ($, _, Svelto, Widgets, Factory, Pointer, Animations) {
+(function ($, _, Svelto, Factory, Pointer, Animations) {
   /* CONFIG */
   var config = {
     name: 'ripple',
@@ -7817,11 +7842,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Ripple =
   /*#__PURE__*/
-  function (_Widgets$Widget7) {
-    _inheritsLoose(Ripple, _Widgets$Widget7);
+  function (_Svelto$Widget7) {
+    _inheritsLoose(Ripple, _Svelto$Widget7);
 
     function Ripple() {
-      return _Widgets$Widget7.apply(this, arguments) || this;
+      return _Svelto$Widget7.apply(this, arguments) || this;
     }
 
     var _proto17 = Ripple.prototype;
@@ -7891,12 +7916,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Ripple;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Ripple, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer, Svelto.Animations); // @optional ./raw/raw.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Pointer, Svelto.Animations); // @optional ./raw/raw.js
 // @require core/svelto/svelto.js
 // @require lib/fetch/fetch.js
 
@@ -9683,7 +9708,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
           }
         }
       } else if (_.isString(color)) {
-        color = _.trim(color, '#');
+        color = color.slice(-6);
 
         if (/^[0-9a-f]{6}$/i.test(color)) {
           // Full 6-chars hex color notation
@@ -11107,6 +11132,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 (function ($, _, Svelto) {
   /* URL */
   var URL = {
+    trailingSlashRe: /\/$/,
     targetRe: /#(.*)$/,
     isEqual: function isEqual(url1, url2, stripTarget) {
       if (stripTarget === void 0) {
@@ -11116,7 +11142,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
       if (!_.isString(url1) || !_.isString(url2)) return url1 === url2;
       url1 = stripTarget ? url1.replace(URL.targetRe, '') : url1;
       url2 = stripTarget ? url2.replace(URL.targetRe, '') : url2;
-      return _.trimEnd(url1, '/') === _.trimEnd(url2, '/');
+      return url1.replace(URL.trailingSlashRe, '') === url2.replace(URL.trailingSlashRe, '');
     },
     makeAbsolute: function makeAbsolute(url) {
       if (url.startsWith('/') || url.includes('://')) return url;
@@ -11221,7 +11247,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 //TODO: Add slides drag support
 
 
-(function ($, _, Svelto, Widgets, Factory, Pointer, Timer, Animations) {
+(function ($, _, Svelto, Factory, Pointer, Timer, Animations) {
   /* CONFIG */
   var config = {
     name: 'carousel',
@@ -11264,11 +11290,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Carousel =
   /*#__PURE__*/
-  function (_Widgets$Widget8) {
-    _inheritsLoose(Carousel, _Widgets$Widget8);
+  function (_Svelto$Widget8) {
+    _inheritsLoose(Carousel, _Svelto$Widget8);
 
     function Carousel() {
-      return _Widgets$Widget8.apply(this, arguments) || this;
+      return _Svelto$Widget8.apply(this, arguments) || this;
     }
 
     var _proto25 = Carousel.prototype;
@@ -11399,7 +11425,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 
     _proto25.enable = function enable() {
-      _Widgets$Widget8.prototype.enable.call(this);
+      _Svelto$Widget8.prototype.enable.call(this);
 
       if (this.options.cycle || this._wasCycling) {
         this.play();
@@ -11407,7 +11433,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     _proto25.disable = function disable() {
-      _Widgets$Widget8.prototype.disable.call(this);
+      _Svelto$Widget8.prototype.disable.call(this);
 
       this._wasCycling = this.options.cycle;
 
@@ -11501,12 +11527,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Carousel;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Carousel, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer, Svelto.Timer, Svelto.Animations); // @optional ./vendor/Chart.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Pointer, Svelto.Timer, Svelto.Animations); // @optional ./vendor/Chart.js
 // @require core/animations/animations.js
 
 /* CHART */
@@ -11544,7 +11570,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
       bodyFontSize: 16,
       footerFontSize: 16
     },
-    animations: {
+    animation: {
       duration: Animations.normal
     }
   });
@@ -11554,7 +11580,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 /* CHART */
 
 
-(function ($, _, Svelto, Widgets, Factory, ChartLib) {
+(function ($, _, Svelto, Factory, ChartLib) {
   /* CHECK IF LOADED */
   if (!ChartLib) return;
   /* CONFIG */
@@ -11569,13 +11595,21 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
         colors: ['#1565c0'],
         // Primary color
         labels: ['Dataset'],
-        datas: [[]]
+        datas: [[]],
+        ticks: undefined,
+        tooltips: undefined,
+        visibilities: [],
+        chartOptions: {}
       },
       datas: {
         type: 'type',
         colors: 'colors',
         labels: 'labels',
-        datas: 'datas'
+        datas: 'datas',
+        ticks: 'ticks',
+        tooltips: 'tooltips',
+        visibilities: 'visibilities',
+        chartOptions: 'chart-options'
       }
     }
   };
@@ -11583,36 +11617,40 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Chart =
   /*#__PURE__*/
-  function (_Widgets$Widget9) {
-    _inheritsLoose(Chart, _Widgets$Widget9);
+  function (_Svelto$Widget9) {
+    _inheritsLoose(Chart, _Svelto$Widget9);
 
     function Chart() {
-      return _Widgets$Widget9.apply(this, arguments) || this;
+      return _Svelto$Widget9.apply(this, arguments) || this;
     }
 
     var _proto26 = Chart.prototype;
 
     /* SPECIAL */
     _proto26._variables = function _variables() {
-      var _this15 = this;
-
       this.$chart = this.$element;
       this.chart = this.element;
-      var properties = ['type', 'colors', 'labels', 'datas'];
-      properties.forEach(function (property) {
+    };
+
+    _proto26._init = function _init() {
+      this._initDatas();
+
+      var settings = this._getSettings();
+
+      this.chartInstance = new ChartLib(this.chart, settings);
+    };
+
+    _proto26._initDatas = function _initDatas() {
+      var _this15 = this;
+
+      Object.keys(this.options.datas).forEach(function (property) {
         _this15[property] = _this15.$chart.data(_this15.options.datas[property]) || _this15.options.defaults[property];
       });
       if (!_.isArray(this.datas[0])) this.datas = [this.datas];
     };
 
-    _proto26._init = function _init() {
-      var settings = this._getSettings();
-
-      this.instance = new ChartLib(this.chart, settings);
-    };
-
     _proto26._destroy = function _destroy() {
-      this.instance.destroy();
+      this.chartInstance.destroy();
     };
     /* PRIVATE */
 
@@ -11620,35 +11658,68 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     _proto26._getSettings = function _getSettings() {
       var _this16 = this;
 
-      return {
+      var settings = {
         type: this.type,
         data: {
-          labels: this.datas[0].map(function (point, index) {
+          labels: this.ticks || this.datas[0].map(function (point, index) {
             return index + 1;
           }),
           datasets: this.labels.map(function (label, index) {
             return {
               label: label,
               data: _this16.datas[index],
+              hidden: _this16.visibilities[index] === false,
               backgroundColor: _this16.colors[index]
             };
           })
-        }
+        },
+        options: this.chartOptions
       };
+
+      if (this.tooltips) {
+        _.merge(settings.options, {
+          tooltips: {
+            callbacks: {
+              title: function title(datas) {
+                return _this16.tooltips[datas[0].index];
+              }
+            }
+          }
+        });
+      }
+
+      return settings;
+    };
+    /* API */
+
+
+    _proto26.update = function update() {
+      this.$chart.removeData();
+
+      this._initDatas();
+
+      var _getSettings2 = this._getSettings(),
+          data = _getSettings2.data;
+
+      this.chartInstance.data.labels = data.labels;
+      this.chartInstance.data.datasets.forEach(function (dataset, i) {
+        _.merge(dataset, data.datasets[i]);
+      });
+      this.chartInstance.update();
     };
 
     return Chart;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Chart, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, window.Chart); // @require core/colors/colors.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, window.Chart); // @require core/colors/colors.js
 // @require core/widget/widget.js
 // @require widgets/remote/loader/loader.js
 
 
-(function ($, _, Svelto, Widgets, Factory, Colors) {
+(function ($, _, Svelto, Factory, Colors) {
   /* CONFIG */
   var config = {
     name: 'chatMessageReplyable',
@@ -11681,11 +11752,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var ChatMessageReplyable =
   /*#__PURE__*/
-  function (_Widgets$Widget10) {
-    _inheritsLoose(ChatMessageReplyable, _Widgets$Widget10);
+  function (_Svelto$Widget10) {
+    _inheritsLoose(ChatMessageReplyable, _Svelto$Widget10);
 
     function ChatMessageReplyable() {
-      return _Widgets$Widget10.apply(this, arguments) || this;
+      return _Svelto$Widget10.apply(this, arguments) || this;
     }
 
     var _proto27 = ChatMessageReplyable.prototype;
@@ -11733,15 +11804,15 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return ChatMessageReplyable;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(ChatMessageReplyable, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Colors); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Colors); // @require core/widget/widget.js
 
 
-(function ($, _, Svelto, Widgets, Factory, Pointer) {
+(function ($, _, Svelto, Factory, Pointer) {
   /* CONFIG */
   var config = {
     name: 'checkbox',
@@ -11757,11 +11828,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Checkbox =
   /*#__PURE__*/
-  function (_Widgets$Widget11) {
-    _inheritsLoose(Checkbox, _Widgets$Widget11);
+  function (_Svelto$Widget11) {
+    _inheritsLoose(Checkbox, _Svelto$Widget11);
 
     function Checkbox() {
-      return _Widgets$Widget11.apply(this, arguments) || this;
+      return _Svelto$Widget11.apply(this, arguments) || this;
     }
 
     var _proto28 = Checkbox.prototype;
@@ -11790,19 +11861,19 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Checkbox;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Checkbox, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Pointer); // @require core/widget/widget.js
 // When using using an incomplete-information format (those where not all the info are exported, like YYYYMMDD) the behaviour when used in combination with, for instance, `formSync` would be broken: at GTM+5 it may be the day 10, but at UTC may actually be day 9, and when syncing we won't get the right date synced between both datepickers
 // Accordion to ISO-8601 the first day of the week is Monday
 //FIXME: When using the arrows the prev day still remains hovered even if it's not below the cursor (chrome) //TODO: Make a SO question, maybe we can workaround it
 //FIXME: `today` button doesn't work when the same month is active but the wrong day is selected
 
 
-(function ($, _, Svelto, Widgets, Factory, Pointer) {
+(function ($, _, Svelto, Factory, Pointer) {
   /* CONFIG */
   var config = {
     name: 'datepicker',
@@ -11897,11 +11968,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Datepicker =
   /*#__PURE__*/
-  function (_Widgets$Widget12) {
-    _inheritsLoose(Datepicker, _Widgets$Widget12);
+  function (_Svelto$Widget12) {
+    _inheritsLoose(Datepicker, _Svelto$Widget12);
 
     function Datepicker() {
-      return _Widgets$Widget12.apply(this, arguments) || this;
+      return _Svelto$Widget12.apply(this, arguments) || this;
     }
 
     var _proto29 = Datepicker.prototype;
@@ -12231,17 +12302,17 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Datepicker;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Datepicker, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Pointer); // @require core/widget/widget.js
 //FIXME: Reposition the draggable properly when autoscrolling inside a container (not document/html)
 //FIXME: On iOS, if the draggable is too close to the left edge of the screen dragging it will cause a `scroll to go back` event/animation on safari
 
 
-(function ($, _, Svelto, Widgets, Factory, Animations, Browser, Pointer, Mouse) {
+(function ($, _, Svelto, Factory, Animations, Browser, Pointer, Mouse) {
   /* CONFIG */
   var config = {
     name: 'draggable',
@@ -12332,11 +12403,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Draggable =
   /*#__PURE__*/
-  function (_Widgets$Widget13) {
-    _inheritsLoose(Draggable, _Widgets$Widget13);
+  function (_Svelto$Widget13) {
+    _inheritsLoose(Draggable, _Svelto$Widget13);
 
     function Draggable() {
-      return _Widgets$Widget13.apply(this, arguments) || this;
+      return _Svelto$Widget13.apply(this, arguments) || this;
     }
 
     var _proto30 = Draggable.prototype;
@@ -12816,12 +12887,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Draggable;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Draggable, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Animations, Svelto.Browser, Svelto.Pointer, Svelto.Mouse); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Animations, Svelto.Browser, Svelto.Pointer, Svelto.Mouse); // @require core/widget/widget.js
 // @require lib/color/color.js
 // @require lib/transform/transform.js
 // @require widgets/draggable/draggable.js
@@ -12829,7 +12900,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 //TODO: Add support for alpha channel, by adding an opacity slider at the bottom of the sbWrp, it should be optional
 
 
-(function ($, _, Svelto, Widgets, Factory, Color, Keyboard) {
+(function ($, _, Svelto, Factory, Color, Keyboard) {
   /* CONFIG */
   var config = {
     name: 'colorpicker',
@@ -12872,11 +12943,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Colorpicker =
   /*#__PURE__*/
-  function (_Widgets$Widget14) {
-    _inheritsLoose(Colorpicker, _Widgets$Widget14);
+  function (_Svelto$Widget14) {
+    _inheritsLoose(Colorpicker, _Svelto$Widget14);
 
     function Colorpicker() {
-      return _Widgets$Widget14.apply(this, arguments) || this;
+      return _Svelto$Widget14.apply(this, arguments) || this;
     }
 
     var _proto31 = Colorpicker.prototype;
@@ -12889,8 +12960,8 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
       this.$hueWrp = this.$colorpicker.find(this.options.selectors.hue.wrp);
       this.$hueHandler = this.$colorpicker.find(this.options.selectors.hue.handler);
       this.$input = this.$colorpicker.find(this.options.selectors.input);
-      this.sbWrpSize = this.$sbWrp.width();
-      this.hueWrpHeight = this.sbWrpSize;
+      this.dimension = this.$sbWrp.width() || 174; //FIXME: It shouldn't be set manually, but this widget might be hidden at init time
+
       this.hsv = false;
     };
 
@@ -12987,8 +13058,8 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     _proto31._sbDragSet = function _sbDragSet(XY, update) {
-      this.hsv.s = _.clamp(XY.x, 0, this.sbWrpSize) * 100 / this.sbWrpSize;
-      this.hsv.v = 100 - _.clamp(XY.y, 0, this.sbWrpSize) * 100 / this.sbWrpSize;
+      this.hsv.s = _.clamp(XY.x, 0, this.dimension) * 100 / this.dimension;
+      this.hsv.v = 100 - _.clamp(XY.y, 0, this.dimension) * 100 / this.dimension;
 
       this._updateSb(false);
 
@@ -13062,7 +13133,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     _proto31._hueDragSet = function _hueDragSet(XY, update) {
-      this.hsv.h = 359 - _.clamp(XY.y, 0, this.hueWrpHeight) * 359 / this.hueWrpHeight;
+      this.hsv.h = 359 - _.clamp(XY.y, 0, this.dimension) * 359 / this.dimension;
 
       this._updateHue(false);
 
@@ -13100,8 +13171,8 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
       /* TRANSLATE */
 
       if (_translate) {
-        var translateX = this.sbWrpSize / 100 * this.hsv.s,
-            translateY = this.sbWrpSize / 100 * (100 - this.hsv.v);
+        var translateX = this.dimension / 100 * this.hsv.s,
+            translateY = this.dimension / 100 * (100 - this.hsv.v);
         this.$sbHandler.translate(translateX, translateY);
       }
     };
@@ -13119,7 +13190,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
       /* TRANSLATE */
 
       if (_translate) {
-        var translateY = this.hueWrpHeight / 100 * (100 - this.hsv.h / 360 * 100);
+        var translateY = this.dimension / 100 * (100 - this.hsv.h / 360 * 100);
         this.$hueHandler.translateY(translateY);
       }
     };
@@ -13163,17 +13234,17 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Colorpicker;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Colorpicker, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Color, Svelto.Keyboard); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Color, Svelto.Keyboard); // @require core/widget/widget.js
 // @require lib/touching/touching.js
 // @require widgets/draggable/draggable.js
 
 
-(function ($, _, Svelto, Widgets, Factory) {
+(function ($, _, Svelto, Factory) {
   /* CONFIG */
   var config = {
     name: 'droppable',
@@ -13199,11 +13270,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Droppable =
   /*#__PURE__*/
-  function (_Widgets$Widget15) {
-    _inheritsLoose(Droppable, _Widgets$Widget15);
+  function (_Svelto$Widget15) {
+    _inheritsLoose(Droppable, _Svelto$Widget15);
 
     function Droppable() {
-      return _Widgets$Widget15.apply(this, arguments) || this;
+      return _Svelto$Widget15.apply(this, arguments) || this;
     }
 
     var _proto32 = Droppable.prototype;
@@ -13300,12 +13371,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Droppable;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Droppable, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @require core/animations/animations.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory); // @require core/animations/animations.js
 // @require lib/slide/slide.js
 // @require widgets/autofocusable/autofocusable.js
 //FIXME: Broken horizontal sliding animation
@@ -13444,11 +13515,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Accordion =
   /*#__PURE__*/
-  function (_Widgets$Widget16) {
-    _inheritsLoose(Accordion, _Widgets$Widget16);
+  function (_Svelto$Widget16) {
+    _inheritsLoose(Accordion, _Svelto$Widget16);
 
     function Accordion() {
-      return _Widgets$Widget16.apply(this, arguments) || this;
+      return _Svelto$Widget16.apply(this, arguments) || this;
     }
 
     var _proto34 = Accordion.prototype;
@@ -13511,7 +13582,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 
     _proto34.enable = function enable() {
-      _Widgets$Widget16.prototype.enable.call(this);
+      _Svelto$Widget16.prototype.enable.call(this);
 
       this.instances.forEach(function (instance) {
         return instance.enable();
@@ -13543,7 +13614,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Accordion;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
@@ -13551,7 +13622,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 })(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @require core/widget/widget.js
 
 
-(function ($, _, Svelto, Widgets, Factory, Pointer) {
+(function ($, _, Svelto, Factory, Pointer) {
   /* CONFIG */
   var config = {
     name: 'flickable',
@@ -13571,11 +13642,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Flickable =
   /*#__PURE__*/
-  function (_Widgets$Widget17) {
-    _inheritsLoose(Flickable, _Widgets$Widget17);
+  function (_Svelto$Widget17) {
+    _inheritsLoose(Flickable, _Svelto$Widget17);
 
     function Flickable() {
-      return _Widgets$Widget17.apply(this, arguments) || this;
+      return _Svelto$Widget17.apply(this, arguments) || this;
     }
 
     var _proto35 = Flickable.prototype;
@@ -13677,15 +13748,15 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Flickable;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Flickable, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer); // @require lib/autofocus/helpers.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Pointer); // @require lib/autofocus/helpers.js
 
 
-(function ($, _, Svelto, Widgets, Factory) {
+(function ($, _, Svelto, Factory) {
   /* CONFIG */
   var config = {
     name: 'flippable',
@@ -13709,11 +13780,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Flippable =
   /*#__PURE__*/
-  function (_Widgets$Widget18) {
-    _inheritsLoose(Flippable, _Widgets$Widget18);
+  function (_Svelto$Widget18) {
+    _inheritsLoose(Flippable, _Svelto$Widget18);
 
     function Flippable() {
-      return _Widgets$Widget18.apply(this, arguments) || this;
+      return _Svelto$Widget18.apply(this, arguments) || this;
     }
 
     var _proto36 = Flippable.prototype;
@@ -13758,16 +13829,16 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Flippable;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Flippable, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory); // @require core/widget/widget.js
 //TODO: Maybe add the ability to trigger a sync when widgetizing a new form in the group, so that if we are appending a new one it gets synced (as a base or not, if not maybe we can get a data-target or the first of othe others in the group as a base)
 
 
-(function ($, _, Svelto, Widgets, Factory) {
+(function ($, _, Svelto, Factory) {
   /* CONFIG */
   var config = {
     name: 'formSync',
@@ -13796,11 +13867,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var FormSync =
   /*#__PURE__*/
-  function (_Widgets$Widget19) {
-    _inheritsLoose(FormSync, _Widgets$Widget19);
+  function (_Svelto$Widget19) {
+    _inheritsLoose(FormSync, _Svelto$Widget19);
 
     function FormSync() {
-      return _Widgets$Widget19.apply(this, arguments) || this;
+      return _Svelto$Widget19.apply(this, arguments) || this;
     }
 
     var _proto37 = FormSync.prototype;
@@ -13866,12 +13937,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return FormSync;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(FormSync, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory); // @require core/widget/widget.js
 // @require lib/validator/validator.js
 // @require widgets/toast/toast.js
 //TODO: Add support for multiple checkboxes validation
@@ -13879,7 +13950,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 //TODO: Maybe make it generic (so that it can be used in single elements) and just call it `validate`
 
 
-(function ($, _, Svelto, Widgets, Factory, Validator) {
+(function ($, _, Svelto, Factory, Validator) {
   /* CONFIG */
   var config = {
     name: 'formValidate',
@@ -14003,11 +14074,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var FormValidate =
   /*#__PURE__*/
-  function (_Widgets$Widget20) {
-    _inheritsLoose(FormValidate, _Widgets$Widget20);
+  function (_Svelto$Widget20) {
+    _inheritsLoose(FormValidate, _Svelto$Widget20);
 
     function FormValidate() {
-      return _Widgets$Widget20.apply(this, arguments) || this;
+      return _Svelto$Widget20.apply(this, arguments) || this;
     }
 
     var _proto38 = FormValidate.prototype;
@@ -14303,16 +14374,16 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return FormValidate;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(FormValidate, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Validator); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Validator); // @require core/widget/widget.js
 // @require lib/fullscreen/fullscreen.js
 
 
-(function ($, _, Svelto, Widgets, Factory, Fullscreen) {
+(function ($, _, Svelto, Factory, Fullscreen) {
   /* CONFIG */
   var config = {
     name: 'fullscreenable',
@@ -14323,11 +14394,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Fullscreenable =
   /*#__PURE__*/
-  function (_Widgets$Widget21) {
-    _inheritsLoose(Fullscreenable, _Widgets$Widget21);
+  function (_Svelto$Widget21) {
+    _inheritsLoose(Fullscreenable, _Svelto$Widget21);
 
     function Fullscreenable() {
-      return _Widgets$Widget21.apply(this, arguments) || this;
+      return _Svelto$Widget21.apply(this, arguments) || this;
     }
 
     var _proto39 = Fullscreenable.prototype;
@@ -14356,12 +14427,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Fullscreenable;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Fullscreenable, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Fullscreen); // @require core/svelto/svelto.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Fullscreen); // @require core/svelto/svelto.js
 
 
 (function ($, _, Svelto) {
@@ -14638,11 +14709,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var DT =
   /*#__PURE__*/
-  function (_Widgets$Widget22) {
-    _inheritsLoose(DT, _Widgets$Widget22);
+  function (_Svelto$Widget22) {
+    _inheritsLoose(DT, _Svelto$Widget22);
 
     function DT() {
-      return _Widgets$Widget22.apply(this, arguments) || this;
+      return _Svelto$Widget22.apply(this, arguments) || this;
     }
 
     /* WIDGETIZE */
@@ -14733,7 +14804,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return DT;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
@@ -15368,11 +15439,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var EmojipickerPopover =
   /*#__PURE__*/
-  function (_Widgets$Widget23) {
-    _inheritsLoose(EmojipickerPopover, _Widgets$Widget23);
+  function (_Svelto$Widget23) {
+    _inheritsLoose(EmojipickerPopover, _Svelto$Widget23);
 
     function EmojipickerPopover() {
-      return _Widgets$Widget23.apply(this, arguments) || this;
+      return _Svelto$Widget23.apply(this, arguments) || this;
     }
 
     var _proto42 = EmojipickerPopover.prototype;
@@ -15449,7 +15520,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return EmojipickerPopover;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
@@ -15472,7 +15543,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 })(Svelto.$, Svelto._, Svelto, Svelto.Widgets.EmojipickerPopover); // @require ./popover_helper.js
 
 
-(function ($, _, Svelto, Widgets, Factory, Pointer) {
+(function ($, _, Svelto, Factory, Pointer) {
   /* CONFIG */
   var config = {
     name: 'emojipickerPopoverTrigger',
@@ -15489,11 +15560,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var EmojipickerPopoverTrigger =
   /*#__PURE__*/
-  function (_Widgets$Widget24) {
-    _inheritsLoose(EmojipickerPopoverTrigger, _Widgets$Widget24);
+  function (_Svelto$Widget24) {
+    _inheritsLoose(EmojipickerPopoverTrigger, _Svelto$Widget24);
 
     function EmojipickerPopoverTrigger() {
-      return _Widgets$Widget24.apply(this, arguments) || this;
+      return _Svelto$Widget24.apply(this, arguments) || this;
     }
 
     var _proto43 = EmojipickerPopoverTrigger.prototype;
@@ -15520,15 +15591,15 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return EmojipickerPopoverTrigger;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(EmojipickerPopoverTrigger, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Pointer); // @require core/widget/widget.js
 
 
-(function ($, _, Svelto, Widgets, Factory) {
+(function ($, _, Svelto, Factory) {
   /* CONFIG */
   var config = {
     name: 'infobar',
@@ -15544,11 +15615,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Infobar =
   /*#__PURE__*/
-  function (_Widgets$Widget25) {
-    _inheritsLoose(Infobar, _Widgets$Widget25);
+  function (_Svelto$Widget25) {
+    _inheritsLoose(Infobar, _Svelto$Widget25);
 
     function Infobar() {
-      return _Widgets$Widget25.apply(this, arguments) || this;
+      return _Svelto$Widget25.apply(this, arguments) || this;
     }
 
     var _proto44 = Infobar.prototype;
@@ -15567,17 +15638,17 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Infobar;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Infobar, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @require core/browser/browser.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory); // @require core/browser/browser.js
 // @require core/widget/widget.js
 // It supports only `box-sizing: border-box` inputs
 
 
-(function ($, _, Svelto, Widgets, Factory, Browser) {
+(function ($, _, Svelto, Factory, Browser) {
   /* CONFIG */
   var config = {
     name: 'inputAutogrow',
@@ -15595,11 +15666,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var InputAutogrow =
   /*#__PURE__*/
-  function (_Widgets$Widget26) {
-    _inheritsLoose(InputAutogrow, _Widgets$Widget26);
+  function (_Svelto$Widget26) {
+    _inheritsLoose(InputAutogrow, _Svelto$Widget26);
 
     function InputAutogrow() {
-      return _Widgets$Widget26.apply(this, arguments) || this;
+      return _Svelto$Widget26.apply(this, arguments) || this;
     }
 
     /* WIDGETIZE */
@@ -15663,15 +15734,15 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return InputAutogrow;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(InputAutogrow, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Browser); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Browser); // @require core/widget/widget.js
 
 
-(function ($, _, Svelto, Widgets, Factory) {
+(function ($, _, Svelto, Factory) {
   /* CONFIG */
   var config = {
     name: 'inputFileNames',
@@ -15688,11 +15759,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var InputFileNames =
   /*#__PURE__*/
-  function (_Widgets$Widget27) {
-    _inheritsLoose(InputFileNames, _Widgets$Widget27);
+  function (_Svelto$Widget27) {
+    _inheritsLoose(InputFileNames, _Svelto$Widget27);
 
     function InputFileNames() {
-      return _Widgets$Widget27.apply(this, arguments) || this;
+      return _Svelto$Widget27.apply(this, arguments) || this;
     }
 
     var _proto46 = InputFileNames.prototype;
@@ -15751,12 +15822,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return InputFileNames;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(InputFileNames, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @require core/animations/animations.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory); // @require core/animations/animations.js
 // @require widgets/autofocusable/autofocusable.js
 //FIXME: Multiple open modals (read it: multiple backdrops) are not well supported
 
@@ -15837,7 +15908,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     _proto47.__tap = function __tap(event) {
-      if (this.isLocked() || event.isDefaultPrevented() || event.isPropagationStopped() || !$.isAttached(event.target) || $(event.target).closest(this.$modal).length) return;
+      if (this.isLocked() || $.isDefaultPrevented(event) || !$.isAttached(event.target) || $(event.target).closest(this.$modal).length) return;
       event.preventDefault();
       event.stopImmediatePropagation();
       this.close();
@@ -15865,19 +15936,9 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
       return this[force ? 'open' : 'close']();
     };
 
-    _proto47.open = function (_open) {
-      function open() {
-        return _open.apply(this, arguments);
-      }
-
-      open.toString = function () {
-        return _open.toString();
-      };
-
-      return open;
-    }(function () {
+    _proto47.open = function open() {
       if (this._isOpen) return null;
-      if (this.isLocked()) return this.whenUnlocked(this.open.bind(open));
+      if (this.isLocked()) return this.whenUnlocked(this.open.bind(this));
       this.lock();
       this._isOpen = true;
 
@@ -15904,7 +15965,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
       this.___tap();
 
       this.___route();
-    });
+    };
 
     _proto47.close = function close() {
       if (!this._isOpen) return null;
@@ -15941,7 +16002,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 })(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer, Svelto.Animations); // @require core/widget/widget.js
 
 
-(function ($, _, Svelto, Widgets, Factory, Pointer) {
+(function ($, _, Svelto, Factory, Pointer) {
   /* CONFIG */
   var config = {
     name: 'numbox',
@@ -15976,11 +16037,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Numbox =
   /*#__PURE__*/
-  function (_Widgets$Widget28) {
-    _inheritsLoose(Numbox, _Widgets$Widget28);
+  function (_Svelto$Widget28) {
+    _inheritsLoose(Numbox, _Svelto$Widget28);
 
     function Numbox() {
-      return _Widgets$Widget28.apply(this, arguments) || this;
+      return _Svelto$Widget28.apply(this, arguments) || this;
     }
 
     var _proto48 = Numbox.prototype;
@@ -16117,12 +16178,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Numbox;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Numbox, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer); // @require core/animations/animations.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Pointer); // @require core/animations/animations.js
 // @require widgets/autofocusable/autofocusable.js
 
 
@@ -16277,7 +16338,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 // It can detect scroll only on the document
 
 
-(function ($, _, Svelto, Widgets, Factory) {
+(function ($, _, Svelto, Factory) {
   /* CONFIG */
   var config = {
     name: 'pager',
@@ -16298,11 +16359,11 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
   var Pager =
   /*#__PURE__*/
-  function (_Widgets$Widget29) {
-    _inheritsLoose(Pager, _Widgets$Widget29);
+  function (_Svelto$Widget29) {
+    _inheritsLoose(Pager, _Svelto$Widget29);
 
     function Pager() {
-      return _Widgets$Widget29.apply(this, arguments) || this;
+      return _Svelto$Widget29.apply(this, arguments) || this;
     }
 
     var _proto50 = Pager.prototype;
@@ -16335,9 +16396,9 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
         _this26.___scrollReset();
 
-        if (event.isDefaultPrevented() || event.isPropagationStopped()) return; // Probably another widget was listening for the same event, and it should take priority over this
+        if ($.isDefaultPrevented(event)) return; // Probably another widget was listening for the same event, and it should take priority over this
 
-        _Widgets$Widget29.prototype.__keydown.call(_this26, event);
+        _Svelto$Widget29.prototype.__keydown.call(_this26, event);
       }, 50); //FIXME: Not exactly a solid implementation
 
     };
@@ -16371,12 +16432,12 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     return Pager;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Pager, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @require widgets/pager/pager.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory); // @require widgets/pager/pager.js
 
 
 (function ($, _, Svelto, Widgets, Factory) {
@@ -16537,7 +16598,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
     };
 
     _proto51.__tap = function __tap(event) {
-      if (this.isLocked() || this._isPinned || event.isDefaultPrevented() || event.isPropagationStopped() || !$.isAttached(event.target) || $(event.target).closest(this.$panel).length) return;
+      if (this.isLocked() || this._isPinned || $.isDefaultPrevented(event) || !$.isAttached(event.target) || $(event.target).closest(this.$panel).length) return;
       event.preventDefault();
       event.stopImmediatePropagation();
       this.close();
@@ -16919,7 +16980,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
     _proto52.__layoutTap = function __layoutTap(event) {
       if (this.isLocked()) return;
-      if (event.isDefaultPrevented() || event.isPropagationStopped()) return;
+      if ($.isDefaultPrevented(event)) return;
       if (event === this._openEvent || this.$popover.touching({
         point: $.eventXY(event, 'clientX', 'clientY')
       }).length) return event.stopImmediatePropagation();
@@ -17687,7 +17748,7 @@ if (Prism.languages.markup) {
 
 Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.js
 
-(function ($, _, Svelto, Widgets, Factory) {
+(function ($, _, Svelto, Factory) {
   /* CONFIG */
   var config = {
     name: 'progressbar',
@@ -17741,11 +17802,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var Progressbar =
   /*#__PURE__*/
-  function (_Widgets$Widget30) {
-    _inheritsLoose(Progressbar, _Widgets$Widget30);
+  function (_Svelto$Widget30) {
+    _inheritsLoose(Progressbar, _Svelto$Widget30);
 
     function Progressbar() {
-      return _Widgets$Widget30.apply(this, arguments) || this;
+      return _Svelto$Widget30.apply(this, arguments) || this;
     }
 
     var _proto53 = Progressbar.prototype;
@@ -17815,12 +17876,12 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return Progressbar;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Progressbar, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @require ./progressbar.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory); // @require ./progressbar.js
 
 
 (function ($, _, Svelto, Progressbar) {
@@ -17876,7 +17937,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 // @require core/widget/widget.js
 
 
-(function ($, _, Svelto, Widgets, Factory, Animations, Pointer) {
+(function ($, _, Svelto, Factory, Animations, Pointer) {
   /* CONFIG */
   var config = {
     name: 'rails',
@@ -17891,12 +17952,19 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
         speed: 200 // The distance scrolled when calling `left` or `right`
 
       },
+      classes: {
+        shadow: {
+          left: 'rails-shadow-left',
+          right: 'rails-shadow-right'
+        }
+      },
       selectors: {
         start: '.rails-start',
         left: '.rails-left',
         right: '.rails-right',
         end: '.rails-end',
         navigation: '.rails-navigation, .rails-start, .rails-left, .rails-right, .rails-end',
+        shadow: '.rails-shadow',
         content: '.rails-content',
         active: '.rails-active'
       },
@@ -17915,11 +17983,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var Rails =
   /*#__PURE__*/
-  function (_Widgets$Widget31) {
-    _inheritsLoose(Rails, _Widgets$Widget31);
+  function (_Svelto$Widget31) {
+    _inheritsLoose(Rails, _Svelto$Widget31);
 
     function Rails() {
-      return _Widgets$Widget31.apply(this, arguments) || this;
+      return _Svelto$Widget31.apply(this, arguments) || this;
     }
 
     var _proto55 = Rails.prototype;
@@ -17932,6 +18000,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
       this.$right = this.$rails.find(this.options.selectors.right);
       this.$end = this.$rails.find(this.options.selectors.end);
       this.$navigation = this.$rails.find(this.options.selectors.navigation);
+      this.$shadow = this.$rails.find(this.options.selectors.shadow);
       this.$content = this.$rails.find(this.options.selectors.content);
       this.$active = this.$content.find(this.options.selectors.active);
     };
@@ -17991,7 +18060,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
 
     _proto55._updateNavigation = function _updateNavigation() {
-      if (!this.$navigation.length) return;
+      if (!this.$navigation.length && !this.$shadow.length) return;
       var contentRect = this.$content.getRect(),
           scrollLeft = this.$content[0].scrollLeft,
           isStart = scrollLeft === 0,
@@ -18001,8 +18070,16 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
         this.$start.add(this.$left).toggleClass(this.options.classes.disabled, isStart);
       }
 
+      if (this.$shadow.length) {
+        this.$shadow.toggleClass(this.options.classes.shadow.left, !isStart);
+      }
+
       if (this.$end.length || this.$right.length) {
         this.$end.add(this.$right).toggleClass(this.options.classes.disabled, isEnd);
+      }
+
+      if (this.$shadow.length) {
+        this.$shadow.toggleClass(this.options.classes.shadow.right, !isEnd);
       }
 
       if (this.options.navigation.hidable) {
@@ -18071,19 +18148,19 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return Rails;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Rails, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Animations, Svelto.Pointer); // @require lib/fetch/fetch.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Animations, Svelto.Pointer); // @require lib/fetch/fetch.js
 // @require widgets/toast/toast.js
 //FIXME: Crappy, not working ATM, maybe should get removed
 //TODO: Support the use of the rater as an input, basically don't perform any ajax operation but instead update an input field
 //TODO: Rewrite as a RemoteReaction widget maybe
 
 
-(function ($, _, Svelto, Widgets, Factory, Pointer, fetch) {
+(function ($, _, Svelto, Factory, Pointer, fetch) {
   /* CONFIG */
   var config = {
     name: 'rater',
@@ -18147,11 +18224,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var Rater =
   /*#__PURE__*/
-  function (_Widgets$Widget32) {
-    _inheritsLoose(Rater, _Widgets$Widget32);
+  function (_Svelto$Widget32) {
+    _inheritsLoose(Rater, _Svelto$Widget32);
 
     function Rater() {
-      return _Widgets$Widget32.apply(this, arguments) || this;
+      return _Svelto$Widget32.apply(this, arguments) || this;
     }
 
     var _proto56 = Rater.prototype;
@@ -18314,12 +18391,12 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return Rater;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Rater, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer, Svelto.fetch); // @require ../remote.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Pointer, Svelto.fetch); // @require ../remote.js
 // @require core/colors/colors.js
 // @require core/sizes/sizes.js
 // @require lib/url/url.js
@@ -18702,11 +18779,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var RemoteTrigger =
   /*#__PURE__*/
-  function (_Widgets$Widget33) {
-    _inheritsLoose(RemoteTrigger, _Widgets$Widget33);
+  function (_Svelto$Widget33) {
+    _inheritsLoose(RemoteTrigger, _Svelto$Widget33);
 
     function RemoteTrigger() {
-      return _Widgets$Widget33.apply(this, arguments) || this;
+      return _Svelto$Widget33.apply(this, arguments) || this;
     }
 
     var _proto58 = RemoteTrigger.prototype;
@@ -18755,7 +18832,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return RemoteTrigger;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
@@ -19773,11 +19850,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var Select =
   /*#__PURE__*/
-  function (_Widgets$Widget34) {
-    _inheritsLoose(Select, _Widgets$Widget34);
+  function (_Svelto$Widget34) {
+    _inheritsLoose(Select, _Svelto$Widget34);
 
     function Select() {
-      return _Widgets$Widget34.apply(this, arguments) || this;
+      return _Svelto$Widget34.apply(this, arguments) || this;
     }
 
     var _proto64 = Select.prototype;
@@ -19966,7 +20043,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return Select;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
@@ -19977,7 +20054,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 // @require core/widget/widget.js
 
 
-(function ($, _, Svelto, Widgets, Factory, Pointer, Browser, Keyboard, Mouse) {
+(function ($, _, Svelto, Factory, Pointer, Browser, Keyboard, Mouse) {
   /* CONFIG */
   var config = {
     name: 'selectable',
@@ -20013,11 +20090,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var Selectable =
   /*#__PURE__*/
-  function (_Widgets$Widget35) {
-    _inheritsLoose(Selectable, _Widgets$Widget35);
+  function (_Svelto$Widget35) {
+    _inheritsLoose(Selectable, _Svelto$Widget35);
 
     function Selectable() {
-      return _Widgets$Widget35.apply(this, arguments) || this;
+      return _Svelto$Widget35.apply(this, arguments) || this;
     }
 
     var _proto65 = Selectable.prototype;
@@ -20286,17 +20363,17 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return Selectable;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Selectable, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer, Svelto.Browser, Svelto.Keyboard, Svelto.Mouse); // @require lib/transform/transform.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Pointer, Svelto.Browser, Svelto.Keyboard, Svelto.Mouse); // @require lib/transform/transform.js
 // @require widgets/draggable/draggable.js
 //TODO: Add vertical slider
 
 
-(function ($, _, Svelto, Widgets, Factory) {
+(function ($, _, Svelto, Factory) {
   /* CONFIG */
   var config = {
     name: 'slider',
@@ -20338,11 +20415,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var Slider =
   /*#__PURE__*/
-  function (_Widgets$Widget36) {
-    _inheritsLoose(Slider, _Widgets$Widget36);
+  function (_Svelto$Widget36) {
+    _inheritsLoose(Slider, _Svelto$Widget36);
 
     function Slider() {
-      return _Widgets$Widget36.apply(this, arguments) || this;
+      return _Svelto$Widget36.apply(this, arguments) || this;
     }
 
     var _proto66 = Slider.prototype;
@@ -20536,12 +20613,12 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return Slider;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Slider, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @require core/colors/colors.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory); // @require core/colors/colors.js
 // @require core/sizes/sizes.js
 // @require widgets/overlay/overlay.js
 //TODO: Add a `IconSpinner` or something, basically if we are applying this to a button with an icon just replace the icon with a spinning one, and make the whole element kind of "disabled", but with animations running. Then make a `waitSpinner` or something that abstracts both `IconSpinner` and `SpinnerOverlay`
@@ -20619,11 +20696,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var SpinnerOverlay =
   /*#__PURE__*/
-  function (_Widgets$Widget37) {
-    _inheritsLoose(SpinnerOverlay, _Widgets$Widget37);
+  function (_Svelto$Widget37) {
+    _inheritsLoose(SpinnerOverlay, _Svelto$Widget37);
 
     function SpinnerOverlay() {
-      return _Widgets$Widget37.apply(this, arguments) || this;
+      return _Svelto$Widget37.apply(this, arguments) || this;
     }
 
     var _proto67 = SpinnerOverlay.prototype;
@@ -20689,7 +20766,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return SpinnerOverlay;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
@@ -20704,7 +20781,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 //TODO: Add a way to abort it, maybe hovering the spinner a clickable X will be displayed and abort the request if tapped (or something more intuitive and easier to implement...)
 
 
-(function ($, _, Svelto, Widgets, Factory, fetch, URL) {
+(function ($, _, Svelto, Factory, fetch, URL) {
   /* CONFIG */
   var config = {
     name: 'formAjax',
@@ -20742,11 +20819,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var FormAjax =
   /*#__PURE__*/
-  function (_Widgets$Widget38) {
-    _inheritsLoose(FormAjax, _Widgets$Widget38);
+  function (_Svelto$Widget38) {
+    _inheritsLoose(FormAjax, _Svelto$Widget38);
 
     function FormAjax() {
-      return _Widgets$Widget38.apply(this, arguments) || this;
+      return _Svelto$Widget38.apply(this, arguments) || this;
     }
 
     var _proto68 = FormAjax.prototype;
@@ -20956,12 +21033,12 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return FormAjax;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(FormAjax, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.fetch, Svelto.URL); // @optional ./vendor/marked.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.fetch, Svelto.URL); // @optional ./vendor/marked.js
 // @optional lib/emojify/emojify.js
 // @optional lib/markdown/markdown.js
 // @optional widgets/emoji/picker/popover/popover_trigger.js
@@ -21557,11 +21634,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var ChatMessageEditable =
   /*#__PURE__*/
-  function (_Widgets$Widget39) {
-    _inheritsLoose(ChatMessageEditable, _Widgets$Widget39);
+  function (_Svelto$Widget39) {
+    _inheritsLoose(ChatMessageEditable, _Svelto$Widget39);
 
     function ChatMessageEditable() {
-      return _Widgets$Widget39.apply(this, arguments) || this;
+      return _Svelto$Widget39.apply(this, arguments) || this;
     }
 
     var _proto70 = ChatMessageEditable.prototype;
@@ -21674,7 +21751,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return ChatMessageEditable;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
@@ -21685,7 +21762,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 //TODO: Add flick support
 
 
-(function ($, _, Svelto, Widgets, Factory, Colors) {
+(function ($, _, Svelto, Factory, Colors) {
   /* CONFIG */
   var config = {
     name: 'switch',
@@ -21726,11 +21803,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var Switch =
   /*#__PURE__*/
-  function (_Widgets$Widget40) {
-    _inheritsLoose(Switch, _Widgets$Widget40);
+  function (_Svelto$Widget40) {
+    _inheritsLoose(Switch, _Svelto$Widget40);
 
     function Switch() {
-      return _Widgets$Widget40.apply(this, arguments) || this;
+      return _Svelto$Widget40.apply(this, arguments) || this;
     }
 
     var _proto71 = Switch.prototype;
@@ -21742,8 +21819,9 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
       this.$bar = this.$switch.find(this.options.selectors.bar);
       this.$handler = this.$switch.find(this.options.selectors.handler);
       this.isChecked = this.$input.prop('checked');
-      this.switchWidth = this.$switch.width();
-      this.handlerWidth = this.$handler.width();
+      this.switchWidth = this.$switch.width() || 47; //FIXME: It shouldn't be set manually, but this widget might be hidden at init time
+
+      this.handlerWidth = this.$handler.width() || 21; //FIXME: It shouldn't be set manually, but this widget might be hidden at init time
     };
 
     _proto71._init = function _init() {
@@ -21872,16 +21950,16 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return Switch;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Switch, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Colors); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Colors); // @require core/widget/widget.js
 //TODO: Better performance with tableHelper, just put the new addded row in the right position, performance boost
 
 
-(function ($, _, Svelto, Widgets, Factory, Pointer) {
+(function ($, _, Svelto, Factory, Pointer) {
   /* CONFIG */
   var config = {
     name: 'tableSortable',
@@ -21927,11 +22005,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var TableSortable =
   /*#__PURE__*/
-  function (_Widgets$Widget41) {
-    _inheritsLoose(TableSortable, _Widgets$Widget41);
+  function (_Svelto$Widget41) {
+    _inheritsLoose(TableSortable, _Svelto$Widget41);
 
     function TableSortable() {
-      return _Widgets$Widget41.apply(this, arguments) || this;
+      return _Svelto$Widget41.apply(this, arguments) || this;
     }
 
     var _proto72 = TableSortable.prototype;
@@ -22081,15 +22159,15 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return TableSortable;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(TableSortable, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Pointer); // @require core/widget/widget.js
 
 
-(function ($, _, Svelto, Widgets, Factory) {
+(function ($, _, Svelto, Factory) {
   /* CONFIG */
   var config = {
     name: 'tableHelper',
@@ -22147,11 +22225,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var TableHelper =
   /*#__PURE__*/
-  function (_Widgets$Widget42) {
-    _inheritsLoose(TableHelper, _Widgets$Widget42);
+  function (_Svelto$Widget42) {
+    _inheritsLoose(TableHelper, _Svelto$Widget42);
 
     function TableHelper() {
-      return _Widgets$Widget42.apply(this, arguments) || this;
+      return _Svelto$Widget42.apply(this, arguments) || this;
     }
 
     var _proto73 = TableHelper.prototype;
@@ -22259,19 +22337,19 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return TableHelper;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(TableHelper, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @require lib/directions/directions.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory); // @require lib/directions/directions.js
 // @require lib/autofocus/helpers.js
 //TODO: Add again the super cool moving indicator
 //TODO: Not well written, make it better
 //TODO: Doesn't handle properly a change of the direction
 
 
-(function ($, _, Svelto, Widgets, Factory, Pointer, Directions) {
+(function ($, _, Svelto, Factory, Pointer, Directions) {
   /* CONFIG */
   var config = {
     name: 'tabs',
@@ -22299,11 +22377,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var Tabs =
   /*#__PURE__*/
-  function (_Widgets$Widget43) {
-    _inheritsLoose(Tabs, _Widgets$Widget43);
+  function (_Svelto$Widget43) {
+    _inheritsLoose(Tabs, _Svelto$Widget43);
 
     function Tabs() {
-      return _Widgets$Widget43.apply(this, arguments) || this;
+      return _Svelto$Widget43.apply(this, arguments) || this;
     }
 
     var _proto74 = Tabs.prototype;
@@ -22404,18 +22482,18 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return Tabs;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Tabs, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer, Svelto.Directions); // @require core/keyboard/keyboard.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Pointer, Svelto.Directions); // @require core/keyboard/keyboard.js
 // @require widgets/icon/icon.js
 // @require widgets/toast/toast.js
 //FIXME: Auto focus on the partial input doesn't work good on mobile, the keyboard keeps opening and closing
 
 
-(function ($, _, Svelto, Widgets, Factory, Colors, Icon, Sizes, Pointer, Keyboard) {
+(function ($, _, Svelto, Factory, Colors, Icon, Sizes, Pointer, Keyboard) {
   /* CONFIG */
   var config = {
     name: 'tagbox',
@@ -22483,11 +22561,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var Tagbox =
   /*#__PURE__*/
-  function (_Widgets$Widget44) {
-    _inheritsLoose(Tagbox, _Widgets$Widget44);
+  function (_Svelto$Widget44) {
+    _inheritsLoose(Tagbox, _Svelto$Widget44);
 
     function Tagbox() {
-      return _Widgets$Widget44.apply(this, arguments) || this;
+      return _Svelto$Widget44.apply(this, arguments) || this;
     }
 
     var _proto75 = Tagbox.prototype;
@@ -22816,15 +22894,15 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return Tagbox;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Tagbox, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Colors, Svelto.Icon, Svelto.Sizes, Svelto.Pointer, Svelto.Keyboard); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Colors, Svelto.Icon, Svelto.Sizes, Svelto.Pointer, Svelto.Keyboard); // @require core/widget/widget.js
 
 
-(function ($, _, Svelto, Widgets, Factory) {
+(function ($, _, Svelto, Factory) {
   /* CONFIG */
   var config = {
     name: 'targeter',
@@ -22844,11 +22922,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var Targeter =
   /*#__PURE__*/
-  function (_Widgets$Widget45) {
-    _inheritsLoose(Targeter, _Widgets$Widget45);
+  function (_Svelto$Widget45) {
+    _inheritsLoose(Targeter, _Svelto$Widget45);
 
     function Targeter() {
-      return _Widgets$Widget45.apply(this, arguments) || this;
+      return _Svelto$Widget45.apply(this, arguments) || this;
     }
 
     var _proto76 = Targeter.prototype;
@@ -22878,12 +22956,12 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return Targeter;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Targeter, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @optional widgets/remote/action/action_helper.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory); // @optional widgets/remote/action/action_helper.js
 // @optional widgets/remote/modal/modal_helper.js
 // @optional widgets/remote/panel/panel_helper.js
 // @optional widgets/remote/popover/popover_helper.js
@@ -24425,7 +24503,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 // It supports only `box-sizing: border-box` textareas
 
 
-(function ($, _, Svelto, Widgets, Factory) {
+(function ($, _, Svelto, Factory) {
   /* CONFIG */
   var config = {
     name: 'textareaAutogrow',
@@ -24441,11 +24519,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var AutogrowTextarea =
   /*#__PURE__*/
-  function (_Widgets$Widget46) {
-    _inheritsLoose(AutogrowTextarea, _Widgets$Widget46);
+  function (_Svelto$Widget46) {
+    _inheritsLoose(AutogrowTextarea, _Svelto$Widget46);
 
     function AutogrowTextarea() {
-      return _Widgets$Widget46.apply(this, arguments) || this;
+      return _Svelto$Widget46.apply(this, arguments) || this;
     }
 
     var _proto86 = AutogrowTextarea.prototype;
@@ -24499,15 +24577,15 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return AutogrowTextarea;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(AutogrowTextarea, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory); // @require core/widget/widget.js
 
 
-(function ($, _, Svelto, Widgets, Factory) {
+(function ($, _, Svelto, Factory) {
   /* CONFIG */
   var config = {
     name: 'textareaSender',
@@ -24526,11 +24604,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var TextareaSender =
   /*#__PURE__*/
-  function (_Widgets$Widget47) {
-    _inheritsLoose(TextareaSender, _Widgets$Widget47);
+  function (_Svelto$Widget47) {
+    _inheritsLoose(TextareaSender, _Svelto$Widget47);
 
     function TextareaSender() {
-      return _Widgets$Widget47.apply(this, arguments) || this;
+      return _Svelto$Widget47.apply(this, arguments) || this;
     }
 
     var _proto87 = TextareaSender.prototype;
@@ -24538,9 +24616,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     /* SPECIAL */
     _proto87._variables = function _variables() {
       this.$textarea = this.$element;
-      this.textarea = this.element;
       this.$form = this.$textarea.closest(this.options.selectors.form);
-      this.form = this.$form[0];
     };
 
     _proto87._events = function _events() {
@@ -24556,25 +24632,33 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
 
     _proto87.send = function send() {
-      this.form.submit();
+      var $submit = this.$form.find('[type="submit"]');
+
+      if ($submit.length) {
+        $submit[0].click();
+      } else {
+        this.$form[0].submit();
+      }
     };
 
     return TextareaSender;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(TextareaSender, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @require core/widget/widget.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory); // @require core/widget/widget.js
 
 
-(function ($, _, Svelto, Widgets, Factory) {
+(function ($, _, Svelto, Factory) {
   /* CONFIG */
   var config = {
     name: 'timeAgo',
     plugin: true,
     selector: '.timeago, .time-ago',
     options: {
+      template: '[timeago]',
+      // Template used for rendering the text
       timestamp: false,
       // UNIX timestamp
       title: false,
@@ -24587,6 +24671,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
       },
       datas: {
+        template: 'template',
         timestamp: 'timestamp'
       },
       callbacks: {
@@ -24598,11 +24683,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var TimeAgo =
   /*#__PURE__*/
-  function (_Widgets$Widget48) {
-    _inheritsLoose(TimeAgo, _Widgets$Widget48);
+  function (_Svelto$Widget48) {
+    _inheritsLoose(TimeAgo, _Svelto$Widget48);
 
     function TimeAgo() {
-      return _Widgets$Widget48.apply(this, arguments) || this;
+      return _Svelto$Widget48.apply(this, arguments) || this;
     }
 
     var _proto88 = TimeAgo.prototype;
@@ -24613,13 +24698,13 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     _proto88._init = function _init() {
+      this.options.template = this.$timeAgoElement.data(this.options.datas.template) || this.options.template;
+
       if (!this.options.timestamp) {
         this.options.timestamp = this.$timeAgoElement.data(this.options.datas.timestamp);
       }
 
-      if (this.isEnabled()) {
-        this._loop();
-      }
+      this._loop();
     };
 
     _proto88._destroy = function _destroy() {
@@ -24642,12 +24727,15 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
 
     _proto88._update = function _update() {
-      var timeAgo = _.timeAgo(this.options.timestamp);
+      var timeAgo = _.timeAgo(this.options.timestamp),
+          str = this.options.template.replace('[timeago]', timeAgo.str);
+
+      ;
 
       if (this.options.title) {
-        this.$timeAgoElement.attr('title', timeAgo.str);
+        this.$timeAgoElement.attr('title', str);
       } else {
-        this.$timeAgoElement.text(timeAgo.str);
+        this.$timeAgoElement.text(str);
       }
 
       this._trigger('change');
@@ -24658,24 +24746,24 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
 
     _proto88.enable = function enable() {
-      _Widgets$Widget48.prototype.enable.call(this);
+      _Svelto$Widget48.prototype.enable.call(this);
 
       this._loop();
     };
 
     _proto88.disable = function disable() {
-      _Widgets$Widget48.prototype.disable.call(this);
+      _Svelto$Widget48.prototype.disable.call(this);
 
       clearTimeout(this.loopId);
     };
 
     return TimeAgo;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(TimeAgo, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Timer); // @require ./toast.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Timer); // @require ./toast.js
 
 
 (function ($, _, Svelto, Toast) {
@@ -24834,7 +24922,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 //TODO: Generalize it for other kind of elements other than `img`
 
 
-(function ($, _, Svelto, Widgets, Factory, Browser, Pointer, Keyboard, Animations, fetch) {
+(function ($, _, Svelto, Factory, Browser, Pointer, Keyboard, Animations, fetch) {
   /* CONFIG */
   var config = {
     name: 'zoomable',
@@ -24909,11 +24997,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
   var Zoomable =
   /*#__PURE__*/
-  function (_Widgets$Widget49) {
-    _inheritsLoose(Zoomable, _Widgets$Widget49);
+  function (_Svelto$Widget49) {
+    _inheritsLoose(Zoomable, _Svelto$Widget49);
 
     function Zoomable() {
-      return _Widgets$Widget49.apply(this, arguments) || this;
+      return _Svelto$Widget49.apply(this, arguments) || this;
     }
 
     var _proto89 = Zoomable.prototype;
@@ -24986,7 +25074,7 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     _proto89.__tapOutside = function __tapOutside(event) {
-      if (this.isLocked() || event.isDefaultPrevented() || event.isPropagationStopped() || !$.isAttached(event.target) || $(event.target).closest(this.$zoomable).length) return;
+      if (this.isLocked() || $.isDefaultPrevented(event) || !$.isAttached(event.target) || $(event.target).closest(this.$zoomable).length) return;
       event.preventDefault();
       event.stopImmediatePropagation();
       this.unzoom();
@@ -25279,12 +25367,12 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
     };
 
     return Zoomable;
-  }(Widgets.Widget);
+  }(Svelto.Widget);
   /* FACTORY */
 
 
   Factory.make(Zoomable, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Browser, Svelto.Pointer, Svelto.Keyboard, Svelto.Animations, Svelto.fetch); // @require ../zoomable.js
+})(Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Browser, Svelto.Pointer, Svelto.Keyboard, Svelto.Animations, Svelto.fetch); // @require ../zoomable.js
 // @require widgets/targeter/closer/closer.js
 
 
@@ -25377,4 +25465,11 @@ Prism.languages.js = Prism.languages.javascript; // @require core/widget/widget.
 
 
   Factory.make(ZoomableToggler, config);
-})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory);
+})(Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory); // @priority -1000000000
+// @require core/modernizr/modernizr.js
+
+
+(function (Modernizr) {
+  /* READY */
+  Modernizr.addTest('ready', true);
+})(window.Modernizr);
