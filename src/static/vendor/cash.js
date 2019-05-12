@@ -24,7 +24,7 @@
       context = doc;
     }
 
-    return context !== doc && context.nodeType !== 1 && context.nodeType !== 9 ? [] : classRe.test(selector) ? context.getElementsByClassName(selector.slice(1)) : tagRe.test(selector) ? context.getElementsByTagName(selector) : context.querySelectorAll(selector);
+    return !isDocument(context) && !isElement(context) ? [] : classRe.test(selector) ? context.getElementsByClassName(selector.slice(1)) : tagRe.test(selector) ? context.getElementsByTagName(selector) : context.querySelectorAll(selector);
   } // @require ./find.ts
   // @require ./variables.ts
 
@@ -68,7 +68,7 @@
   cash.fn = cash.prototype = Cash.prototype; // Ensuring that `cash () instanceof cash`
 
   Cash.prototype.length = 0;
-  Cash.prototype.splice = splice; // Ensuring a cash collection gets printed as array-like in Chrome
+  Cash.prototype.splice = splice; // Ensuring a cash collection gets printed as array-like in Chrome's devtools
 
   if (typeof Symbol === 'function') {
     Cash.prototype[Symbol['iterator']] = Array.prototype[Symbol['iterator']];
@@ -104,7 +104,7 @@
 
   var dashAlphaRe = /-([a-z])/g;
 
-  function camelCaseReplace(all, letter) {
+  function camelCaseReplace(match, letter) {
     return letter.toUpperCase();
   }
 
@@ -112,7 +112,7 @@
     return str.replace(dashAlphaRe, camelCaseReplace);
   }
 
-  cash.camelCase = camelCase; // @require ./cash.ts
+  cash.camelCase = camelCase;
 
   function each(arr, callback) {
     for (var i = 0, l = arr.length; i < l; i++) {
@@ -157,13 +157,11 @@
     return extend(cash.fn, plugins);
   };
 
-  cash.extend = extend; // @require ./cash.ts
-
-  var guid = 1;
-  cash.guid = guid; // @require ./cash.ts
+  cash.extend = extend;
+  cash.guid = 1; // @require ./cash.ts
 
   function matches(ele, selector) {
-    var matches = ele && (ele.matches || ele['webkitMatchesSelector'] || ele['mozMatchesSelector'] || ele['msMatchesSelector'] || ele['oMatchesSelector']);
+    var matches = ele && (ele['matches'] || ele['webkitMatchesSelector'] || ele['mozMatchesSelector'] || ele['msMatchesSelector'] || ele['oMatchesSelector']);
     return !!matches && matches.call(ele, selector);
   }
 
@@ -190,6 +188,18 @@
     return x instanceof Cash;
   }
 
+  function isWindow(x) {
+    return !!x && x === x.window;
+  }
+
+  function isDocument(x) {
+    return !!x && x.nodeType === 9;
+  }
+
+  function isElement(x) {
+    return !!x && x.nodeType === 1;
+  }
+
   function isFunction(x) {
     return typeof x === 'function';
   }
@@ -203,6 +213,7 @@
   }
 
   var isArray = Array.isArray;
+  cash.isWindow = isWindow;
   cash.isFunction = isFunction;
   cash.isString = isString;
   cash.isNumeric = isNumeric;
@@ -283,6 +294,7 @@
         return value_1 === null ? undefined : value_1;
       }
 
+      if (value === undefined) return this;
       if (value === null) return this.removeAttr(attr);
       return this.each(function (i, ele) {
         ele.setAttribute(attr, value);
@@ -341,11 +353,12 @@
 
   Cash.prototype.add = function (selector, context) {
     return cash(unique(this.get().concat(cash(selector, context).get())));
-  }; // @require core/variables.ts
+  }; // @require core/type_checking.ts
+  // @require core/variables.ts
 
 
   function computeStyle(ele, prop, isVariable) {
-    if (ele.nodeType !== 1 || !prop) return;
+    if (!isElement(ele) || !prop) return;
     var style = win.getComputedStyle(ele, null);
     return prop ? isVariable ? style.getPropertyValue(prop) || undefined : style[prop] : style;
   } // @require ./compute_style.ts
@@ -426,10 +439,10 @@
       if (!prop) return this;
       value = getSuffixedValue(prop, value, isVariable_1);
       return this.each(function (i, ele) {
-        if (ele.nodeType !== 1) return;
+        if (!isElement(ele)) return;
 
         if (isVariable_1) {
-          ele.style.setProperty(prop, value);
+          ele.style.setProperty(prop, value); //TSC
         } else {
           ele.style[prop] = value; //TSC
         }
@@ -510,7 +523,7 @@
   each(['Width', 'Height'], function (i, prop) {
     Cash.prototype["inner" + prop] = function () {
       if (!this[0]) return;
-      if (this[0] === win) return win["inner" + prop];
+      if (isWindow(this[0])) return win["inner" + prop];
       return this[0]["client" + prop];
     };
   });
@@ -519,13 +532,14 @@
       if (!this[0]) return value === undefined ? undefined : this;
 
       if (!arguments.length) {
-        if (this[0] === win) return this[0][camelCase("outer-" + prop)];
+        if (isWindow(this[0])) return this[0][camelCase("outer-" + prop)];
         return this[0].getBoundingClientRect()[prop] - getExtraSpace(this[0], !index);
       }
 
-      var valueNumber = parseInt(value, 10);
+      var valueNumber = parseInt(value, 10); //TSC
+
       return this.each(function (i, ele) {
-        if (ele.nodeType !== 1) return;
+        if (!isElement(ele)) return;
         var boxSizing = computeStyle(ele, 'boxSizing');
         ele.style[prop] = getSuffixedValue(prop, valueNumber + (boxSizing === 'border-box' ? getExtraSpace(ele, !index) : 0));
       });
@@ -534,7 +548,7 @@
   each(['Width', 'Height'], function (index, prop) {
     Cash.prototype["outer" + prop] = function (includeMargins) {
       if (!this[0]) return;
-      if (this[0] === win) return win["outer" + prop];
+      if (isWindow(this[0])) return win["outer" + prop];
       return this[0]["offset" + prop] + (includeMargins ? computeStyleInt(this[0], "margin" + (!index ? 'Left' : 'Top')) + computeStyleInt(this[0], "margin" + (!index ? 'Right' : 'Bottom')) : 0);
     };
   }); // @optional ./inner.ts
@@ -615,11 +629,11 @@
 
 
   function addEvent(ele, name, namespaces, selector, callback) {
-    callback['guid'] = callback['guid'] || guid++;
+    callback.guid = callback.guid || cash.guid++;
     var eventCache = getEventsCache(ele);
     eventCache[name] = eventCache[name] || [];
     eventCache[name].push([namespaces, selector, callback]);
-    ele.addEventListener(name, callback); //TSC
+    ele.addEventListener(name, callback);
   } // @require ./variables.ts
 
 
@@ -645,7 +659,7 @@
         var ns = _a[0],
             sel = _a[1],
             cb = _a[2];
-        if (callback && cb['guid'] !== callback['guid'] || !hasNamespaces(ns, namespaces) || selector && selector !== sel) return true;
+        if (callback && cb.guid !== callback.guid || !hasNamespaces(ns, namespaces) || selector && selector !== sel) return true;
         ele.removeEventListener(name, cb);
       });
     }
@@ -711,7 +725,7 @@
             while (!matches(target, selector)) {
               //TSC
               if (target === ele) return;
-              target = target.parentNode;
+              target = target['parentNode'];
               if (!target) return;
             }
 
@@ -740,7 +754,8 @@
           }
         };
 
-        finalCallback['guid'] = callback['guid'] = callback['guid'] || guid++;
+        finalCallback.guid = callback['guid'] = callback['guid'] || cash.guid++; //TSC
+
         addEvent(ele, name, namespaces, selector, finalCallback); //TSC
       });
     });
@@ -771,7 +786,7 @@
   };
 
   Cash.prototype.trigger = function (eventFullName, data) {
-    var evt = eventFullName;
+    var evt;
 
     if (isString(eventFullName)) {
       var _a = parseEventName(eventFullName),
@@ -781,14 +796,16 @@
 
       evt = doc.createEvent(type);
       evt.initEvent(name_1, true, true);
-      evt['namespace'] = namespaces.join(eventsNamespacesSeparator);
+      evt.namespace = namespaces.join(eventsNamespacesSeparator);
+    } else {
+      evt = eventFullName;
     }
 
-    evt['data'] = data;
-    var isEventFocus = evt['type'] in eventsFocus;
+    evt.data = data;
+    var isEventFocus = evt.type in eventsFocus;
     return this.each(function (i, ele) {
-      if (isEventFocus && isFunction(ele[evt['type']])) {
-        ele[evt['type']]();
+      if (isEventFocus && isFunction(ele[evt.type])) {
+        ele[evt.type]();
       } else {
         ele.dispatchEvent(evt);
       }
@@ -906,15 +923,11 @@
   cash.parseHTML = parseHTML;
 
   Cash.prototype.empty = function () {
-    var ele = this[0];
-
-    if (ele) {
+    return this.each(function (i, ele) {
       while (ele.firstChild) {
         ele.removeChild(ele.firstChild);
       }
-    }
-
-    return this;
+    });
   };
 
   function html(html) {
@@ -1004,7 +1017,6 @@
 
     return cash(unique(result));
   }; // @require collection/filter.ts
-  // @require collection/filter.ts
   // @require traversal/find.ts
 
 
@@ -1228,10 +1240,13 @@
   };
 
   Cash.prototype.siblings = function (comparator) {
-    var ele = this[0];
-    return filtered(this.parent().children().filter(function (i, child) {
-      return child !== ele;
-    }), comparator);
+    var result = [];
+    this.each(function (i, ele) {
+      push.apply(result, cash(ele).parent().children(function (ci, child) {
+        return child !== ele;
+      }));
+    });
+    return filtered(cash(unique(result)), comparator);
   }; // @optional ./children.ts
   // @optional ./closest.ts
   // @optional ./contents.ts
@@ -1268,4 +1283,4 @@
     // Browser
     win['cash'] = win['$'] = cash;
   }
-  })();
+})();
