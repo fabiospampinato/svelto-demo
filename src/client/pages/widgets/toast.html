@@ -52,6 +52,16 @@
     {{{widget.action "Icon + Title + Body + Buttons" "toast_icon_adv_two ()"}}}
   </div>
 
+  {{{widget.divider "Unique"}}}
+
+  <div class="multiple">
+    {{{widget.action "Title" "toast_unique_title ()"}}}
+    {{{widget.action "Body" "toast_unique_body ()"}}}
+    {{{widget.action "Title + Body + Icon" "toast_unique_adv_one ()"}}}
+    {{{widget.action "Title + Body + Icon + Buttons" "toast_unique_adv_two ()"}}}
+    {{{widget.action "Title + Body + Icon + Buttons Alt" "toast_unique_adv_three ()"}}}
+  </div>
+
   {{{widget.divider "Advanced"}}}
 
   <div class="multiple">
@@ -235,6 +245,75 @@
           text: 'Foo'
         }, {
           text: 'Bar'
+        }]
+      });
+    }
+
+    function toast_unique_title () {
+      $.toast ({
+        unique: true,
+        title: 'Test title'
+      });
+    }
+
+    function toast_unique_body () {
+      $.toast ({
+        unique: true,
+        body: 'This is just an example body'
+      });
+    }
+
+    function toast_unique_adv_one () {
+      $.toast ({
+        unique: true,
+        title: 'Test title',
+        body: 'This is just an example body',
+        icon: 'person'
+      });
+    }
+
+    function toast_unique_adv_two () {
+      $.toast ({
+        unique: true,
+        title: 'Test title',
+        body: 'This is just an example body',
+        icon: 'person',
+        buttons: [{
+          text: 'Foo',
+          onClick () {
+            alert ( 'Foo' );
+          }
+        }, {
+          text: 'Bar',
+          onClick () {
+            alert ( 'Bar' );
+          }
+        }]
+      });
+    }
+
+    function toast_unique_adv_three () {
+      $.toast ({
+        unique: true,
+        title: 'Test title',
+        body: 'This is just an example body',
+        icon: 'person',
+        color: 'red',
+        anchor: {
+          x: 'right',
+          y: 'bottom'
+        },
+        buttons: [{
+          text: 'Foo',
+          onClick () {
+            alert ( 'Foo' );
+          }
+        }, {
+          text: 'Bar',
+          size: Svelto.Sizes.small,
+          onClick () {
+            alert ( 'Bar' );
+          }
         }]
       });
     }
