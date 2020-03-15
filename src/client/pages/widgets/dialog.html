@@ -1,0 +1,241 @@
+
+<!-- DIALOG -->
+
+<template name="dialog">
+
+  {{{widget.divider "API"}}}
+
+  <div class="multiple">
+    {{{widget.action "Create" "dialog_api_create ()"}}}
+    {{{widget.action "Open" "dialog_api_open ()"}}}
+    {{{widget.action "Close" "dialog_api_close ()"}}}
+    {{{widget.action "isOpen" "dialog_api_isOpen ()"}}}
+  </div>
+
+  {{{widget.divider "Text"}}}
+
+  <div class="multiple">
+    {{{widget.action "None" "dialog_none ()"}}}
+    {{{widget.action "Title" "dialog_title ()"}}}
+    {{{widget.action "Body" "dialog_body ()"}}}
+    {{{widget.action "Title + Body" "dialog_title_body ()"}}}
+    {{{widget.action "Medium" "dialog_rich_medium ()"}}}
+    {{{widget.action "Long" "dialog_rich_long ()"}}}
+  </div>
+
+  {{{widget.divider "Buttons"}}}
+
+  <div class="multiple">
+    {{{widget.action "False" "dialog_btns_false ()"}}}
+    {{{widget.action "Zero" "dialog_btns ( 0 )"}}}
+    {{{widget.action "One" "dialog_btns ( 1 )"}}}
+    {{{widget.action "Two" "dialog_btns ( 2 )"}}}
+    {{{widget.action "Three" "dialog_btns ( 3 )"}}}
+    {{{widget.action "Four" "dialog_btns ( 4 )"}}}
+    {{{widget.action "Five" "dialog_btns ( 5 )"}}}
+  </div>
+
+  {{{widget.divider "Stacked"}}}
+
+  <div class="multiple">
+    {{{widget.action "Zero" "dialog_btns ( 0, true )"}}}
+    {{{widget.action "One" "dialog_btns ( 1, true )"}}}
+    {{{widget.action "Two" "dialog_btns ( 2, true )"}}}
+    {{{widget.action "Three" "dialog_btns ( 3, true )"}}}
+    {{{widget.action "Four" "dialog_btns ( 4, true )"}}}
+    {{{widget.action "Five" "dialog_btns ( 5, true )"}}}
+  </div>
+
+  {{{widget.divider "Rich"}}}
+
+  <div class="multiple">
+    {{{widget.action "Input" "dialog_rich_input ()"}}}
+    {{{widget.action "Textarea" "dialog_rich_textarea ()"}}}
+    {{{widget.action "Everything" "dialog_rich_everything ()"}}}
+  </div>
+
+  <script>
+    var created_dialog;
+
+    function dialog_api_create () {
+      created_dialog = new Svelto.Widgets.Dialog ({
+        title: 'Title',
+        body: 'This is the body',
+        buttons: [{
+          text: 'Close'
+        }]
+      });
+      created_dialog.$dialog.appendTo ( $.$body );
+    }
+
+    function dialog_api_open () {
+      if ( created_dialog ) {
+        created_dialog.open ();
+      } else {
+        $.toast ( 'You should "Create" it before...' );
+      }
+    }
+
+    function dialog_api_close () {
+      if ( created_dialog ) {
+        created_dialog.close ();
+      } else {
+        $.toast ( 'You should "Create" it before...' );
+      }
+    }
+
+    function dialog_api_isOpen () {
+      if ( created_dialog ) {
+        $.toast ( created_dialog.isOpen () );
+      } else {
+        $.toast ( 'You should "Create" it before...' );
+      }
+    }
+
+    function dialog_none () {
+      $.dialog ();
+    }
+
+    function dialog_title () {
+      $.dialog ({
+        title: 'Title'
+      });
+    }
+
+    function dialog_body () {
+      $.dialog ({
+        body: 'Body'
+      });
+    }
+
+    function dialog_title_body () {
+      $.dialog ({
+        title: 'Title',
+        body: 'Body'
+      });
+    }
+
+    function dialog_rich_medium () {
+      $.dialog ({
+        title: 'This is a medium title',
+        body: 'This is a very very very very very very very very medium body...'
+      });
+    }
+
+    function dialog_rich_long () {
+      $.dialog ({
+        title: 'This is a very very long title',
+        body: 'This is a very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very medium body...'
+      });
+    }
+
+    function dialog_btns_false () {
+      $.dialog ({
+        title: 'Title',
+        body: 'Body',
+        buttons: [{
+          text: 'False',
+          onClick: function () {
+            return false;
+          }
+        }]
+      });
+    }
+
+    function dialog_btns ( nr, stack ) {
+      var texts = ['Uno', 'Due', 'Tre', 'Quattro', 'Cinque'];
+      var buttons = [];
+      for ( var i = 0; i < nr; i++ ) {
+        buttons.push ({
+          text: texts[i],
+          onClick: (function (i) {
+            return function ( event, data ) {
+              $.toast ( `${texts[i]} - ${data.value}` );
+            };
+          })(i)
+        });
+      }
+      $.dialog ({
+        title: 'Title',
+        body: 'Body',
+        buttons: buttons,
+        stack: !!stack
+      });
+    }
+
+    function dialog_rich_input () {
+      $.dialog ({
+        title: 'Title',
+        input: {
+          enabled: true,
+          placeholder: 'Placeholder...',
+          value: 'Value...'
+        },
+        buttons: [
+          {
+            text: 'Cancel'
+          },
+          {
+            text: 'Submit',
+            onClick: function ( event, data ) {
+              $.toast ( data.value );
+            }
+          }
+        ]
+      });
+    }
+
+    function dialog_rich_textarea () {
+      $.dialog ({
+        title: 'Title',
+        textarea: {
+          enabled: true,
+          placeholder: 'Placeholder...',
+          value: 'Value...',
+          rows: 4
+        },
+        buttons: [
+          {
+            text: 'Cancel'
+          },
+          {
+            text: 'Submit',
+            onClick: function ( event, data ) {
+              $.toast ( data.value );
+            }
+          }
+        ]
+      });
+    }
+
+    function dialog_rich_everything () {
+      $.dialog ({
+        title: 'Title',
+        body: 'Body',
+        input: {
+          enabled: true,
+          placeholder: 'Placeholder...',
+          value: 'Value...'
+        },
+        textarea: {
+          enabled: true,
+          placeholder: 'Placeholder...',
+          value: 'Value...',
+          rows: 4
+        },
+        buttons: [
+          {
+            text: 'Cancel'
+          },
+          {
+            text: 'Submit',
+            onClick: function ( event, data ) {
+              $.toast ( data.value );
+            }
+          }
+        ]
+      });
+    }
+  </script>
+
+</template>
