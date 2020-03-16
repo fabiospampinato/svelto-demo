@@ -150,7 +150,7 @@
           text: texts[i],
           onClick: (function (i) {
             return function ( event, data ) {
-              $.toast ( `${texts[i]} - ${data.value}` );
+              $.toast ( texts[i] );
             };
           })(i)
         });
