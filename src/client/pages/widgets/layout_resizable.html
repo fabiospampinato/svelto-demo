@@ -39,4 +39,16 @@
     <footer class="layout-footer bordered">Footer</footer>
   </div>
 
+  {{{widget.divider "Layout Resizable - Nested"}}}
+
+  <div class="layout resizable horizontal" style="height: 100px">
+    <header class="layout-header bordered" style="max-width: 100px;">Header</header>
+    <main class="layout-content bordered" style="max-width: 100px;">Content</main>
+    <div class="layout layout-content resizable horizontal" style="height: 100px; padding: 0">
+      <main class="layout-content bordered">Nested</main>
+      <main class="layout-content bordered">Nested</main>
+    </div>
+    <footer class="layout-footer bordered">Footer</footer>
+  </div>
+
 </template>
