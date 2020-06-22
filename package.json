@@ -2,7 +2,7 @@
   "private": true,
   "name": "svelto-demo",
   "description": "Demo website used during the development of Svelto for testing all the available components.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "svelto",
     "demo"

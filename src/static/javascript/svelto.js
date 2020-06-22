@@ -518,20 +518,32 @@
 
 
 // @require ../init.js
+// @require ./get_rect.js
 
 (function ( $ ) {
 
   /* IS VISIBLE */
 
-  $.isVisible = function ( ele ) {
+  $.isVisible = function ( ele, inViewport ) {
 
-    return !!ele && !!( ele.offsetWidth || ele.offsetHeight || ele.getClientRects ().length );
+    if ( !ele || !( ele.offsetWidth || ele.offsetHeight || ele.getClientRects ().length ) ) return false;
+
+    if ( inViewport ) {
+
+      const rect1 = $.getRect ( ele ),
+            rect2 = $.getWindowRect ();
+
+      return !( rect2.left > rect1.right || rect2.right < rect1.left || rect2.top > rect1.bottom || rect2.bottom < rect1.top );
+
+    }
+
+    return true;
 
   };
 
-  $.fn.isVisible = function () {
+  $.fn.isVisible = function ( inViewport ) {
 
-    return $.isVisible ( this[0] );
+    return $.isVisible ( this[0], inViewport );
 
   };
 
@@ -554,7 +566,7 @@
 
     return _remove.call ( this );
 
-	};
+  };
 
 }( window.$ ));
 
@@ -569,13 +581,21 @@
   /* RESIZE */
 
   let width = $.window.outerWidth,
-      height = $.window.outerHeight;
+      height = $.window.outerHeight,
+      pixelRatio = $.window.devicePixelRatio || 1; // Used for more reliable zoom detection
 
-  $.$window.on ( 'resize', () => {
+  $.$window.on ( 'resize', (e) => {
 
-    const newWidth = $.window.outerWidth;
+    const newPixelRatio = $.window.devicePixelRatio || 1,
+          newWidth = $.window.outerWidth,
+          newHeight = $.window.outerHeight;
 
-    if ( newWidth !== width ) {
+    const didPixelRatioChange = newPixelRatio !== pixelRatio,
+          didWidthChange = newWidth !== width,
+          didHeightChange = newHeight !== height,
+          didSomethingChange = didPixelRatioChange || didWidthChange || didHeightChange; // Sometimes for some reason nothing actually changed
+
+    if ( !didSomethingChange || didWidthChange || didPixelRatioChange ) {
 
       width = newWidth;
 
@@ -583,15 +603,15 @@
 
     }
 
-    const newHeight = $.window.outerHeight;
-
-    if ( newHeight !== height ) {
+    if ( !didSomethingChange || didHeightChange || didPixelRatioChange ) {
 
       height = newHeight;
 
       $.$window.trigger ( 'resize:height' );
 
     }
+
+    pixelRatio = newPixelRatio;
 
   });
 
@@ -984,6 +1004,8 @@
 
   /* TEMPLATE */
 
+  if ( !_.template ) return;
+
   const _template = _.template;
 
   _.template = function ( str, options ) {
@@ -1000,6 +1022,8 @@
 (function ( _ ) {
 
   /* TEMPLATE SETTINGS */ // Default settings
+
+  if ( !_.templateSettings ) return;
 
   _.templateSettings.variable = 'o';
 
@@ -2797,18 +2821,24 @@
 
   _.frames = function ( fn ) {
 
-    let wait, args;
+    let wait, timeout, args;
 
-    function proxy () {
-      wait = false;
+    function fnProxy () {
       fn.apply ( undefined, args );
+    }
+
+    function rafProxy () {
+      wait = false;
+      clearTimeout ( timeout );
+      timeout = setTimeout ( fnProxy, 50 );
+      fnProxy ();
     }
 
     function framed () {
       if ( wait ) return;
       wait = true;
       args = arguments;
-      requestAnimationFrame ( proxy );
+      requestAnimationFrame ( rafProxy );
     }
 
     return framed;
@@ -3241,7 +3271,27 @@
 
 (function ( Modernizr, $ ) {
 
-  /* CLIP PATH URL */
+  /* CSS SUPPORTS CHECK */
+
+  if ( 'CSS' in window && 'supports' in window.CSS ) {
+
+    for ( let i = 0, l = Modernizr._prefixes.length; i < l; i++ ) {
+
+      const prop = `${Modernizr._prefixes[i]}clip-path`;
+
+      if ( window.CSS.supports ( prop, 'url(#test)' ) ) {
+
+        return Modernizr.addTest ( 'clip-path-url', true );
+
+      }
+
+    }
+
+    return Modernizr.addTest ( 'clip-path-url', false );
+
+  }
+
+  /* VISUAL CHECK */
 
   $(function () {
 
@@ -3342,7 +3392,7 @@
 
   let Svelto = {
 
-    VERSION: '1.0.0',
+    VERSION: '1.2.15',
     ENVIRONMENT: 'development',
     DEVELOPMENT: 'development' === 'development',
 
@@ -3597,48 +3647,67 @@
       TAB: 9,
       UP: 38
     },
+    keysModifiers: {
+      ALT: true,
+      CMD: true,
+      CTRL: true,
+      CTMD: true, // `ctmd` is treated as `cmd` on Mac, and as `ctrl` elsewhere
+      SHIFT: true
+    },
     keystroke: {
+
+      parse: (() => {
+
+        const cache = {};
+
+        return keystroke => {
+
+          const cached = cache[keystroke];
+
+          if ( cached ) return cached;
+
+          const keys = {};
+
+          keystroke.split ( '+' ).forEach ( key => {
+
+            key = key.trim ().toUpperCase ();
+
+            keys[key] = true;
+
+            if ( !Keyboard.keysModifiers[key] ) keys.trigger = key;
+
+          });
+
+          if ( keys.CTMD ) keys[Browser.is.mac ? 'CMD' : 'CTRL'] = true;
+
+          return cache[keystroke] = keys;
+
+        };
+
+      })(),
 
       match ( event, keystroke ) {
 
-        // `ctmd` is treated as `cmd` on Mac, and as `ctrl` elsewhere
+        const keys = Keyboard.keystroke.parse ( keystroke );
 
-        let specialKeys = ['ctrl', 'cmd', 'ctmd', 'alt', 'shift'],
-            keys = keystroke.split ( '+' ).map ( key => key.trim ().toLowerCase () );
+        if ( !!keys.CTRL !== event.ctrlKey ) return false;
+        if ( !!keys.CMD !== event.metaKey ) return false;
+        if ( !!keys.ALT !== event.altKey ) return false;
+        if ( !!keys.SHIFT !== event.shiftKey ) return false;
 
-        if ( keys.includes ( 'ctmd' ) ) {
+        let keyCode = event.keyCode;
 
-          if ( !Keyboard.keystroke.hasCtrlOrCmd ( event ) ) return false;
+        if ( keyCode === Keyboard.keys[keys.trigger] ) return true;
 
-        } else {
+        if ( keyCode >= 96 && keyCode <= 105 ) keyCode -= 48; // Numpad patch
 
-          if ( keys.includes ( 'ctrl' ) !== event.ctrlKey ) return false;
-          if ( keys.includes ( 'cmd' ) !== event.metaKey ) return false;
-
-        }
-
-        if ( keys.includes ( 'alt' ) !== event.altKey ) return false;
-        if ( keys.includes ( 'shift' ) !== event.shiftKey ) return false;
-
-        for ( let i = 0, l = keys.length; i < l; i++ ) {
-
-          let key = keys[i];
-
-          if ( !specialKeys.includes ( key ) ) {
-
-            if ( !( event.keyCode === Keyboard.keys[key.toUpperCase ()] || String.fromCharCode ( event.keyCode ).toLowerCase () === key ) ) return false;
-
-          }
-
-        }
-
-        return true;
+        return String.fromCharCode ( keyCode ).toUpperCase () === keys.trigger;
 
       },
 
       hasCtrlOrCmd ( event ) {
 
-        return ( !Browser.is.mac && event.ctrlKey ) || ( Browser.is.mac && event.metaKey );
+        return Browser.is.mac ? !!event.metaKey : !!event.ctrlKey;
 
       }
 
@@ -3760,7 +3829,7 @@
 
     $.fn[name] = function ( data, fn ) {
 
-      return arguments.length ? this.on ( Pointer[name], null, data, fn ) : this.triggger ( name );
+      return arguments.length ? this.on ( Pointer[name], undefined, data, fn ) : this.triggger ( name );
 
     };
 
@@ -4908,7 +4977,7 @@
 
       /* RETURN */
 
-      return configs.length > 1 ? _.merge ( {}, ...configs ) : _.cloneDeep ( config );
+      return configs.length > 1 ? _.cloneDeep ( _.merge ( {}, ...configs ) ) : _.cloneDeep ( config );
 
     }
 
@@ -5161,7 +5230,7 @@
 
         _onlyOne = handler;
         handler = selector;
-        selector = false;
+        selector = undefined;
 
       }
 
@@ -6998,6 +7067,7 @@
     history: [], // List of autofocused elements
     historySize: 3, // How many elements to keep in the history
     restore: false, // Switch focus to the previously focused element
+    selectionTypeRe: /text|search|url|tel|password/i,
 
     /* INIT */
 
@@ -7020,7 +7090,7 @@
 
       /* CARET TO THE END */
 
-      if ( ele.setSelectionRange ) {
+      if ( ele.setSelectionRange && Autofocus.selectionTypeRe.test ( ele.type ) ) {
 
         let length = ele.value.length * 2; // Double the length because Opera is inconsistent about whether a carriage return is one character or two
 
@@ -8087,6 +8157,7 @@
       type: 'alert',
       color: Colors.black,
       css: '',
+      unique: false, // Whether to avoid showing this if another equal toast is already shown
       persistent: false, // Whether it should survive a change of page or not. Needed when used in frameworks like Meteor
       autoplay: true,
       ttl: 3500,
@@ -8113,25 +8184,19 @@
     }
   };
 
+  /* INIT QUEUE */
+
+  const initQueues = _.once ( () => {
+
+    const queues = Toast.config.templates.queues ();
+
+    $.$layout.append ( queues );
+
+  });
+
   /* TOAST */
 
   class Toast extends Widgets.Autofocusable {
-
-    /* READY */
-
-    static ready ( done ) {
-
-      setTimeout ( function () { // In order to better support client size rendering //TODO: Maybe do this lazily
-
-        const queues = Toast.config.templates.queues ();
-
-        $.$layout.append ( queues );
-
-        done ();
-
-      });
-
-    }
 
     /* SPECIAL */
 
@@ -8150,6 +8215,8 @@
     _init () {
 
       this.$toast.widgetize ();
+
+      if ( this.options.unique && this._existsOtherEqualToast () ) return this.close ();
 
       if ( this._isOpen ) {
 
@@ -8181,9 +8248,25 @@
 
     }
 
+    _existsOtherEqualToast () {
+
+      const pickProps = toast => {
+        const props = _.pick ( toast.options, ['anchor', 'title', 'body', 'img', 'icon', 'buttons', 'type', 'color', 'css'] );
+        props.buttons = props.buttons.map ( button => _.omit ( button, 'onClick' ) );
+        return props;
+      };
+
+      const props = pickProps ( this );
+
+      return !!Toasts.get ().find ( toast => _.isEqualJSON ( props, pickProps ( toast ) ) );
+
+    }
+
     /* TIMER */
 
     ___timer () {
+
+      Toasts.add ( this );
 
       if ( this.options.type !== 'action' && _.isNumber ( this.options.ttl ) && !_.isNaN ( this.options.ttl ) && this.options.ttl !== Infinity ) {
 
@@ -8196,8 +8279,6 @@
           this.timer.reset ();
 
         }
-
-        Toasts.add ( this );
 
       }
 
@@ -8370,6 +8451,8 @@
 
       this._frame ( function () {
 
+        initQueues ();
+
         $(this.options.selectors.queues + '.' + this.options.anchor.y + ' ' + this.options.selectors.queue + '.' + this.options.anchor.x).append ( this.$toast );
 
         this._frame ( function () {
@@ -8439,11 +8522,15 @@
 
     pause () {
 
+      if ( !this.timer ) return;
+
       this.timer.pause ();
 
     }
 
     resume () {
+
+      if ( !this.timer ) return;
 
       this.timer.remaining ( Math.max ( this.options.ttlMinimumRemaining, this.timer.remaining () ) ).play ();
 
@@ -8743,6 +8830,261 @@
   Factory.make ( RemoteLoader, config );
 
 }( Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.fetch ));
+
+
+// @priority 550
+// @require core/animations/animations.js
+// @require core/widget/widget.js
+
+(function ( $, _, Svelto, Factory, Animations, Pointer ) {
+
+  /* CONFIG */
+
+  let config = {
+    name: 'rails',
+    plugin: true,
+    selector: '.rails',
+    options: {
+      navigation: {
+        hidable: true // Controls whether the navigation should be hidden when all the buttons are disabled
+      },
+      scroll: {
+        speed: 200 // The distance scrolled when calling `left` or `right`
+      },
+      classes: {
+        shadow: {
+          left: 'rails-shadow-left',
+          right: 'rails-shadow-right'
+        }
+      },
+      selectors: {
+        start: '.rails-start',
+        left: '.rails-left',
+        right: '.rails-right',
+        end: '.rails-end',
+        navigation: '.rails-navigation, .rails-start, .rails-left, .rails-right, .rails-end',
+        shadow: '.rails-shadow',
+        content: '.rails-content',
+        active: '.rails-active'
+      },
+      animations: {
+        scroll: Animations.fast
+      },
+      keystrokes: {
+        'home, page_up': 'start',
+        'left': 'left',
+        'right': 'right',
+        'end, page_down': 'end'
+      }
+    }
+  };
+
+  /* RAILS */
+
+  class Rails extends Svelto.Widget {
+
+    /* SPECIAL */
+
+    _variables () {
+
+      this.$rails = this.$element;
+
+      this.$start = this.$rails.find ( this.options.selectors.start );
+      this.$left = this.$rails.find ( this.options.selectors.left );
+      this.$right = this.$rails.find ( this.options.selectors.right );
+      this.$end = this.$rails.find ( this.options.selectors.end );
+      this.$navigation = this.$rails.find ( this.options.selectors.navigation );
+      this.$shadow = this.$rails.find ( this.options.selectors.shadow );
+      this.$content = this.$rails.find ( this.options.selectors.content );
+      this.$active = this.$content.find ( this.options.selectors.active );
+
+    }
+
+    _init () {
+
+      this._scrollToElement ( this.$active, false );
+      this._updateNavigation ();
+
+    }
+
+    _events () {
+
+      this.___keydown ();
+      this.___resize ();
+      this.___scroll ();
+      this.___startTap ();
+      this.___leftTap ();
+      this.___rightTap ();
+      this.___endTap ();
+
+    }
+
+    /* KEYDOWN */
+
+    ___keydown () {
+
+      this._onHover ( [$.$document, 'keydown', this.__keydown] );
+
+    }
+
+    /* START TAP */
+
+    ___startTap () {
+
+      this._on ( this.$start, Pointer.tap, this.start );
+
+    }
+
+    /* LEFT TAP */
+
+    ___leftTap () {
+
+      this._on ( this.$left, Pointer.tap, this.left );
+
+    }
+
+    /* RIGHT TAP */
+
+    ___rightTap () {
+
+      this._on ( this.$right, Pointer.tap, this.right );
+
+    }
+
+    /* END TAP */
+
+    ___endTap () {
+
+      this._on ( this.$end, Pointer.tap, this.end );
+
+    }
+
+    /* UPDATE */
+
+    _updateNavigation () {
+
+      if ( !this.$navigation.length && !this.$shadow.length ) return;
+
+      let contentRect = this.$content.getRect (),
+          scrollLeft = this.$content[0].scrollLeft,
+          isStart = ( scrollLeft === 0 ),
+          isEnd = ( this.$content[0].scrollWidth - scrollLeft - contentRect.width <= 1 ); // If we use `0`, as we should it won't always trigger
+
+      if ( this.$start.length || this.$left.length ) {
+
+        this.$start.add ( this.$left ).toggleClass ( this.options.classes.disabled, isStart );
+
+      }
+
+      if ( this.$shadow.length ) {
+
+        this.$shadow.toggleClass ( this.options.classes.shadow.left, !isStart );
+
+      }
+
+      if ( this.$end.length || this.$right.length ) {
+
+        this.$end.add ( this.$right ).toggleClass ( this.options.classes.disabled, isEnd );
+
+      }
+
+      if ( this.$shadow.length ) {
+
+        this.$shadow.toggleClass ( this.options.classes.shadow.right, !isEnd );
+
+      }
+
+      if ( this.options.navigation.hidable ) {
+
+        let hidable = ( isStart && isEnd );
+
+        this.$navigation.toggleClass ( this.options.classes.hidden, hidable );
+
+      }
+
+    }
+
+    /* RESIZE */
+
+    ___resize () {
+
+      this._on ( true, $.$window, 'resize:width', this._frames ( this._updateNavigation.bind ( this ) ) );
+
+    }
+
+    /* SCROLL */
+
+    ___scroll () {
+
+      this._on ( true, this.$content, 'scroll', this._frames ( this._updateNavigation.bind ( this ) ) );
+
+    }
+
+    _scroll ( left, animate = true ) {
+
+      if ( animate ) {
+
+        $.animateProp ( this.$content[0], { scrollLeft: left }, { duration: this.options.animations.scroll } );
+
+      } else {
+
+        this.$content[0].scrollLeft = left;
+
+      }
+
+    }
+
+    _deltaScroll ( delta )  {
+
+      this._scroll ( this.$content[0].scrollLeft + delta );
+
+    }
+
+    _scrollToElement ( $element, animate ) {
+
+      if ( !$element.length ) return;
+
+      let eleRect = $element.getRect (),
+          contentRect = this.$content.getRect (),
+          left = ( eleRect.left - contentRect.left ) + this.$content[0].scrollLeft + ( eleRect.width / 2 ) - ( contentRect.width / 2 );
+
+      this._scroll ( left, animate );
+
+    }
+
+    /* API */
+
+    start () {
+
+      this._scroll ( 0 );
+
+    }
+
+    left () {
+
+      this._deltaScroll ( - this.options.scroll.speed );
+
+    }
+
+    right () {
+
+      this._deltaScroll ( this.options.scroll.speed );
+
+    }
+
+    end () {
+
+      this._scroll ( this.$content[0].scrollWidth );
+
+    }
+
+  }
+
+  /* FACTORY */
+
+  Factory.make ( Rails, config );
+
+}( Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Animations, Svelto.Pointer ));
 
 
 // @priority 500
@@ -10459,8 +10801,6 @@
 
 /* EMBEDDED CSS */
 
-//TODO: Lazily instanciate this
-
 (function ( $, _, Svelto, Readify ) {
 
   /* EMBEDDED CSS */
@@ -10513,6 +10853,16 @@
     _refresh () {
 
       this.$stylesheet.text ( this._cssfy () );
+
+      if ( _.isEmpty ( this.tree ) ) { // Empty, detaching
+
+        this.detach ();
+
+      } else { // Not empty, attaching
+
+        this.attach ();
+
+      }
 
     }
 
@@ -10596,10 +10946,6 @@
 
   Svelto.EmbeddedCSS = new EmbeddedCSS ();
 
-  /* READY */
-
-  Readify.add ( Svelto.EmbeddedCSS.attach.bind ( Svelto.EmbeddedCSS ) );
-
 }( Svelto.$, Svelto._, Svelto, Svelto.Readify ));
 
 
@@ -10633,7 +10979,6 @@
   /* VARIABLES */
 
   let html = document.documentElement,
-      keyboardAllowed = ( typeof Element !== 'undefined' && 'ALLOW_KEYBOARD_INPUT' in Element ),
       apis = [
         ['requestFullscreen',       'exitFullscreen',       'fullscreenElement',       'fullscreenEnabled',       'fullscreenchange',       'fullscreenerror'],
         ['webkitRequestFullscreen', 'webkitExitFullscreen', 'webkitFullscreenElement', 'webkitFullscreenEnabled', 'webkitfullscreenchange', 'webkitfullscreenerror'],
@@ -10650,15 +10995,15 @@
   let Fullscreen = {
     request ( ele = html ) {
       if ( !raw.requestFullscreen ) return;
-      ele[raw.requestFullscreen]( keyboardAllowed && Element.ALLOW_KEYBOARD_INPUT );
+      ele[raw.requestFullscreen]();
     },
     exit () {
       if ( !raw.exitFullscreen ) return;
       document[raw.exitFullscreen]();
     },
-		toggle ( ele ) {
+    toggle ( ele ) {
       Fullscreen.isFullscreen ? Fullscreen.exit () : Fullscreen.request ( ele );
-		},
+    },
     get isFullscreen () {
       return !!Fullscreen.element;
     },
@@ -10680,6 +11025,8 @@
 
 // @require core/svelto/svelto.js
 
+//URL: https://github.com/bevacqua/fuzzysearch
+
 (function ( $, _, Svelto ) {
 
   /* FUZZY */
@@ -10688,6 +11035,11 @@
 
     match ( str, search, isCaseSensitive = true ) {
 
+      const searchLength = search.length,
+            strLength = str.length;
+
+      if ( searchLength > strLength ) return false;
+
       if ( !isCaseSensitive ) {
 
         str = str.toLowerCase ();
@@ -10695,28 +11047,19 @@
 
       }
 
-      let currentIndex = -1,
-          str_i,
-          str_l = str.length;
+      if ( searchLength === strLength ) return search === str;
 
-      for ( let search_i = 0, search_l = search.length; search_i < search_l; search_i++ ) {
+      outer: for ( let i = 0, j = 0; i < searchLength; i++) {
 
-        for ( str_i = currentIndex + 1; str_i < str_l; str_i++ ) {
+        const searchChar = search.charCodeAt ( i );
 
-          if ( str[str_i] === search[search_i] ) {
+        while ( j < strLength ) {
 
-            currentIndex = str_i;
-            str_i = str_l + 1;
-
-          }
+          if ( str.charCodeAt ( j++ ) === searchChar ) continue outer;
 
         }
 
-        if ( str_i === str_l ) {
-
-          return false;
-
-        }
+        return false;
 
       }
 
@@ -12159,6 +12502,7 @@
     plugin: true,
     selector: 'canvas.background-generator',
     options: {
+      pausable: true, // Pause the animation when the canvas is no longer visible in the viewport
       density: 15000 * pixelRatio, // One shape every this number of pixels
       shapes: 200,
       shapeOptions: {}, // Options to pass to the shape
@@ -12168,7 +12512,7 @@
         hsla: {
           h: Date.now ().toString ().slice ( -5 ) / 100000 * 360, // Tying the starting hue to the timestamp
           s: 100,
-          l: 15,
+          l: 10,
           a: 1
         },
         color: 'hsla( 0, 100%, 15%, 1 )',
@@ -12212,6 +12556,8 @@
 
       }
 
+      this._loopUpdate ();
+
     }
 
     _initCanvas () {
@@ -12252,6 +12598,7 @@
 
       this.___resize ();
       this.___loop ();
+      this.___scroll ();
 
     }
 
@@ -12275,9 +12622,47 @@
 
     ___loop () {
 
-      if ( !this.options.animations.enabled ) return;
+      if ( !this.options.animations.enabled || this.loopIntervalId ) return;
 
-      setInterval ( this._frames ( this.loop.bind ( this ) ), 1000 / 30 );
+      this.loopIntervalId = setInterval ( this._frames ( this.loop.bind ( this ) ), 1000 / 30 );
+
+    }
+
+    ___loop_off () {
+
+      if ( !this.options.pausable || !this.loopIntervalId ) return;
+
+      clearInterval ( this.loopIntervalId );
+
+      delete this.loopIntervalId;
+
+    }
+
+    _loopUpdate () {
+
+      const isVisible = $.isVisible ( this.canvas, true );
+
+      if ( isVisible ) {
+
+        this.___loop ();
+
+      } else {
+
+        this.___loop_off ();
+
+      }
+
+    }
+
+    /* SCROLL */
+
+    ___scroll () {
+
+      if ( !this.options.animations.enabled || !this.options.pausable ) return;
+
+      this._on ( true, $.$window, 'scroll', this._debounce ( this._loopUpdate.bind ( this ), 150 ) );
+
+      this._loopUpdate ();
 
     }
 
@@ -12845,8 +13230,6 @@
     /* API */
 
     update () {
-
-      this.$chart.removeData ();
 
       this._initDatas ();
 
@@ -16210,50 +16593,50 @@
 
         }
 
-				let btnText = '',
+        let btnText = '',
             btnClasses = button;
 
-				switch ( button ) {
+        switch ( button ) {
 
-					case 'ellipsis':
-						btnText = `<i class="icon">${Icon ( 'dots-horizontal' )}</i>`;
+          case 'ellipsis':
+            btnText = `<i class="icon">${Icon ( 'dots-horizontal' )}</i>`;
             break;
 
-					case 'first':
+          case 'first':
             if ( page === 0 ) continue;
-						btnText = lang.sFirst;
-						break;
+            btnText = lang.sFirst;
+            break;
 
-					case 'previous':
+          case 'previous':
             if ( page === 0 ) continue;
-						btnText = lang.sPrevious;
-						break;
+            btnText = lang.sPrevious;
+            break;
 
-					case 'next':
+          case 'next':
             if ( pages === 0 || page === pages - 1 ) continue;
-						btnText = lang.sNext;
-						break;
+            btnText = lang.sNext;
+            break;
 
-					case 'last':
+          case 'last':
             if ( pages === 0 || page === pages - 1 ) continue;
-						btnText = lang.sLast;
-						break;
+            btnText = lang.sLast;
+            break;
 
-					default:
-						btnText = button + 1;
-						btnClasses += page === button ? ' ' + classes.sPageButtonActive : '';
-						break;
+          default:
+            btnText = button + 1;
+            btnClasses += page === button ? ' ' + classes.sPageButtonActive : '';
+            break;
 
-				}
+        }
 
-				let node = $('<div>', {
+        let node = $('<div>', {
           'aria-controls': settings.sTableId,
           'aria-label': aria[button],
           'data-dt-idx': counter,
           'tabindex': settings.iTabIndex,
-					'class': classes.sPageButton + ' ' + btnClasses,
-					'id': idx === 0 && typeof button === 'string' ? settings.sTableId + '_' + button : null
-				}).html ( btnText )
+          'class': classes.sPageButton + ' ' + btnClasses,
+          'id': idx === 0 && typeof button === 'string' ? settings.sTableId + '_' + button : null
+        }).html ( btnText )
           .appendTo ( container );
 
         if ( button !== 'ellipsis' ) {
@@ -16262,7 +16645,7 @@
 
         }
 
-				counter++;
+        counter++;
 
   		}
 
@@ -17347,7 +17730,11 @@
 
     _getNeededWidth () {
 
-      this.$tempInput.css ( 'font', this.$input.css ( 'font' ) ).val ( this.$input.val () ).appendTo ( this.$layout );
+      const val = this.$input.val ();
+
+      if ( !val ) return this.options.minWidth;
+
+      this.$tempInput.css ( 'font', this.$input.css ( 'font' ) ).val ( val ).appendTo ( this.$layout );
 
       let width = this.$tempInput[0].scrollWidth;
 
@@ -17493,6 +17880,370 @@
 }( Svelto.$, Svelto._, Svelto, Svelto.Factory ));
 
 
+// @require core/widget/widget.js
+// @require widgets/draggable/draggable.js
+
+(function ( $, _, Svelto, Factory ) {
+
+  /* CONFIG */
+
+  let config = {
+    name: 'layoutResizable',
+    plugin: true,
+    selector: '.layout.resizable',
+    templates: {
+      sash: _.template ( '<div class="sash"></div>' )
+    },
+    options: {
+      classes: {
+        nosash: 'no-sash',
+        vertical: 'vertical'
+      },
+      callbacks: {
+        resize: _.noop
+      }
+    }
+  };
+
+  /* LAYOUT RESIZER */
+
+  class LayoutResizer extends Svelto.Widget {
+
+    /* SPECIAL */
+
+    _variables () {
+
+      this.$layout = this.$element;
+      this.$panes = this.$layout.children ();
+      this.$sashes = $.$empty;
+      this.isHorizontal = !this.$layout.hasClass ( this.options.classes.vertical );
+      this.mapping = {}; // id => [$pane, $sash, hasSash, isResizable, minDimension, maxDimension, dimension]
+
+    }
+
+    _init () {
+
+      this._initMapping ();
+      this._updateMapping ();
+      this._updatePanes ();
+      this._updateSashes ();
+
+      this.$layout.prepend ( this.$sashes );
+
+    }
+
+    _events () {
+
+      this.___drag ();
+      this.___resizeRelative ();
+      this.___resize ();
+      this.___sashDoubleclick ();
+
+    }
+
+    _destroy () {
+
+      this.$sashes.remove ();
+
+    }
+
+    /* HELPERS */
+
+    _calcProp ( $ele, prop, fallback = 0 ) {
+
+      return parseFloat ( $ele.css ( prop ) ) || fallback;
+
+    }
+
+    _initMapping () {
+
+      this.$panes.get ().forEach ( ( pane, id ) => {
+
+        const $pane = $(pane),
+              isLast = id === ( this.$panes.length - 1 ),
+              hasSash = !isLast && !$pane.hasClass ( this.options.classes.nosash ),
+              isResizable = hasSash || ( id && this.mapping[id - 1][2] ),
+              $sash = hasSash ? $(this._template ( 'sash' )) : undefined,
+              minDimensionRaw = this._calcProp ( $pane, this.isHorizontal ? 'min-width' : 'min-height' ),
+              minDimension = minDimensionRaw || ( this._calcProp ( $pane, this.isHorizontal ? 'padding-left' : 'padding-top' ) + this._calcProp ( $pane, this.isHorizontal ? 'padding-right' : 'padding-bottom' ) + this._calcProp ( $pane, this.isHorizontal ? 'border-left-width' : 'border-top-width' ) + this._calcProp ( $pane, this.isHorizontal ? 'border-right-width' : 'border-bottom-width' ) ) || 0,
+              maxDimensionRaw = parseFloat ( $pane.css ( this.isHorizontal ? 'max-width' : 'max-height' ) ),
+              maxDimension = maxDimensionRaw || Infinity,
+              dimension = 0;
+
+        this.mapping[id] = [$pane, $sash, hasSash, isResizable, minDimension, maxDimension, dimension];
+
+        if ( !hasSash ) return;
+
+        $sash[0]._resid = id;
+
+        this.$sashes = this.$sashes.add ( $sash );
+
+      });
+
+    }
+
+    _updateMapping () {
+
+      for ( let id in this.mapping ) {
+        const mapping = this.mapping[id];
+        const dimension = this.isHorizontal ? mapping[0].outerWidth () : mapping[0].outerHeight ();
+        mapping[6] = dimension;
+      }
+
+    }
+
+    _updatePanes () {
+
+      for ( let id in this.mapping ) {
+        const mapping = this.mapping[id];
+        const $pane = mapping[0];
+        const dimension = mapping[6];
+        this.isHorizontal ? $pane.css ( 'width', dimension ) : $pane.css ( 'height', dimension );
+        if ( !mapping[3] ) continue;
+        $pane.css ( 'flex-basis', dimension ); // So that panes scale properly on resize
+      }
+
+      this._trigger ( 'resize' );
+
+    }
+
+    _updateSashes () {
+
+      let offset = 0;
+
+      for ( let id in this.mapping ) {
+        const mapping = this.mapping[id];
+        const $sash = mapping[1];
+        const dimension = mapping[6];
+        offset += dimension;
+        if ( !$sash ) continue;
+        this.isHorizontal ? $sash.translateX ( offset ) : $sash.translateY ( offset );
+      }
+
+    }
+
+    /* DRAGGING */
+
+    ___drag () {
+
+      this.$sashes.draggable ({
+        axis: this.isHorizontal ? 'x' : 'y',
+        classes: {
+          layout: {
+            priorityZIndex: 'layout-priority-z-index sash-dragging'
+          }
+        },
+        callbacks: {
+          start: this.__dragStart.bind ( this ),
+          move: this.__dragMove.bind ( this ),
+          end: this.__dragEnd.bind ( this )
+        }
+      });
+
+    }
+
+    __dragStart ( event, data ) {
+
+      this._prevMoveXY = data.startXY;
+
+    }
+
+    __dragMove ( event, data ) {
+
+      const {draggable, moveXY} = data,
+            deltaDimension = this.isHorizontal ? moveXY.x - this._prevMoveXY.x : moveXY.y - this._prevMoveXY.y;
+
+      if ( !deltaDimension ) return;
+
+      const id = draggable._resid,
+            mapping = this.mapping[id];
+
+      // We are starting by decrementing because we can actually determine when we've reached the limit
+
+      let decSign = Math.sign ( deltaDimension ), // Direction of the decrement
+          decId = decSign > 0 ? id + 1 : id, // Next id to target
+          incSign = - decSign, // Direction of the increment
+          incId = incSign > 0 ? id + 1 : id, // Id to increment
+          extraId = incId, // Just a copy of incId, so that we can mutate it
+          remDimension = Math.abs ( deltaDimension ), // Amount of remaining dimension left to distribute
+          extraDimension = remDimension, // Dimension that goes over max-dimension and therefore can't be assigned
+          accDimension = 0; // Amount of accumulated dimension that has been redistributed
+
+      while ( true ) { // Checking how much extra dimension there is
+
+        const mapping = this.mapping[extraId];
+
+        if ( !mapping ) break;
+
+        if ( mapping[3] ) {
+
+          extraDimension -= Math.min ( extraDimension, ( mapping[5] - mapping[6] ) )
+
+          if ( !extraDimension ) break;
+
+        }
+
+        extraId += incSign;
+
+      }
+
+      remDimension -= extraDimension;
+
+      while ( true ) { // Decreasing dimension
+
+        const mapping = this.mapping[decId];
+
+        if ( !mapping ) break;
+
+        if ( mapping[3] ) {
+
+          const dimensionNext = Math.max ( mapping[4], mapping[6] - remDimension ),
+                distributedDimension = mapping[6] - dimensionNext;
+
+          accDimension += distributedDimension;
+          remDimension -= distributedDimension;
+
+          mapping[6] = dimensionNext;
+
+          if ( !remDimension ) break;
+
+        }
+
+        decId += decSign;
+
+      }
+
+      if ( !accDimension ) return;
+
+      this.isHorizontal ? data.moveXY.x -= remDimension + extraDimension : data.moveXY.y -= remDimension + extraDimension; // Removing remaining dimension in order to improve the alignment between the cursor and the sash
+      this._prevMoveXY = data.moveXY; // If this event didn't cause any change, we don't consider it at all
+
+      while ( true ) { // Increasing dimension
+
+        const mapping = this.mapping[incId];
+
+        if ( !mapping ) break;
+
+        if ( mapping[3] ) {
+
+          const partial = Math.min ( accDimension, ( mapping[5] - mapping[6] ) );
+
+          mapping[6] += partial;
+          accDimension -= partial;
+
+          if ( !accDimension ) break;
+
+        }
+
+        incId += incSign;
+
+      }
+
+      this._updatePanes ();
+
+    }
+
+    __dragEnd () {
+
+      this._updateMapping ();
+      this._updateSashes ();
+
+    }
+
+    /* RESIZE RELATIVE */
+
+    ___resizeRelative () {
+
+      this._on ( true, $.$window, 'layoutresizable:resize', this._throttle ( this.__resizeRelative.bind ( this ), 500 ) );
+
+    }
+
+    __resizeRelative ( event ) {
+
+      if ( !event.target.contains ( this.element ) && !this.element.contains ( event.target ) ) return; // The resize happened in another tree, ignoring
+
+      this.__resize ();
+
+    }
+
+    /* RESIZE */
+
+    ___resize () {
+
+      this._on ( true, $.$window, 'resize', this._throttle ( this.__resize.bind ( this ), 500 ) );
+
+    }
+
+    __resize () {
+
+      this._updateMapping ();
+      this._updateSashes ();
+
+    }
+
+    /* SASH DOUBLE CLICK */
+
+    ___sashDoubleclick () {
+
+      this._on ( this.$sashes, 'dblclick', this.__sashDoubleclick );
+
+    }
+
+    __sashDoubleclick ( event ) {
+
+      const originalEvent = event.originalEvent || event,
+            sash = originalEvent.target,
+            index = sash._resid,
+            mappingLeft = this.mapping[index],
+            mappingRight = this.mapping[index + 1],
+            centerDelta = ( ( mappingLeft[6] + mappingRight[6] ) / 2 ) - mappingLeft[6],
+            clickXY = $.eventXY ( event ),
+            x = this.isHorizontal ? clickXY.x + centerDelta : clickXY.x,
+            y = this.isHorizontal ? clickXY.y : clickXY.y + centerDelta;
+
+      this.__dragMove ( event, { // A little hacky, but it gets the job done with minimal code
+        draggable: sash,
+        moveXY: {x, y}
+      });
+
+    }
+
+    /* API */
+
+    getDimensions () {
+
+      const dimensions = {};
+
+      for ( let id in this.mapping ) {
+        dimensions[id] = this.mapping[id][6];
+      }
+
+      return dimensions;
+
+    }
+
+    setDimensions ( dimensions ) {
+
+      for ( let id in dimensions ) {
+        if ( !this.mapping[id] ) break;
+        this.mapping[id][6] = dimensions[id];
+      }
+
+      this._updatePanes ();
+      this._updateMapping ();
+      this._updateSashes ();
+
+    }
+
+  }
+
+  /* FACTORY */
+
+  Factory.make ( LayoutResizer, config );
+
+}( Svelto.$, Svelto._, Svelto, Svelto.Factory ));
+
+
 // @require core/animations/animations.js
 // @require widgets/autofocusable/autofocusable.js
 
@@ -17579,7 +18330,7 @@
 
     __tap ( event ) {
 
-      if ( this.isLocked () || $.isDefaultPrevented ( event ) || !$.isAttached ( event.target ) || $(event.target).closest ( this.$modal ).length ) return;
+      if ( this.isLocked () || $.isDefaultPrevented ( event ) || !$.isAttached ( event.target ) || $(event.target).closest ( this.$modal ).length || this.$modal.touching ({ point: $.eventXY ( event, 'clientX', 'clientY' )} ).length ) return;
 
       event.preventDefault ();
       event.stopImmediatePropagation ();
@@ -17699,6 +18450,298 @@
   Factory.make ( Modal, config );
 
 }( Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer, Svelto.Animations ));
+
+
+// @require core/colors/colors.js
+// @require core/keyboard/keyboard.js
+// @require core/readify/readify.js
+// @require widgets/modal/modal.js
+
+(function ( $, _, Svelto, Pointer, Keyboard ) {
+
+  Svelto.Readify.add ( () => {
+
+    $.$document.on ( 'keydown', event => {
+
+      const ele = document.activeElement;
+
+      if ( !ele.classList.contains ( 'button' ) ) return;
+
+      if ( !Keyboard.keystroke.match ( event, 'enter' ) && !Keyboard.keystroke.match ( event, 'space' ) ) return;
+
+      $(ele).trigger ( Pointer.tap );
+
+    });
+
+  });
+
+}( Svelto.$, Svelto._, Svelto, Svelto.Pointer, Svelto.Keyboard ));
+
+
+// @require core/colors/colors.js
+// @require widgets/modal/modal.js
+
+(function ( $, _, Svelto, Widgets, Factory, Pointer, Colors ) {
+
+  /* CONFIG */
+
+  let config = {
+    name: 'dialog',
+    plugin: true,
+    selector: '.dialog',
+    templates: {
+      base: _.template ( `
+        <div class="card modal dialog <%= o.color %> <%= o.css %>">
+          <% if ( o.title ) { %>
+            <div class="card-header">
+              <%= o.title %>
+            </div>
+          <% } %>
+          <% if ( o.body || o.input.enabled || o.textarea.enabled ) { %>
+            <div class="card-block">
+              <% if ( o.body ) { %>
+                <p><%= o.body %></p>
+              <% } %>
+              <% if ( o.input.enabled ) { %>
+                <input placeholder="<%= o.input.placeholder %>" value="<%= o.input.value %>" type="text" class="autofocus fluid <%= o.input.css %>"" />
+              <% } %>
+              <% if ( o.textarea.enabled ) { %>
+                <textarea placeholder="<%= o.textarea.placeholder %>" rows="<%= o.textarea.rows %>" class="autofocus fluid <%= o.textarea.css %>"><%= o.textarea.value %></textarea>
+              <% } %>
+            </div>
+          <% } %>
+          <div class="card-footer text-right">
+            <% if ( !o.buttons.length ) { %>
+              <% print ( Svelto.Templates.Dialog.button ({ text: 'OK' }) ) %>
+            <% } else if ( o.buttons.length === 1 ) { %>
+              <% print ( Svelto.Templates.Dialog.button ( o.buttons[0] ) ) %>
+            <% } else if ( o.stack || ( o.autostack.enabled && ( o.buttons.length >= o.autostack.thresholds.buttons || o.buttons.map ( function ( btn ) { return btn.text; } ).join ( '' ).length >= o.autostack.thresholds.length ) ) ) { %>
+              <div class="multiple stack vertical">
+                <% for ( var i = o.buttons.length - 1; i >= 0; i-- ) { %>
+                  <% print ( Svelto.Templates.Dialog.button ( o.buttons[i] ) ) %>
+                <% } %>
+              </div>
+            <% } else { %>
+              <div class="multiple">
+                <% print ( Svelto.Templates.Dialog.button ( o.buttons[0] ) ) %>
+                <div class="spacer"></div>
+                <% for ( var i = 1; i < o.buttons.length; i++ ) { %>
+                  <% print ( Svelto.Templates.Dialog.button ( o.buttons[i] ) ) %>
+                <% } %>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      ` ),
+      button: _.template ( `
+        <div class="button <%= o.color || '' %> <%= o.size || '' %> <%= o.css || '' %>" tabindex="0">
+          <%= o.text || '' %>
+        </div>
+      ` )
+    },
+    options: {
+      title: false,
+      body: false,
+      input: {
+        enabled: false,
+        placeholder: '',
+        value: '',
+        css: 'bordered'
+      },
+      textarea: {
+        enabled: false,
+        placeholder: '',
+        value: '',
+        css: 'bordered',
+        rows: 3
+      },
+      buttons: [],
+      /*
+             : [{
+                color: '',
+                size: '',
+                css: '',
+                text: '',
+                onClick: _.noop // If it returns `false` the Dialog won't be closed
+             }],
+      */
+      color: Colors.white,
+      css: '',
+      stack: false,
+      autostack: {
+        enabled: true,
+        thresholds: {
+          buttons: 4,
+          length: 30
+        }
+      },
+      selectors: {
+        button: '.card-footer .button',
+        stack: '.stack'
+      },
+      keystrokes: {
+        'ctmd + enter': ['__enter', true],
+        'enter': ['__enter', false]
+      }
+    }
+  };
+
+  /* DIALOG */
+
+  class Dialog extends Widgets.Modal {
+
+    /* SPECIAL */
+
+    _variables () {
+
+      super._variables ();
+
+      this.$dialog = this.$element;
+      this.$buttons = this.$dialog.find ( this.options.selectors.button );
+
+      this.$dialog.widgetize ();
+
+    }
+
+    /* BUTTON TAP */
+
+    ___buttonTap () {
+
+      this._on ( this.$buttons, Pointer.tap, this.__buttonTap );
+
+    }
+
+    __buttonTap ( event, data = {} ) {
+
+      let $button = $(event.target),
+          index = this.$buttons.index ( $button ),
+          indexNormalized = this.$buttons.parent ().is ( this.options.selectors.stack ) ? this.options.buttons.length - index - 1 : index,
+          buttonObj = this.options.buttons[indexNormalized];
+
+      if ( buttonObj && buttonObj.onClick ) {
+
+        data.value = this.$dialog.find ( 'input, textarea, select').val ();
+
+        if ( buttonObj.onClick.apply ( $button[0], [event, data] ) === false ) return;
+
+      }
+
+      this.close ();
+
+    }
+
+    /* FOCUS */
+
+    ___focus () {
+
+      this._frame ( function () { // The modal needs to get opened first
+
+        if ( this.$dialog.find ( 'input, textarea' ).isFocused () ) return;
+
+        const $button = this.$buttons.parent ().is ( this.options.selectors.stack ) ? this.$buttons.first () : this.$buttons.last ();
+
+        $button.trigger ( 'focus' );
+
+      });
+
+    }
+
+    /* ENTER */
+
+    __enter ( withCtmd ) {
+
+      if ( withCtmd ) {
+
+        if ( !this.$dialog.find ( 'textarea' ).isFocused () && !this.$dialog.find ( 'input' ).isFocused () ) return null;
+
+      } else {
+
+        if ( !this.$dialog.find ( 'input' ).isFocused () ) return null;
+
+      }
+
+      this.$buttons.last ().trigger ( Pointer.tap );
+
+    }
+
+    /* API */
+
+    open () {
+
+      const result = super.open ();
+
+      if ( !_.isUndefined ( result ) ) return result;
+
+      this.___buttonTap ();
+      this.___focus ();
+
+    }
+
+  }
+
+  /* FACTORY */
+
+  Factory.make ( Dialog, config );
+
+}( Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory, Svelto.Pointer, Svelto.Colors ));
+
+
+// @require ./dialog.js
+
+(function ( $, _, Svelto, Dialog ) {
+
+  /* HELPER */
+
+  $.dialog = function ( options = {} ) {
+
+    /* CLEANUP */
+
+    const $modals = $('.modal.open, .dialog.open');
+
+    if ( $modals.length ) {
+
+      return new Promise ( resolve => {
+
+        $modals.one ( 'modal:close dialog:close', _.once ( () => _.defer ( () => resolve ( $.dialog ( options ) ) ) ) );
+
+        $modals.modal ( 'close' );
+
+      });
+
+    }
+
+    /* OPTIONS */
+
+    options = _.isPlainObject ( options ) ? options : { body: String ( options ) };
+
+    /* DIALOG */
+
+    const {$dialog} = new Dialog ( options );
+
+    /* OPEN */
+
+    return new Promise ( resolve => {
+
+      $dialog.one ( 'dialog:close', () => {
+
+        _.defer ( () => { // Deferring because we need the cleanup event to be triggered too
+          $dialog.dialog ( 'destroy' );
+          $dialog.remove ();
+        });
+
+        resolve ();
+
+      });
+
+      $dialog.appendTo ( $.$body );
+
+      $dialog.dialog ( 'open' );
+
+    });
+
+  };
+
+}( Svelto.$, Svelto._, Svelto, Svelto.Widgets.Dialog ));
 
 
 // @require core/widget/widget.js
@@ -19931,260 +20974,6 @@ Prism.languages.js = Prism.languages.javascript;
   Factory.make ( Radio, config );
 
 }( Svelto.$, Svelto._, Svelto, Svelto.Widgets, Svelto.Factory ));
-
-
-// @require core/animations/animations.js
-// @require core/widget/widget.js
-
-(function ( $, _, Svelto, Factory, Animations, Pointer ) {
-
-  /* CONFIG */
-
-  let config = {
-    name: 'rails',
-    plugin: true,
-    selector: '.rails',
-    options: {
-      navigation: {
-        hidable: true // Controls whether the navigation should be hidden when all the buttons are disabled
-      },
-      scroll: {
-        speed: 200 // The distance scrolled when calling `left` or `right`
-      },
-      classes: {
-        shadow: {
-          left: 'rails-shadow-left',
-          right: 'rails-shadow-right'
-        }
-      },
-      selectors: {
-        start: '.rails-start',
-        left: '.rails-left',
-        right: '.rails-right',
-        end: '.rails-end',
-        navigation: '.rails-navigation, .rails-start, .rails-left, .rails-right, .rails-end',
-        shadow: '.rails-shadow',
-        content: '.rails-content',
-        active: '.rails-active'
-      },
-      animations: {
-        scroll: Animations.fast
-      },
-      keystrokes: {
-        'home, page_up': 'start',
-        'left': 'left',
-        'right': 'right',
-        'end, page_down': 'end'
-      }
-    }
-  };
-
-  /* RAILS */
-
-  class Rails extends Svelto.Widget {
-
-    /* SPECIAL */
-
-    _variables () {
-
-      this.$rails = this.$element;
-
-      this.$start = this.$rails.find ( this.options.selectors.start );
-      this.$left = this.$rails.find ( this.options.selectors.left );
-      this.$right = this.$rails.find ( this.options.selectors.right );
-      this.$end = this.$rails.find ( this.options.selectors.end );
-      this.$navigation = this.$rails.find ( this.options.selectors.navigation );
-      this.$shadow = this.$rails.find ( this.options.selectors.shadow );
-      this.$content = this.$rails.find ( this.options.selectors.content );
-      this.$active = this.$content.find ( this.options.selectors.active );
-
-    }
-
-    _init () {
-
-      this._scrollToElement ( this.$active, false );
-      this._updateNavigation ();
-
-    }
-
-    _events () {
-
-      this.___keydown ();
-      this.___resize ();
-      this.___scroll ();
-      this.___startTap ();
-      this.___leftTap ();
-      this.___rightTap ();
-      this.___endTap ();
-
-    }
-
-    /* KEYDOWN */
-
-    ___keydown () {
-
-      this._onHover ( [$.$document, 'keydown', this.__keydown] );
-
-    }
-
-    /* START TAP */
-
-    ___startTap () {
-
-      this._on ( this.$start, Pointer.tap, this.start );
-
-    }
-
-    /* LEFT TAP */
-
-    ___leftTap () {
-
-      this._on ( this.$left, Pointer.tap, this.left );
-
-    }
-
-    /* RIGHT TAP */
-
-    ___rightTap () {
-
-      this._on ( this.$right, Pointer.tap, this.right );
-
-    }
-
-    /* END TAP */
-
-    ___endTap () {
-
-      this._on ( this.$end, Pointer.tap, this.end );
-
-    }
-
-    /* UPDATE */
-
-    _updateNavigation () {
-
-      if ( !this.$navigation.length && !this.$shadow.length ) return;
-
-      let contentRect = this.$content.getRect (),
-          scrollLeft = this.$content[0].scrollLeft,
-          isStart = ( scrollLeft === 0 ),
-          isEnd = ( this.$content[0].scrollWidth - scrollLeft - contentRect.width <= 1 ); // If we use `0`, as we should it won't always trigger
-
-      if ( this.$start.length || this.$left.length ) {
-
-        this.$start.add ( this.$left ).toggleClass ( this.options.classes.disabled, isStart );
-
-      }
-
-      if ( this.$shadow.length ) {
-
-        this.$shadow.toggleClass ( this.options.classes.shadow.left, !isStart );
-
-      }
-
-      if ( this.$end.length || this.$right.length ) {
-
-        this.$end.add ( this.$right ).toggleClass ( this.options.classes.disabled, isEnd );
-
-      }
-
-      if ( this.$shadow.length ) {
-
-        this.$shadow.toggleClass ( this.options.classes.shadow.right, !isEnd );
-
-      }
-
-      if ( this.options.navigation.hidable ) {
-
-        let hidable = ( isStart && isEnd );
-
-        this.$navigation.toggleClass ( this.options.classes.hidden, hidable );
-
-      }
-
-    }
-
-    /* RESIZE */
-
-    ___resize () {
-
-      this._on ( true, $.$window, 'resize:width', this._frames ( this._updateNavigation.bind ( this ) ) );
-
-    }
-
-    /* SCROLL */
-
-    ___scroll () {
-
-      this._on ( true, this.$content, 'scroll', this._frames ( this._updateNavigation.bind ( this ) ) );
-
-    }
-
-    _scroll ( left, animate = true ) {
-
-      if ( animate ) {
-
-        $.animateProp ( this.$content[0], { scrollLeft: left }, { duration: this.options.animations.scroll } );
-
-      } else {
-
-        this.$content[0].scrollLeft = left;
-
-      }
-
-    }
-
-    _deltaScroll ( delta )  {
-
-      this._scroll ( this.$content[0].scrollLeft + delta );
-
-    }
-
-    _scrollToElement ( $element, animate ) {
-
-      if ( !$element.length ) return;
-
-      let eleRect = $element.getRect (),
-          contentRect = this.$content.getRect (),
-          left = ( eleRect.left - contentRect.left ) + this.$content[0].scrollLeft + ( eleRect.width / 2 ) - ( contentRect.width / 2 );
-
-      this._scroll ( left, animate );
-
-    }
-
-    /* API */
-
-    start () {
-
-      this._scroll ( 0 );
-
-    }
-
-    left () {
-
-      this._deltaScroll ( - this.options.scroll.speed );
-
-    }
-
-    right () {
-
-      this._deltaScroll ( this.options.scroll.speed );
-
-    }
-
-    end () {
-
-      this._scroll ( this.$content[0].scrollWidth );
-
-    }
-
-  }
-
-  /* FACTORY */
-
-  Factory.make ( Rails, config );
-
-}( Svelto.$, Svelto._, Svelto, Svelto.Factory, Svelto.Animations, Svelto.Pointer ));
 
 
 // @require lib/fetch/fetch.js
@@ -24735,12 +25524,15 @@ Prism.languages.js = Prism.languages.javascript;
         separator: ',', // It will also become kind of a forbidden character, used for insertion
         inserters: [Keyboard.keys.ENTER, Keyboard.keys.TAB] // They are keyCodes
       },
+      addOnBlur: true, // Treat a blur event like a submit event
+      editBackspace: true, // Enable editing the last tag when pressing backspace with an empty input
+      minPasteTags: 3, // Minimum number of pasted tags to trigger a submit event
       sort: false, // The tags will be outputted in alphanumeric-sort order
       escape: false, // Escape potential XSS characters
       deburr: false, // Replace non basic-latin characters
       messages: {
-        tooShort: '`$1` is shorter than $2 characters',
-        duplicate: '`$1` is a duplicate',
+        tooShort: '"$1" is shorter than $2 characters',
+        duplicate: '"$1" is a duplicate',
         forbidden: 'The character you entered is forbidden'
       },
       datas: {
@@ -24758,6 +25550,7 @@ Prism.languages.js = Prism.languages.javascript;
         change: _.noop,
         add: _.noop,
         remove: _.noop,
+        trigger: _.noop,
         empty: _.noop
       }
     }
@@ -24926,7 +25719,7 @@ Prism.languages.js = Prism.languages.javascript;
 
       this._on ( this.$partial, 'paste', this.__paste );
 
-      this._on ( this.$partial, 'blur', this.___blur );
+      if ( this.options.addOnBlur ) this._on ( this.$partial, 'blur', this.___blur );
 
     }
 
@@ -24934,36 +25727,53 @@ Prism.languages.js = Prism.languages.javascript;
 
     __keypressKeydown ( event ) {
 
+      let keyCode = event.keyCode;
+
+      if ( keyCode >= 96 && keyCode <= 105 ) keyCode -= 48; // Numpad patch
+
       let value = this.$partial.val ();
 
-      if ( this.options.characters.inserters.includes ( event.keyCode ) || event.keyCode === this.options.characters.separator.charCodeAt ( 0 ) ) {
+      if ( this.options.characters.inserters.includes ( keyCode ) || keyCode === this.options.characters.separator.charCodeAt ( 0 ) ) {
 
-        let added = this.add ( value );
+        if ( !value ) {
 
-        if ( added ) {
+          this._trigger ( 'trigger' );
 
-          this._clearPartial ();
+        } else {
+
+          let added = this.add ( value );
+
+          if ( added ) {
+
+            this._clearPartial ();
+
+          }
 
         }
 
         event.preventDefault ();
         event.stopImmediatePropagation ();
 
-      } else if ( event.keyCode === Keyboard.keys.BACKSPACE ) {
+      } else if ( keyCode === Keyboard.keys.BACKSPACE ) {
 
-        if ( !value.length && this.options.tags.length ) {
+        if ( this.options.editBackspace && !value.length && this.options.tags.length ) {
 
-          let $tag = this.$tagbox.find ( this.options.selectors.tag ).last (),
-              edit = !Keyboard.keystroke.hasCtrlOrCmd ( event );
+          let $tag = this.$tagbox.find ( this.options.selectors.tag ).last ();
 
-          this.remove ( $tag, edit );
+          if ( $tag.length ) {
 
-          event.preventDefault ();
-          event.stopImmediatePropagation ();
+            let edit = !Keyboard.keystroke.hasCtrlOrCmd ( event );
+
+            this.remove ( $tag, edit );
+
+            event.preventDefault ();
+            event.stopImmediatePropagation ();
+
+          }
 
         }
 
-      } else if ( this.options.characters.forbid && this.options.characters.forbidden.includes ( String.fromCharCode ( event.keyCode ) ) ) {
+      } else if ( this.options.characters.forbid && this.options.characters.forbidden.includes ( event.key ) ) {
 
         $.toast ( this.options.messages.forbidden );
 
@@ -24978,9 +25788,15 @@ Prism.languages.js = Prism.languages.javascript;
 
     __paste ( event ) {
 
-      let originalEvent = event.originalEvent || event;
+      let originalEvent = event.originalEvent || event,
+          text = originalEvent.clipboardData.getData ( 'text' ),
+          inserterRe = /[,\r\n\t]/gi, //TODO: This regex shouldn't be hardcoded but generated from options
+          tagsNr = _.findMatches ( text, inserterRe ).length + 1,
+          shouldAdd = tagsNr >= this.options.minPasteTags;
 
-      this.add ( originalEvent.clipboardData.getData ( 'text' ) );
+      if ( !shouldAdd ) return;
+
+      this.add ( text );
 
       event.preventDefault ();
       event.stopImmediatePropagation ();

@@ -22,6 +22,34 @@
 }
 
 
+/* LANGUAGE */
+
+@function is-empty ( $x ) {
+
+  @if not $x or $x == '' or $x == 0 or $x == () or length( $x ) == 0 {
+
+    @return true;
+
+  } @else {
+
+    @return false;
+
+  }
+
+}
+
+
+/* LIST */
+
+@function first ( $list ) {
+  @return nth( $list, 1 );
+}
+
+@function last ( $list ) {
+  @return nth( $list, length( $list ) );
+}
+
+
 /* MAP */
 
 @function map-previous ( $map, $key ) {
@@ -379,6 +407,12 @@
 
 /* BREAKPOINTS */
 
+@function breakpoint-exists ( $breakpoint ) {
+
+  @return map-has-key( $breakpoints, $breakpoint );
+
+}
+
 @function breakpoint-previous ( $breakpoint ) {
 
   @return map-previous( $breakpoints, $breakpoint );
@@ -393,9 +427,13 @@
 
 @function breakpoint-min ( $breakpoint ) {
 
-  $value: map-get( $breakpoints, $breakpoint );
+  @if breakpoint-exists( $breakpoint ) {
 
-  @return if( unit-strip( $value ) != 0, $value, null );
+    $value: map-get( $breakpoints, $breakpoint );
+
+    @return if( unit-strip( $value ) != 0, $value, null );
+
+  }
 
 }
 
@@ -456,6 +494,14 @@
 }
 
 
+/* EXISTS */
+
+@function color-exists ( $color ) {
+
+  @return map-has-key( $colors, $color );
+
+}
+
 /* SELECTOR */
 
 @function colors-get-undefined-selector () {
@@ -495,19 +541,33 @@
 }
 
 
+// @require core/colors/functions.scss
+
 /* GRADIENT */
 
 @function gradient-get-start-end-from-color ( $color ) {
 
-  $datas: map-get( $colors, $color );
+  @if color-exists( $color ) {
 
-  $start: nth( $datas, 2 ); // Hover
-  $end: nth( $datas, 3 ); // Active
+    $datas: map-get( $colors, $color );
 
-  @return ( $start, $end );
+    $start: nth( $datas, 2 ); // Hover
+    $end: nth( $datas, 3 ); // Active
+
+    @return ( $start, $end );
+
+  }
 
 }
 
+
+/* EXISTS */
+
+@function size-exists ( $size ) {
+
+  @return map-has-key( $sizes, $size );
+
+}
 
 /* SIZES */
 
@@ -624,6 +684,14 @@
 
 }
 
+
+/* EXISTS */
+
+@function z-depth-exists ( $z-depth ) {
+
+  @return map-has-key( $z-depths, $z-depth );
+
+}
 
 /* SELECTOR */
 

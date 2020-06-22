@@ -1,5 +1,7 @@
 @charset "UTF-8";
 /* COLOR */
+/* LANGUAGE */
+/* LIST */
 /* MAP */
 /* DEEP */
 /* ANGLE */
@@ -12,13 +14,16 @@
 /* CLASSES */
 /* BREAKPOINTS */
 /* CLASSES */
+/* EXISTS */
 /* SELECTOR */
 /* CLASSES */
 /* GRADIENT */
+/* EXISTS */
 /* SIZES */
 /* SELECTOR */
 /* CLASSES */
 /* UNIT */
+/* EXISTS */
 /* SELECTOR */
 /* CLASSES */
 /* RAISABLE */
@@ -29,7 +34,6 @@
 /* CLEARFIX */
 /* DIMENSION */
 /* GRADIENT */
-/* LIST */
 /* MARGIN */
 /* PADDING */
 /* PRIVATE */
@@ -253,12 +257,16 @@
 /* CHECKBOX */
 /* LABEL */
 /* ANIMATION */
+/* DIALOG */
+/* TITLE */
+/* BUTTON */
 /* INPUT */
 /* COMPACT */
 /* COMPACT */
 /* CORNER */
 /* FLOATING */
 /* COMPACT */
+/* LAYOUT RESIZABLE */
 /* LIKER */
 /* ICON */
 /* COUNTER */
@@ -1880,8 +1888,8 @@ html {
 /* BODY */
 body {
   background-color: #eceff1;
-  color: #3f3f3f;
   border-color: #bdc7ce;
+  color: #3f3f3f;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.375;
@@ -1978,7 +1986,7 @@ dl:last-child, p:last-child, pre:last-child {
 }
 
 /* ACTIONABLE */
-.actionable, .button {
+.actionable, .button, .button > * {
   touch-action: manipulation;
   cursor: pointer;
 }
@@ -2633,179 +2641,179 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
 }
 
 /* COLORS */
-.actionable.primary:not(.disabled):not(.active):hover, .primary.button:not(.disabled):not(.active):hover {
+.actionable.primary:not(.disabled):not(.active):hover, .primary.button:not(.disabled):not(.active):hover, .button > .primary:not(.disabled):not(.active):hover {
   background-color: #176fd2;
 }
 
-.actionable.primary:not(.disabled):not(.ripple):active, .primary.button:not(.disabled):not(.ripple):active {
+.actionable.primary:not(.disabled):not(.ripple):active, .primary.button:not(.disabled):not(.ripple):active, .button > .primary:not(.disabled):not(.ripple):active {
   background-color: #135bae;
 }
 
-.actionable.secondary:not(.disabled):not(.active):hover, .secondary.button:not(.disabled):not(.active):hover {
+.actionable.secondary:not(.disabled):not(.active):hover, .secondary.button:not(.disabled):not(.active):hover, .button > .secondary:not(.disabled):not(.active):hover {
   background-color: #ff7604;
 }
 
-.actionable.secondary:not(.disabled):not(.ripple):active, .secondary.button:not(.disabled):not(.ripple):active {
+.actionable.secondary:not(.disabled):not(.ripple):active, .secondary.button:not(.disabled):not(.ripple):active, .button > .secondary:not(.disabled):not(.ripple):active {
   background-color: #db6300;
 }
 
-.actionable.tertiary:not(.disabled):not(.active):hover, .tertiary.button:not(.disabled):not(.active):hover {
+.actionable.tertiary:not(.disabled):not(.active):hover, .tertiary.button:not(.disabled):not(.active):hover, .button > .tertiary:not(.disabled):not(.active):hover {
   background-color: #761eab;
 }
 
-.actionable.tertiary:not(.disabled):not(.ripple):active, .tertiary.button:not(.disabled):not(.ripple):active {
+.actionable.tertiary:not(.disabled):not(.ripple):active, .tertiary.button:not(.disabled):not(.ripple):active, .button > .tertiary:not(.disabled):not(.ripple):active {
   background-color: #5e1889;
 }
 
-.actionable.quaternary:not(.disabled):not(.active):hover, .quaternary.button:not(.disabled):not(.active):hover {
+.actionable.quaternary:not(.disabled):not(.active):hover, .quaternary.button:not(.disabled):not(.active):hover, .button > .quaternary:not(.disabled):not(.active):hover {
   background-color: #338c38;
 }
 
-.actionable.quaternary:not(.disabled):not(.ripple):active, .quaternary.button:not(.disabled):not(.ripple):active {
+.actionable.quaternary:not(.disabled):not(.ripple):active, .quaternary.button:not(.disabled):not(.ripple):active, .button > .quaternary:not(.disabled):not(.ripple):active {
   background-color: #296e2c;
 }
 
-.actionable.black:not(.disabled):not(.active):hover, .black.button:not(.disabled):not(.active):hover {
+.actionable.black:not(.disabled):not(.active):hover, .black.button:not(.disabled):not(.active):hover, .button > .black:not(.disabled):not(.active):hover {
   background-color: #2b2b2b;
 }
 
-.actionable.black:not(.disabled):not(.ripple):active, .black.button:not(.disabled):not(.ripple):active {
+.actionable.black:not(.disabled):not(.ripple):active, .black.button:not(.disabled):not(.ripple):active, .button > .black:not(.disabled):not(.ripple):active {
   background-color: #171717;
 }
 
-.actionable.blue:not(.disabled):not(.active):hover, .blue.button:not(.disabled):not(.active):hover {
+.actionable.blue:not(.disabled):not(.active):hover, .blue.button:not(.disabled):not(.active):hover, .button > .blue:not(.disabled):not(.active):hover {
   background-color: #349ff4;
 }
 
-.actionable.blue:not(.disabled):not(.ripple):active, .blue.button:not(.disabled):not(.ripple):active {
+.actionable.blue:not(.disabled):not(.ripple):active, .blue.button:not(.disabled):not(.ripple):active, .button > .blue:not(.disabled):not(.ripple):active {
   background-color: #0e8df2;
 }
 
-.actionable.brown:not(.disabled):not(.active):hover, .brown.button:not(.disabled):not(.active):hover {
+.actionable.brown:not(.disabled):not(.active):hover, .brown.button:not(.disabled):not(.active):hover, .button > .brown:not(.disabled):not(.active):hover {
   background-color: #865e50;
 }
 
-.actionable.brown:not(.disabled):not(.ripple):active, .brown.button:not(.disabled):not(.ripple):active {
+.actionable.brown:not(.disabled):not(.ripple):active, .brown.button:not(.disabled):not(.ripple):active, .button > .brown:not(.disabled):not(.ripple):active {
   background-color: #6c4c40;
 }
 
-.actionable.gray:not(.disabled):not(.active):hover, .gray.button:not(.disabled):not(.active):hover {
+.actionable.gray:not(.disabled):not(.active):hover, .gray.button:not(.disabled):not(.active):hover, .button > .gray:not(.disabled):not(.active):hover {
   background-color: #eaeaea;
 }
 
-.actionable.gray:not(.disabled):not(.ripple):active, .gray.button:not(.disabled):not(.ripple):active {
+.actionable.gray:not(.disabled):not(.ripple):active, .gray.button:not(.disabled):not(.ripple):active, .button > .gray:not(.disabled):not(.ripple):active {
   background-color: #d6d6d6;
 }
 
-.actionable.green:not(.disabled):not(.active):hover, .green.button:not(.disabled):not(.active):hover {
+.actionable.green:not(.disabled):not(.active):hover, .green.button:not(.disabled):not(.active):hover, .button > .green:not(.disabled):not(.active):hover {
   background-color: #59b75c;
 }
 
-.actionable.green:not(.disabled):not(.ripple):active, .green.button:not(.disabled):not(.ripple):active {
+.actionable.green:not(.disabled):not(.ripple):active, .green.button:not(.disabled):not(.ripple):active, .button > .green:not(.disabled):not(.ripple):active {
   background-color: #46a149;
 }
 
-.actionable.olive:not(.disabled):not(.active):hover, .olive.button:not(.disabled):not(.active):hover {
+.actionable.olive:not(.disabled):not(.active):hover, .olive.button:not(.disabled):not(.active):hover, .button > .olive:not(.disabled):not(.active):hover {
   background-color: #d1df4a;
 }
 
-.actionable.olive:not(.disabled):not(.ripple):active, .olive.button:not(.disabled):not(.ripple):active {
+.actionable.olive:not(.disabled):not(.ripple):active, .olive.button:not(.disabled):not(.ripple):active, .button > .olive:not(.disabled):not(.ripple):active {
   background-color: #c9d928;
 }
 
-.actionable.orange:not(.disabled):not(.active):hover, .orange.button:not(.disabled):not(.active):hover {
+.actionable.orange:not(.disabled):not(.active):hover, .orange.button:not(.disabled):not(.active):hover, .button > .orange:not(.disabled):not(.active):hover {
   background-color: #ffa014;
 }
 
-.actionable.orange:not(.disabled):not(.ripple):active, .orange.button:not(.disabled):not(.ripple):active {
+.actionable.orange:not(.disabled):not(.ripple):active, .orange.button:not(.disabled):not(.ripple):active, .button > .orange:not(.disabled):not(.ripple):active {
   background-color: #eb8c00;
 }
 
-.actionable.pink:not(.disabled):not(.active):hover, .pink.button:not(.disabled):not(.active):hover {
+.actionable.pink:not(.disabled):not(.active):hover, .pink.button:not(.disabled):not(.active):hover, .button > .pink:not(.disabled):not(.active):hover {
   background-color: #eb3170;
 }
 
-.actionable.pink:not(.disabled):not(.ripple):active, .pink.button:not(.disabled):not(.ripple):active {
+.actionable.pink:not(.disabled):not(.ripple):active, .pink.button:not(.disabled):not(.ripple):active, .button > .pink:not(.disabled):not(.ripple):active {
   background-color: #dd1659;
 }
 
-.actionable.purple:not(.disabled):not(.active):hover, .purple.button:not(.disabled):not(.active):hover {
+.actionable.purple:not(.disabled):not(.active):hover, .purple.button:not(.disabled):not(.active):hover, .button > .purple:not(.disabled):not(.active):hover {
   background-color: #ab2bc1;
 }
 
-.actionable.purple:not(.disabled):not(.ripple):active, .purple.button:not(.disabled):not(.ripple):active {
+.actionable.purple:not(.disabled):not(.ripple):active, .purple.button:not(.disabled):not(.ripple):active, .button > .purple:not(.disabled):not(.ripple):active {
   background-color: #8d239f;
 }
 
-.actionable.red:not(.disabled):not(.active):hover, .red.button:not(.disabled):not(.active):hover {
+.actionable.red:not(.disabled):not(.active):hover, .red.button:not(.disabled):not(.active):hover, .button > .red:not(.disabled):not(.active):hover {
   background-color: #f55549;
 }
 
-.actionable.red:not(.disabled):not(.ripple):active, .red.button:not(.disabled):not(.ripple):active {
+.actionable.red:not(.disabled):not(.ripple):active, .red.button:not(.disabled):not(.ripple):active, .button > .red:not(.disabled):not(.ripple):active {
   background-color: #f33123;
 }
 
-.actionable.teal:not(.disabled):not(.active):hover, .teal.button:not(.disabled):not(.active):hover {
+.actionable.teal:not(.disabled):not(.active):hover, .teal.button:not(.disabled):not(.active):hover, .button > .teal:not(.disabled):not(.active):hover {
   background-color: #00aa9a;
 }
 
-.actionable.teal:not(.disabled):not(.ripple):active, .teal.button:not(.disabled):not(.ripple):active {
+.actionable.teal:not(.disabled):not(.ripple):active, .teal.button:not(.disabled):not(.ripple):active, .button > .teal:not(.disabled):not(.ripple):active {
   background-color: #008276;
 }
 
-.actionable.violet:not(.disabled):not(.active):hover, .violet.button:not(.disabled):not(.active):hover {
+.actionable.violet:not(.disabled):not(.active):hover, .violet.button:not(.disabled):not(.active):hover, .button > .violet:not(.disabled):not(.active):hover {
   background-color: #7142c3;
 }
 
-.actionable.violet:not(.disabled):not(.ripple):active, .violet.button:not(.disabled):not(.ripple):active {
+.actionable.violet:not(.disabled):not(.ripple):active, .violet.button:not(.disabled):not(.ripple):active, .button > .violet:not(.disabled):not(.ripple):active {
   background-color: #5e35a8;
 }
 
-.actionable.white:not(.disabled):not(.active):hover, .white.button:not(.disabled):not(.active):hover {
+.actionable.white:not(.disabled):not(.active):hover, .white.button:not(.disabled):not(.active):hover, .button > .white:not(.disabled):not(.active):hover {
   background-color: whitesmoke;
 }
 
-.actionable.white:not(.disabled):not(.ripple):active, .white.button:not(.disabled):not(.ripple):active {
+.actionable.white:not(.disabled):not(.ripple):active, .white.button:not(.disabled):not(.ripple):active, .button > .white:not(.disabled):not(.ripple):active {
   background-color: #f0f0f0;
 }
 
-.actionable.yellow:not(.disabled):not(.active):hover, .yellow.button:not(.disabled):not(.active):hover {
+.actionable.yellow:not(.disabled):not(.active):hover, .yellow.button:not(.disabled):not(.active):hover, .button > .yellow:not(.disabled):not(.active):hover {
   background-color: #fbc654;
 }
 
-.actionable.yellow:not(.disabled):not(.ripple):active, .yellow.button:not(.disabled):not(.ripple):active {
+.actionable.yellow:not(.disabled):not(.ripple):active, .yellow.button:not(.disabled):not(.ripple):active, .button > .yellow:not(.disabled):not(.ripple):active {
   background-color: #f9b82c;
 }
 
-.actionable.error:not(.disabled):not(.active):hover, .error.button:not(.disabled):not(.active):hover {
+.actionable.error:not(.disabled):not(.active):hover, .error.button:not(.disabled):not(.active):hover, .button > .error:not(.disabled):not(.active):hover {
   background-color: #f55549;
 }
 
-.actionable.error:not(.disabled):not(.ripple):active, .error.button:not(.disabled):not(.ripple):active {
+.actionable.error:not(.disabled):not(.ripple):active, .error.button:not(.disabled):not(.ripple):active, .button > .error:not(.disabled):not(.ripple):active {
   background-color: #f33123;
 }
 
-.actionable.success:not(.disabled):not(.active):hover, .success.button:not(.disabled):not(.active):hover {
+.actionable.success:not(.disabled):not(.active):hover, .success.button:not(.disabled):not(.active):hover, .button > .success:not(.disabled):not(.active):hover {
   background-color: #59b75c;
 }
 
-.actionable.success:not(.disabled):not(.ripple):active, .success.button:not(.disabled):not(.ripple):active {
+.actionable.success:not(.disabled):not(.ripple):active, .success.button:not(.disabled):not(.ripple):active, .button > .success:not(.disabled):not(.ripple):active {
   background-color: #46a149;
 }
 
-.actionable.warning:not(.disabled):not(.active):hover, .warning.button:not(.disabled):not(.active):hover {
+.actionable.warning:not(.disabled):not(.active):hover, .warning.button:not(.disabled):not(.active):hover, .button > .warning:not(.disabled):not(.active):hover {
   background-color: #fbc654;
 }
 
-.actionable.warning:not(.disabled):not(.ripple):active, .warning.button:not(.disabled):not(.ripple):active {
+.actionable.warning:not(.disabled):not(.ripple):active, .warning.button:not(.disabled):not(.ripple):active, .button > .warning:not(.disabled):not(.ripple):active {
   background-color: #f9b82c;
 }
 
-.actionable.base:not(.disabled):not(.active):hover, .base.button:not(.disabled):not(.active):hover {
+.actionable.base:not(.disabled):not(.active):hover, .base.button:not(.disabled):not(.active):hover, .button > .base:not(.disabled):not(.active):hover {
   background-color: #f8f9fa;
 }
 
-.actionable.base:not(.disabled):not(.ripple):active, .base.button:not(.disabled):not(.ripple):active {
+.actionable.base:not(.disabled):not(.ripple):active, .base.button:not(.disabled):not(.ripple):active, .button > .base:not(.disabled):not(.ripple):active {
   background-color: #e0e5e8;
 }
 
@@ -2816,13 +2824,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #1565c0;
 }
 
-.inverted.hover.primary, .inverted.actionable.primary:not(.disabled):not(.active):hover, .inverted.primary.button:not(.disabled):not(.active):hover {
+.inverted.hover.primary, .inverted.actionable.primary:not(.disabled):not(.active):hover, .inverted.primary.button:not(.disabled):not(.active):hover, .button > .inverted.primary:not(.disabled):not(.active):hover {
   background-color: #176fd2;
   border-color: #1565c0;
   color: #ffffff;
 }
 
-.inverted.active.primary, .inverted.actionable.primary:not(.disabled):not(.ripple):active, .inverted.primary.button:not(.disabled):not(.ripple):active {
+.inverted.active.primary, .inverted.actionable.primary:not(.disabled):not(.ripple):active, .inverted.primary.button:not(.disabled):not(.ripple):active, .button > .inverted.primary:not(.disabled):not(.ripple):active {
   background-color: #135bae;
   border-color: #1565c0;
   color: #ffffff;
@@ -2834,13 +2842,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #ef6c00;
 }
 
-.inverted.hover.secondary, .inverted.actionable.secondary:not(.disabled):not(.active):hover, .inverted.secondary.button:not(.disabled):not(.active):hover {
+.inverted.hover.secondary, .inverted.actionable.secondary:not(.disabled):not(.active):hover, .inverted.secondary.button:not(.disabled):not(.active):hover, .button > .inverted.secondary:not(.disabled):not(.active):hover {
   background-color: #ff7604;
   border-color: #ef6c00;
   color: #ffffff;
 }
 
-.inverted.active.secondary, .inverted.actionable.secondary:not(.disabled):not(.ripple):active, .inverted.secondary.button:not(.disabled):not(.ripple):active {
+.inverted.active.secondary, .inverted.actionable.secondary:not(.disabled):not(.ripple):active, .inverted.secondary.button:not(.disabled):not(.ripple):active, .button > .inverted.secondary:not(.disabled):not(.ripple):active {
   background-color: #db6300;
   border-color: #ef6c00;
   color: #ffffff;
@@ -2852,13 +2860,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #6a1b9a;
 }
 
-.inverted.hover.tertiary, .inverted.actionable.tertiary:not(.disabled):not(.active):hover, .inverted.tertiary.button:not(.disabled):not(.active):hover {
+.inverted.hover.tertiary, .inverted.actionable.tertiary:not(.disabled):not(.active):hover, .inverted.tertiary.button:not(.disabled):not(.active):hover, .button > .inverted.tertiary:not(.disabled):not(.active):hover {
   background-color: #761eab;
   border-color: #6a1b9a;
   color: #ffffff;
 }
 
-.inverted.active.tertiary, .inverted.actionable.tertiary:not(.disabled):not(.ripple):active, .inverted.tertiary.button:not(.disabled):not(.ripple):active {
+.inverted.active.tertiary, .inverted.actionable.tertiary:not(.disabled):not(.ripple):active, .inverted.tertiary.button:not(.disabled):not(.ripple):active, .button > .inverted.tertiary:not(.disabled):not(.ripple):active {
   background-color: #5e1889;
   border-color: #6a1b9a;
   color: #ffffff;
@@ -2870,13 +2878,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #2e7d32;
 }
 
-.inverted.hover.quaternary, .inverted.actionable.quaternary:not(.disabled):not(.active):hover, .inverted.quaternary.button:not(.disabled):not(.active):hover {
+.inverted.hover.quaternary, .inverted.actionable.quaternary:not(.disabled):not(.active):hover, .inverted.quaternary.button:not(.disabled):not(.active):hover, .button > .inverted.quaternary:not(.disabled):not(.active):hover {
   background-color: #338c38;
   border-color: #2e7d32;
   color: #ffffff;
 }
 
-.inverted.active.quaternary, .inverted.actionable.quaternary:not(.disabled):not(.ripple):active, .inverted.quaternary.button:not(.disabled):not(.ripple):active {
+.inverted.active.quaternary, .inverted.actionable.quaternary:not(.disabled):not(.ripple):active, .inverted.quaternary.button:not(.disabled):not(.ripple):active, .button > .inverted.quaternary:not(.disabled):not(.ripple):active {
   background-color: #296e2c;
   border-color: #2e7d32;
   color: #ffffff;
@@ -2888,13 +2896,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #212121;
 }
 
-.inverted.hover.black, .inverted.actionable.black:not(.disabled):not(.active):hover, .inverted.black.button:not(.disabled):not(.active):hover {
+.inverted.hover.black, .inverted.actionable.black:not(.disabled):not(.active):hover, .inverted.black.button:not(.disabled):not(.active):hover, .button > .inverted.black:not(.disabled):not(.active):hover {
   background-color: #2b2b2b;
   border-color: #212121;
   color: #ffffff;
 }
 
-.inverted.active.black, .inverted.actionable.black:not(.disabled):not(.ripple):active, .inverted.black.button:not(.disabled):not(.ripple):active {
+.inverted.active.black, .inverted.actionable.black:not(.disabled):not(.ripple):active, .inverted.black.button:not(.disabled):not(.ripple):active, .button > .inverted.black:not(.disabled):not(.ripple):active {
   background-color: #171717;
   border-color: #212121;
   color: #ffffff;
@@ -2906,13 +2914,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #2196f3;
 }
 
-.inverted.hover.blue, .inverted.actionable.blue:not(.disabled):not(.active):hover, .inverted.blue.button:not(.disabled):not(.active):hover {
+.inverted.hover.blue, .inverted.actionable.blue:not(.disabled):not(.active):hover, .inverted.blue.button:not(.disabled):not(.active):hover, .button > .inverted.blue:not(.disabled):not(.active):hover {
   background-color: #349ff4;
   border-color: #2196f3;
   color: #ffffff;
 }
 
-.inverted.active.blue, .inverted.actionable.blue:not(.disabled):not(.ripple):active, .inverted.blue.button:not(.disabled):not(.ripple):active {
+.inverted.active.blue, .inverted.actionable.blue:not(.disabled):not(.ripple):active, .inverted.blue.button:not(.disabled):not(.ripple):active, .button > .inverted.blue:not(.disabled):not(.ripple):active {
   background-color: #0e8df2;
   border-color: #2196f3;
   color: #ffffff;
@@ -2924,13 +2932,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #795548;
 }
 
-.inverted.hover.brown, .inverted.actionable.brown:not(.disabled):not(.active):hover, .inverted.brown.button:not(.disabled):not(.active):hover {
+.inverted.hover.brown, .inverted.actionable.brown:not(.disabled):not(.active):hover, .inverted.brown.button:not(.disabled):not(.active):hover, .button > .inverted.brown:not(.disabled):not(.active):hover {
   background-color: #865e50;
   border-color: #795548;
   color: #ffffff;
 }
 
-.inverted.active.brown, .inverted.actionable.brown:not(.disabled):not(.ripple):active, .inverted.brown.button:not(.disabled):not(.ripple):active {
+.inverted.active.brown, .inverted.actionable.brown:not(.disabled):not(.ripple):active, .inverted.brown.button:not(.disabled):not(.ripple):active, .button > .inverted.brown:not(.disabled):not(.ripple):active {
   background-color: #6c4c40;
   border-color: #795548;
   color: #ffffff;
@@ -2942,13 +2950,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #e0e0e0;
 }
 
-.inverted.hover.gray, .inverted.actionable.gray:not(.disabled):not(.active):hover, .inverted.gray.button:not(.disabled):not(.active):hover {
+.inverted.hover.gray, .inverted.actionable.gray:not(.disabled):not(.active):hover, .inverted.gray.button:not(.disabled):not(.active):hover, .button > .inverted.gray:not(.disabled):not(.active):hover {
   background-color: #eaeaea;
   border-color: #e0e0e0;
   color: #3f3f3f;
 }
 
-.inverted.active.gray, .inverted.actionable.gray:not(.disabled):not(.ripple):active, .inverted.gray.button:not(.disabled):not(.ripple):active {
+.inverted.active.gray, .inverted.actionable.gray:not(.disabled):not(.ripple):active, .inverted.gray.button:not(.disabled):not(.ripple):active, .button > .inverted.gray:not(.disabled):not(.ripple):active {
   background-color: #d6d6d6;
   border-color: #e0e0e0;
   color: #3f3f3f;
@@ -2960,13 +2968,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #4caf50;
 }
 
-.inverted.hover.green, .inverted.actionable.green:not(.disabled):not(.active):hover, .inverted.green.button:not(.disabled):not(.active):hover {
+.inverted.hover.green, .inverted.actionable.green:not(.disabled):not(.active):hover, .inverted.green.button:not(.disabled):not(.active):hover, .button > .inverted.green:not(.disabled):not(.active):hover {
   background-color: #59b75c;
   border-color: #4caf50;
   color: #ffffff;
 }
 
-.inverted.active.green, .inverted.actionable.green:not(.disabled):not(.ripple):active, .inverted.green.button:not(.disabled):not(.ripple):active {
+.inverted.active.green, .inverted.actionable.green:not(.disabled):not(.ripple):active, .inverted.green.button:not(.disabled):not(.ripple):active, .button > .inverted.green:not(.disabled):not(.ripple):active {
   background-color: #46a149;
   border-color: #4caf50;
   color: #ffffff;
@@ -2978,13 +2986,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #cddc39;
 }
 
-.inverted.hover.olive, .inverted.actionable.olive:not(.disabled):not(.active):hover, .inverted.olive.button:not(.disabled):not(.active):hover {
+.inverted.hover.olive, .inverted.actionable.olive:not(.disabled):not(.active):hover, .inverted.olive.button:not(.disabled):not(.active):hover, .button > .inverted.olive:not(.disabled):not(.active):hover {
   background-color: #d1df4a;
   border-color: #cddc39;
   color: #ffffff;
 }
 
-.inverted.active.olive, .inverted.actionable.olive:not(.disabled):not(.ripple):active, .inverted.olive.button:not(.disabled):not(.ripple):active {
+.inverted.active.olive, .inverted.actionable.olive:not(.disabled):not(.ripple):active, .inverted.olive.button:not(.disabled):not(.ripple):active, .button > .inverted.olive:not(.disabled):not(.ripple):active {
   background-color: #c9d928;
   border-color: #cddc39;
   color: #ffffff;
@@ -2996,13 +3004,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #ff9800;
 }
 
-.inverted.hover.orange, .inverted.actionable.orange:not(.disabled):not(.active):hover, .inverted.orange.button:not(.disabled):not(.active):hover {
+.inverted.hover.orange, .inverted.actionable.orange:not(.disabled):not(.active):hover, .inverted.orange.button:not(.disabled):not(.active):hover, .button > .inverted.orange:not(.disabled):not(.active):hover {
   background-color: #ffa014;
   border-color: #ff9800;
   color: #ffffff;
 }
 
-.inverted.active.orange, .inverted.actionable.orange:not(.disabled):not(.ripple):active, .inverted.orange.button:not(.disabled):not(.ripple):active {
+.inverted.active.orange, .inverted.actionable.orange:not(.disabled):not(.ripple):active, .inverted.orange.button:not(.disabled):not(.ripple):active, .button > .inverted.orange:not(.disabled):not(.ripple):active {
   background-color: #eb8c00;
   border-color: #ff9800;
   color: #ffffff;
@@ -3014,13 +3022,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #e91e63;
 }
 
-.inverted.hover.pink, .inverted.actionable.pink:not(.disabled):not(.active):hover, .inverted.pink.button:not(.disabled):not(.active):hover {
+.inverted.hover.pink, .inverted.actionable.pink:not(.disabled):not(.active):hover, .inverted.pink.button:not(.disabled):not(.active):hover, .button > .inverted.pink:not(.disabled):not(.active):hover {
   background-color: #eb3170;
   border-color: #e91e63;
   color: #ffffff;
 }
 
-.inverted.active.pink, .inverted.actionable.pink:not(.disabled):not(.ripple):active, .inverted.pink.button:not(.disabled):not(.ripple):active {
+.inverted.active.pink, .inverted.actionable.pink:not(.disabled):not(.ripple):active, .inverted.pink.button:not(.disabled):not(.ripple):active, .button > .inverted.pink:not(.disabled):not(.ripple):active {
   background-color: #dd1659;
   border-color: #e91e63;
   color: #ffffff;
@@ -3032,13 +3040,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #9c27b0;
 }
 
-.inverted.hover.purple, .inverted.actionable.purple:not(.disabled):not(.active):hover, .inverted.purple.button:not(.disabled):not(.active):hover {
+.inverted.hover.purple, .inverted.actionable.purple:not(.disabled):not(.active):hover, .inverted.purple.button:not(.disabled):not(.active):hover, .button > .inverted.purple:not(.disabled):not(.active):hover {
   background-color: #ab2bc1;
   border-color: #9c27b0;
   color: #ffffff;
 }
 
-.inverted.active.purple, .inverted.actionable.purple:not(.disabled):not(.ripple):active, .inverted.purple.button:not(.disabled):not(.ripple):active {
+.inverted.active.purple, .inverted.actionable.purple:not(.disabled):not(.ripple):active, .inverted.purple.button:not(.disabled):not(.ripple):active, .button > .inverted.purple:not(.disabled):not(.ripple):active {
   background-color: #8d239f;
   border-color: #9c27b0;
   color: #ffffff;
@@ -3050,13 +3058,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #f44336;
 }
 
-.inverted.hover.red, .inverted.actionable.red:not(.disabled):not(.active):hover, .inverted.red.button:not(.disabled):not(.active):hover {
+.inverted.hover.red, .inverted.actionable.red:not(.disabled):not(.active):hover, .inverted.red.button:not(.disabled):not(.active):hover, .button > .inverted.red:not(.disabled):not(.active):hover {
   background-color: #f55549;
   border-color: #f44336;
   color: #ffffff;
 }
 
-.inverted.active.red, .inverted.actionable.red:not(.disabled):not(.ripple):active, .inverted.red.button:not(.disabled):not(.ripple):active {
+.inverted.active.red, .inverted.actionable.red:not(.disabled):not(.ripple):active, .inverted.red.button:not(.disabled):not(.ripple):active, .button > .inverted.red:not(.disabled):not(.ripple):active {
   background-color: #f33123;
   border-color: #f44336;
   color: #ffffff;
@@ -3068,13 +3076,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #009688;
 }
 
-.inverted.hover.teal, .inverted.actionable.teal:not(.disabled):not(.active):hover, .inverted.teal.button:not(.disabled):not(.active):hover {
+.inverted.hover.teal, .inverted.actionable.teal:not(.disabled):not(.active):hover, .inverted.teal.button:not(.disabled):not(.active):hover, .button > .inverted.teal:not(.disabled):not(.active):hover {
   background-color: #00aa9a;
   border-color: #009688;
   color: #ffffff;
 }
 
-.inverted.active.teal, .inverted.actionable.teal:not(.disabled):not(.ripple):active, .inverted.teal.button:not(.disabled):not(.ripple):active {
+.inverted.active.teal, .inverted.actionable.teal:not(.disabled):not(.ripple):active, .inverted.teal.button:not(.disabled):not(.ripple):active, .button > .inverted.teal:not(.disabled):not(.ripple):active {
   background-color: #008276;
   border-color: #009688;
   color: #ffffff;
@@ -3086,13 +3094,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #673ab7;
 }
 
-.inverted.hover.violet, .inverted.actionable.violet:not(.disabled):not(.active):hover, .inverted.violet.button:not(.disabled):not(.active):hover {
+.inverted.hover.violet, .inverted.actionable.violet:not(.disabled):not(.active):hover, .inverted.violet.button:not(.disabled):not(.active):hover, .button > .inverted.violet:not(.disabled):not(.active):hover {
   background-color: #7142c3;
   border-color: #673ab7;
   color: #ffffff;
 }
 
-.inverted.active.violet, .inverted.actionable.violet:not(.disabled):not(.ripple):active, .inverted.violet.button:not(.disabled):not(.ripple):active {
+.inverted.active.violet, .inverted.actionable.violet:not(.disabled):not(.ripple):active, .inverted.violet.button:not(.disabled):not(.ripple):active, .button > .inverted.violet:not(.disabled):not(.ripple):active {
   background-color: #5e35a8;
   border-color: #673ab7;
   color: #ffffff;
@@ -3104,13 +3112,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #ffffff;
 }
 
-.inverted.hover.white, .inverted.actionable.white:not(.disabled):not(.active):hover, .inverted.white.button:not(.disabled):not(.active):hover {
+.inverted.hover.white, .inverted.actionable.white:not(.disabled):not(.active):hover, .inverted.white.button:not(.disabled):not(.active):hover, .button > .inverted.white:not(.disabled):not(.active):hover {
   background-color: whitesmoke;
   border-color: #ffffff;
   color: #3f3f3f;
 }
 
-.inverted.active.white, .inverted.actionable.white:not(.disabled):not(.ripple):active, .inverted.white.button:not(.disabled):not(.ripple):active {
+.inverted.active.white, .inverted.actionable.white:not(.disabled):not(.ripple):active, .inverted.white.button:not(.disabled):not(.ripple):active, .button > .inverted.white:not(.disabled):not(.ripple):active {
   background-color: #f0f0f0;
   border-color: #ffffff;
   color: #3f3f3f;
@@ -3122,13 +3130,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #fabf40;
 }
 
-.inverted.hover.yellow, .inverted.actionable.yellow:not(.disabled):not(.active):hover, .inverted.yellow.button:not(.disabled):not(.active):hover {
+.inverted.hover.yellow, .inverted.actionable.yellow:not(.disabled):not(.active):hover, .inverted.yellow.button:not(.disabled):not(.active):hover, .button > .inverted.yellow:not(.disabled):not(.active):hover {
   background-color: #fbc654;
   border-color: #fabf40;
   color: #ffffff;
 }
 
-.inverted.active.yellow, .inverted.actionable.yellow:not(.disabled):not(.ripple):active, .inverted.yellow.button:not(.disabled):not(.ripple):active {
+.inverted.active.yellow, .inverted.actionable.yellow:not(.disabled):not(.ripple):active, .inverted.yellow.button:not(.disabled):not(.ripple):active, .button > .inverted.yellow:not(.disabled):not(.ripple):active {
   background-color: #f9b82c;
   border-color: #fabf40;
   color: #ffffff;
@@ -3140,13 +3148,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #f44336;
 }
 
-.inverted.hover.error, .inverted.actionable.error:not(.disabled):not(.active):hover, .inverted.error.button:not(.disabled):not(.active):hover {
+.inverted.hover.error, .inverted.actionable.error:not(.disabled):not(.active):hover, .inverted.error.button:not(.disabled):not(.active):hover, .button > .inverted.error:not(.disabled):not(.active):hover {
   background-color: #f55549;
   border-color: #f44336;
   color: #ffffff;
 }
 
-.inverted.active.error, .inverted.actionable.error:not(.disabled):not(.ripple):active, .inverted.error.button:not(.disabled):not(.ripple):active {
+.inverted.active.error, .inverted.actionable.error:not(.disabled):not(.ripple):active, .inverted.error.button:not(.disabled):not(.ripple):active, .button > .inverted.error:not(.disabled):not(.ripple):active {
   background-color: #f33123;
   border-color: #f44336;
   color: #ffffff;
@@ -3158,13 +3166,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #4caf50;
 }
 
-.inverted.hover.success, .inverted.actionable.success:not(.disabled):not(.active):hover, .inverted.success.button:not(.disabled):not(.active):hover {
+.inverted.hover.success, .inverted.actionable.success:not(.disabled):not(.active):hover, .inverted.success.button:not(.disabled):not(.active):hover, .button > .inverted.success:not(.disabled):not(.active):hover {
   background-color: #59b75c;
   border-color: #4caf50;
   color: #ffffff;
 }
 
-.inverted.active.success, .inverted.actionable.success:not(.disabled):not(.ripple):active, .inverted.success.button:not(.disabled):not(.ripple):active {
+.inverted.active.success, .inverted.actionable.success:not(.disabled):not(.ripple):active, .inverted.success.button:not(.disabled):not(.ripple):active, .button > .inverted.success:not(.disabled):not(.ripple):active {
   background-color: #46a149;
   border-color: #4caf50;
   color: #ffffff;
@@ -3176,13 +3184,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #fabf40;
 }
 
-.inverted.hover.warning, .inverted.actionable.warning:not(.disabled):not(.active):hover, .inverted.warning.button:not(.disabled):not(.active):hover {
+.inverted.hover.warning, .inverted.actionable.warning:not(.disabled):not(.active):hover, .inverted.warning.button:not(.disabled):not(.active):hover, .button > .inverted.warning:not(.disabled):not(.active):hover {
   background-color: #fbc654;
   border-color: #fabf40;
   color: #ffffff;
 }
 
-.inverted.active.warning, .inverted.actionable.warning:not(.disabled):not(.ripple):active, .inverted.warning.button:not(.disabled):not(.ripple):active {
+.inverted.active.warning, .inverted.actionable.warning:not(.disabled):not(.ripple):active, .inverted.warning.button:not(.disabled):not(.ripple):active, .button > .inverted.warning:not(.disabled):not(.ripple):active {
   background-color: #f9b82c;
   border-color: #fabf40;
   color: #ffffff;
@@ -3194,13 +3202,13 @@ html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointi
   color: #eceff1;
 }
 
-.inverted.hover.base, .inverted.actionable.base:not(.disabled):not(.active):hover, .inverted.base.button:not(.disabled):not(.active):hover {
+.inverted.hover.base, .inverted.actionable.base:not(.disabled):not(.active):hover, .inverted.base.button:not(.disabled):not(.active):hover, .button > .inverted.base:not(.disabled):not(.active):hover {
   background-color: #f8f9fa;
   border-color: #eceff1;
   color: #3f3f3f;
 }
 
-.inverted.active.base, .inverted.actionable.base:not(.disabled):not(.ripple):active, .inverted.base.button:not(.disabled):not(.ripple):active {
+.inverted.active.base, .inverted.actionable.base:not(.disabled):not(.ripple):active, .inverted.base.button:not(.disabled):not(.ripple):active, .button > .inverted.base:not(.disabled):not(.ripple):active {
   background-color: #e0e5e8;
   border-color: #eceff1;
   color: #3f3f3f;
@@ -5219,7 +5227,7 @@ html.clip-path-url .pointing-left:after, html.clip-path-polygon .chat-message.di
 html.clip-path-url .chat-message.direction-left .chat-message-content > .card-header:after,
 html.clip-path-url .chat-message:not(.direction-center):not(.direction-right) .chat-message-content > .card-header:after {
   left: -0.3125em;
-  clip-path: url(/static/images/pointing-clips.svg?v=1.0.0#clip-left);
+  clip-path: url(/static/images/pointing-clips.svg?v=1.2.15#clip-left);
   clip-path: polygon(0 0, 100% 100%, 0 100%);
 }
 
@@ -5248,7 +5256,7 @@ html.clip-path-polygon .pointing-right:after,
 html.clip-path-url .pointing-right:after, html.clip-path-polygon .chat-message.direction-right .chat-message-content > .card-header:after,
 html.clip-path-url .chat-message.direction-right .chat-message-content > .card-header:after {
   right: -0.3125em;
-  clip-path: url(/static/images/pointing-clips.svg?v=1.0.0#clip-right);
+  clip-path: url(/static/images/pointing-clips.svg?v=1.2.15#clip-right);
   clip-path: polygon(0 0, 100% 100%, 100% 0);
 }
 
@@ -5288,7 +5296,7 @@ html.clip-path-url .pointing-bottom {
 html.clip-path-polygon .pointing-bottom:after,
 html.clip-path-url .pointing-bottom:after {
   bottom: -0.3125em;
-  clip-path: url(/static/images/pointing-clips.svg?v=1.0.0#clip-bottom);
+  clip-path: url(/static/images/pointing-clips.svg?v=1.2.15#clip-bottom);
   clip-path: polygon(0 100%, 100% 100%, 100% 0);
 }
 
@@ -5320,7 +5328,7 @@ html.clip-path-url .pointing-top, html.clip-path-url .pointing:not(.pointing-rig
 html.clip-path-polygon .pointing-top:after, html.clip-path-polygon .pointing:not(.pointing-left):not(.pointing-bottom):not(.pointing-right):after,
 html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointing-left):not(.pointing-bottom):not(.pointing-right):after {
   top: -0.3125em;
-  clip-path: url(/static/images/pointing-clips.svg?v=1.0.0#clip-top);
+  clip-path: url(/static/images/pointing-clips.svg?v=1.2.15#clip-top);
   clip-path: polygon(100% 0, 0 0, 0 100%);
 }
 
@@ -5590,7 +5598,7 @@ span .avatar {
 }
 
 /* AVATAR HOVER */
-.actionable:hover .avatar, .button:hover .avatar, .avatar.actionable:hover, .avatar.button:hover {
+.actionable:hover .avatar, .button:hover .avatar, .button > :hover .avatar, .avatar.actionable:hover, .avatar.button:hover, .button > .avatar:hover {
   opacity: 0.8;
 }
 
@@ -6639,6 +6647,42 @@ html.clip-path-url .chat-message.no-tip.direction-right .chat-message-content {
   border-color: #4caf50 !important;
 }
 
+/* DIALOG */
+.dialog {
+  min-width: 19rem;
+  max-width: 30rem !important;
+}
+
+.dialog > .card-header {
+  font-size: 1.1892em;
+  padding: 0.625rem 1.375rem !important;
+  font-weight: 500;
+}
+
+.dialog > .card-header:not(.bordered) {
+  padding-bottom: 0 !important;
+}
+
+.dialog > .card-block {
+  padding: 0.625rem 1.375rem !important;
+}
+
+.dialog > .card-footer .multiple.stack {
+  align-items: flex-end;
+}
+
+.dialog > .card-footer .button {
+  font-weight: 500;
+}
+
+.dialog > .card-footer .button:not(:hover):not(.hover):not(:active):not(.active):focus {
+  color: #ef6c00 !important;
+}
+
+.dialog > .card-footer:not(:only-child):not(.bordered) {
+  padding-top: 0 !important;
+}
+
 /* BLOCK */
 .divider.block {
   text-align: center;
@@ -7159,7 +7203,7 @@ i.flag {
   vertical-align: middle;
   width: 16px;
   height: 11px;
-  background-image: url(/static/images/flags.png?v=1.0.0);
+  background-image: url(/static/images/flags.png?v=1.2.15);
 }
 
 /* FLAGS */
@@ -8289,7 +8333,7 @@ header, footer {
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url(/static/fonts/MaterialIcons-Regular.woff2?v=1.0.0) format("woff2"), url(/static/fonts/MaterialIcons-Regular.woff?v=1.0.0) format("woff"), url(/static/fonts/MaterialIcons-Regular.ttf?v=1.0.0) format("truetype"), url(/static/fonts/MaterialIcons-Regular.eot?v=1.0.0) format("eot");
+  src: url(/static/fonts/MaterialIcons-Regular.woff2?v=1.2.15) format("woff2"), url(/static/fonts/MaterialIcons-Regular.woff?v=1.2.15) format("woff"), url(/static/fonts/MaterialIcons-Regular.ttf?v=1.2.15) format("truetype"), url(/static/fonts/MaterialIcons-Regular.eot?v=1.2.15) format("eot");
 }
 
 /* ICON */
@@ -8750,7 +8794,6 @@ i.icon.actionable:not(.disabled):not(.ripple).active:before, i.emoji.actionable:
 img {
   display: block;
   max-width: 100%;
-  height: auto;
   min-height: 1px;
   /* INLINE */
 }
@@ -8759,6 +8802,10 @@ img:not(.primary):not(.secondary):not(.tertiary):not(.quaternary):not(.black):no
   background-color: inherit;
   border-color: inherit;
   color: inherit;
+}
+
+img:not([height]) {
+  height: auto;
 }
 
 address img,
@@ -9096,6 +9143,10 @@ input.valid, textarea.valid {
 }
 
 /* BUTTON */
+.button {
+  /* CURSOR */
+}
+
 .button:not(.primary):not(.secondary):not(.tertiary):not(.quaternary):not(.black):not(.blue):not(.brown):not(.gray):not(.green):not(.olive):not(.orange):not(.pink):not(.purple):not(.red):not(.teal):not(.violet):not(.white):not(.yellow):not(.error):not(.success):not(.warning):not(.base):not(.inherit):not(.transparent) {
   background-color: #ffffff;
   border-color: #d6d6d6;
@@ -9518,6 +9569,54 @@ input.valid, textarea.valid {
   color: #4caf50 !important;
 }
 
+/* LAYOUT RESIZABLE */
+.layout.resizable > .sash {
+  z-index: 1;
+}
+
+/* HORIZONTAL */
+.layout.horizontal.resizable.sash-dragging, .sash-dragging.layout.resizable:not(.vertical):not(.horizontal) {
+  cursor: col-resize !important;
+}
+
+.layout.horizontal.resizable.sash-dragging > *:not(.sash), .sash-dragging.layout.resizable:not(.vertical):not(.horizontal) > *:not(.sash) {
+  pointer-events: none !important;
+}
+
+.layout.horizontal.resizable > .sash, .layout.resizable:not(.vertical):not(.horizontal) > .sash {
+  position: absolute;
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: auto;
+  cursor: col-resize;
+  width: 4px;
+  margin-left: -2px;
+  transform: translateX(-2px);
+}
+
+/* VERTICAL */
+.layout.vertical.resizable.sash-dragging, .resizable.sash-dragging.layout:not(.vertical):not(.horizontal) {
+  cursor: row-resize !important;
+}
+
+.layout.vertical.resizable.sash-dragging > *:not(.sash), .resizable.sash-dragging.layout:not(.vertical):not(.horizontal) > *:not(.sash) {
+  pointer-events: none !important;
+}
+
+.layout.vertical.resizable > .sash, .resizable.layout:not(.vertical):not(.horizontal) > .sash {
+  position: absolute;
+  top: auto;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  cursor: row-resize;
+  height: 4px;
+  margin-top: -2px;
+  transform: translateY(-2px);
+}
+
+/* DEFAULT */
 /* LIKER */
 .liker {
   /* NOT MULTIPLE */
@@ -10697,7 +10796,8 @@ input[type=radio] + label:after {
 
 .rails-content {
   flex: 1 1 auto;
-  overflow-x: scroll;
+  overflow-x: hidden;
+  /* In order to avoid displaying any scrollbars, even while loading */
   overflow-y: hidden;
   /* READY */
   /* CHILDREN */
@@ -10713,6 +10813,7 @@ html[class*="scrollbar-size-"] .rails-content {
 
 /* SCROLLBAR */
 html.scrollbar-size-0 .rails .rails-content {
+  overflow-x: scroll;
   margin-bottom: calc( ( 30px + 0px ) * -1);
 }
 
@@ -10725,6 +10826,7 @@ html.scrollbar-size-0 .rails .rails-content.multiple {
 }
 
 html.scrollbar-size-12 .rails .rails-content {
+  overflow-x: scroll;
   margin-bottom: calc( ( 30px + 12px ) * -1);
 }
 
@@ -10737,6 +10839,7 @@ html.scrollbar-size-12 .rails .rails-content.multiple {
 }
 
 html.scrollbar-size-15 .rails .rails-content {
+  overflow-x: scroll;
   margin-bottom: calc( ( 30px + 15px ) * -1);
 }
 
@@ -10749,6 +10852,7 @@ html.scrollbar-size-15 .rails .rails-content.multiple {
 }
 
 html.scrollbar-size-16 .rails .rails-content {
+  overflow-x: scroll;
   margin-bottom: calc( ( 30px + 16px ) * -1);
 }
 
@@ -10761,6 +10865,7 @@ html.scrollbar-size-16 .rails .rails-content.multiple {
 }
 
 html.scrollbar-size-17 .rails .rails-content {
+  overflow-x: scroll;
   margin-bottom: calc( ( 30px + 17px ) * -1);
 }
 
@@ -12485,7 +12590,7 @@ table th.sortable.sort-asc:after {
 
 /* STRIPED */
 .table.striped tbody tr:first-child.table-row-empty ~ tr:nth-child(even) {
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .table.striped tbody tr:first-child.table-row-empty ~ tr:nth-child(odd) {
@@ -12493,11 +12598,11 @@ table th.sortable.sort-asc:after {
 }
 
 .table.striped tbody tr:first-child:not(.table-row-empty) {
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .table.striped tbody tr:first-child:not(.table-row-empty) ~ tr:nth-child(odd) {
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .table.striped tbody tr:first-child:not(.table-row-empty) ~ tr:nth-child(even) {
@@ -13483,22 +13588,34 @@ a {
 }
 
 p a:hover,
+li a:hover,
+th a:hover,
+td a:hover,
 address a:hover {
   text-decoration: underline;
 }
 
 /* COLORS */
 p a,
+li a,
+th a,
+td a,
 address a, .link-primary {
   color: #1565c0;
 }
 
 p a:hover,
+li a:hover,
+th a:hover,
+td a:hover,
 address a:hover, .link-primary:hover {
   color: #176fd2;
 }
 
 p a:active,
+li a:active,
+th a:active,
+td a:active,
 address a:active, .link-primary:active {
   color: #135bae;
 }

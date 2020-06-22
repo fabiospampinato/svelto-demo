@@ -168,17 +168,6 @@
 }
 
 
-/* LIST */
-
-@function first ( $list ) {
-  @return nth( $list, 1 );
-}
-
-@function last ( $list ) {
-  @return nth( $list, length( $list ) );
-}
-
-
 /* MARGIN */
 
 @mixin margin-x ( $margin ) {
@@ -336,6 +325,20 @@
 }
 
 // `$axis` can be either: `x`, `y` or `false` for both
+
+@mixin center-flex ( $axis: false ) {
+
+  display: flex;
+
+  @if $axis != x {
+    align-items: center;
+  }
+
+  @if $axis != y {
+    justify-content: center;
+  }
+
+}
 
 @mixin center-transform ( $axis: false ) {
 
@@ -804,13 +807,23 @@
 /* GRADIENT */
 
 @mixin gradient-x-from-color ( $color ) {
+
   $start-end: gradient-get-start-end-from-color( $color );
-  @include gradient-x ( nth( $start-end, 1 ), nth( $start-end, 2 ), 0%, 100% );
+
+  @if $start-end {
+    @include gradient-x ( nth( $start-end, 1 ), nth( $start-end, 2 ), 0%, 100% );
+  }
+
 }
 
 @mixin gradient-y-from-color ( $color ) {
+
   $start-end: gradient-get-start-end-from-color( $color );
-  @include gradient-y ( nth( $start-end, 1 ), nth( $start-end, 2 ), 0%, 100% );
+
+  @if $start-end {
+    @include gradient-y ( nth( $start-end, 1 ), nth( $start-end, 2 ), 0%, 100% );
+  }
+
 }
 
 
@@ -855,41 +868,45 @@
 
 @mixin color ( $color, $force: false, $basic: false ) {
 
-  @if not $force {
+  @if color-exists( $color ) {
 
-    $selector: colors-get-undefined-selector();
+    @if not $force {
 
-    &#{$selector} {
+      $selector: colors-get-undefined-selector();
 
-      @if not $basic {
+      &#{$selector} {
 
-        @if $svelto-development { // For performance reasons
-          @include color-inline ( $color, 'full' );
+        @if not $basic {
+
+          @if $svelto-development { // For performance reasons
+            @include color-inline ( $color, 'full' );
+          } @else {
+            @extend %color-#{$color};
+          }
+
         } @else {
-          @extend %color-#{$color};
-        }
 
-      } @else {
+          @if $svelto-development { // For performance reasons
+            @include color-inline ( $color, 'base' );
+          } @else {
+            @extend %color-#{$color}-base;
+          }
 
-        @if $svelto-development { // For performance reasons
-          @include color-inline ( $color, 'base' );
-        } @else {
-          @extend %color-#{$color}-base;
         }
 
       }
 
-    }
-
-  } @else {
-
-    @if not $basic {
-
-      @extend %color-#{$color};
-
     } @else {
 
-      @extend %color-#{$color}-base;
+      @if not $basic {
+
+        @extend %color-#{$color};
+
+      } @else {
+
+        @extend %color-#{$color}-base;
+
+      }
 
     }
 
@@ -899,40 +916,44 @@
 
 @mixin color-inline ( $color, $type ) {
 
-  $datas: map-get( $colors, $color );
+  @if color-exists( $color ) {
 
-  $bg: nth( $datas, 1 );
-  $bg-hover: nth( $datas, 2 );
-  $bg-active: nth( $datas, 3 );
-  $border: nth( $datas, 4 );
-  $text: nth( $datas, 6 );
+    $datas: map-get( $colors, $color );
 
-  @if $type == 'base' {
+    $bg: nth( $datas, 1 );
+    $bg-hover: nth( $datas, 2 );
+    $bg-active: nth( $datas, 3 );
+    $border: nth( $datas, 4 );
+    $text: nth( $datas, 6 );
 
-    background-color: $bg;
-    border-color: $border;
-    color: $text;
+    @if $type == 'base' {
 
-  } @else if $type == 'hover' {
+      background-color: $bg;
+      border-color: $border;
+      color: $text;
 
-    background-color: $bg-hover;
+    } @else if $type == 'hover' {
 
-  } @else if $type == 'active' {
+      background-color: $bg-hover;
 
-    background-color: $bg-active;
+    } @else if $type == 'active' {
 
-  } @else if $type == 'full' {
+      background-color: $bg-active;
 
-    @include color-inline ( $color, 'base' );
+    } @else if $type == 'full' {
 
-    &.hover,
-    &:hover {
-      @include color-inline ( $color, 'hover' );
-    }
+      @include color-inline ( $color, 'base' );
 
-    &.active,
-    &:active {
-      @include color-inline ( $color, 'active' );
+      &.hover,
+      &:hover {
+        @include color-inline ( $color, 'hover' );
+      }
+
+      &.active,
+      &:active {
+        @include color-inline ( $color, 'active' );
+      }
+
     }
 
   }
@@ -944,11 +965,27 @@
 
 @mixin size ( $size, $force: false, $basic: false ) {
 
-  @if not $force {
+  @if size-exists( $size ) {
 
-    $selector: sizes-get-undefined-selector();
+    @if not $force {
 
-    &#{$selector} {
+      $selector: sizes-get-undefined-selector();
+
+      &#{$selector} {
+
+        @if not $basic {
+
+          @extend %size-#{$size};
+
+        } @else {
+
+          @extend %size-#{$size}-base;
+
+        }
+
+      }
+
+    } @else {
 
       @if not $basic {
 
@@ -962,27 +999,19 @@
 
     }
 
-  } @else {
-
-    @if not $basic {
-
-      @extend %size-#{$size};
-
-    } @else {
-
-      @extend %size-#{$size}-base;
-
-    }
-
   }
 
 }
 
 @mixin size-inline ( $size ) {
 
-  $font-size: map-get( $sizes, $size );
+  @if size-exists( $size ) {
 
-  font-size: $font-size;
+    $font-size: map-get( $sizes, $size );
+
+    font-size: $font-size;
+
+  }
 
 }
 
@@ -991,11 +1020,27 @@
 
 @mixin z-depth ( $depth, $force: false, $basic: false ) {
 
-  @if not $force {
+  @if z-depth-exists( $depth ) {
 
-    $selector: z-depths-get-undefined-selector();
+    @if not $force {
 
-    &#{$selector} {
+      $selector: z-depths-get-undefined-selector();
+
+      &#{$selector} {
+
+        @if not $basic {
+
+          @extend %z-depth-#{$depth};
+
+        } @else {
+
+          @extend %z-depth-#{$depth}-base;
+
+        }
+
+      }
+
+    } @else {
 
       @if not $basic {
 
@@ -1009,27 +1054,19 @@
 
     }
 
-  } @else {
-
-    @if not $basic {
-
-      @extend %z-depth-#{$depth};
-
-    } @else {
-
-      @extend %z-depth-#{$depth}-base;
-
-    }
-
   }
 
 }
 
 @mixin z-depth-inline ( $depth ) {
 
-  $z-depth: map-get( $z-depths, $depth );
+  @if z-depth-exists( $depth ) {
 
-  box-shadow: $z-depth;
+    $z-depth: map-get( $z-depths, $depth );
+
+    box-shadow: $z-depth;
+
+  }
 
 }
 
@@ -1042,15 +1079,19 @@
 
   @if $depth != false {
 
-    @include z-depth ( $depth, $force );
+    @if z-depth-exists( $depth ) {
 
-    @if not $force {
+      @include z-depth ( $depth, $force );
 
-      @extend %raisable;
+      @if not $force {
 
-    } @else {
+        @extend %raisable;
 
-      @extend %raisable%z-depth-#{$depth};
+      } @else {
+
+        @extend %raisable%z-depth-#{$depth};
+
+      }
 
     }
 
@@ -1172,11 +1213,27 @@
 
 @mixin color-link ( $color, $force: false, $basic: false ) {
 
-  @if not $force {
+  @if color-exists( $color ) {
 
-    $selector: colors-link-get-undefined-selector();
+    @if not $force {
 
-    &#{$selector} {
+      $selector: colors-link-get-undefined-selector();
+
+      &#{$selector} {
+
+        @if not $basic {
+
+          @extend %color-#{$color}-link;
+
+        } @else {
+
+          @extend %color-#{$color}-link-base;
+
+        }
+
+      }
+
+    } @else {
 
       @if not $basic {
 
@@ -1190,52 +1247,44 @@
 
     }
 
-  } @else {
-
-    @if not $basic {
-
-      @extend %color-#{$color}-link;
-
-    } @else {
-
-      @extend %color-#{$color}-link-base;
-
-    }
-
   }
 
 }
 
 @mixin color-link-inline ( $color, $type ) {
 
-  $datas: map-get( $colors, $color );
+  @if color-exists( $color ) {
 
-  $bg: nth( $datas, 1 );
-  $bg-hover: nth( $datas, 2 );
-  $bg-active: nth( $datas, 3 );
+    $datas: map-get( $colors, $color );
 
-  @if $type == 'base' {
+    $bg: nth( $datas, 1 );
+    $bg-hover: nth( $datas, 2 );
+    $bg-active: nth( $datas, 3 );
 
-    color: $bg;
+    @if $type == 'base' {
 
-  } @else if $type == 'hover' {
+      color: $bg;
 
-    color: $bg-hover;
+    } @else if $type == 'hover' {
 
-  } @else if $type == 'active' {
+      color: $bg-hover;
 
-    color: $bg-active;
+    } @else if $type == 'active' {
 
-  } @else if $type == 'full' {
+      color: $bg-active;
 
-    @include color-link-inline ( $color, 'base' );
+    } @else if $type == 'full' {
 
-    &:hover {
-      @include color-link-inline ( $color, 'hover' );
-    }
+      @include color-link-inline ( $color, 'base' );
 
-    &:active {
-      @include color-link-inline ( $color, 'active' );
+      &:hover {
+        @include color-link-inline ( $color, 'hover' );
+      }
+
+      &:active {
+        @include color-link-inline ( $color, 'active' );
+      }
+
     }
 
   }

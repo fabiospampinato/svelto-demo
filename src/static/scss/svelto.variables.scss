@@ -80,7 +80,7 @@ $breakpoints: (
 
 /* EPSILON */
 
-$breakpoint-epsilon: .1 + ( map-get( $breakpoints, last( map-keys( $breakpoints ) ) ) * 0 ) !default; // A value of `.01` for some reasons breaks the iPad Air (iOS 9.2)
+$breakpoint-epsilon: .1 + ( if( is-empty( $breakpoints ), 0px, map-get( $breakpoints, last( map-keys( $breakpoints ) ) ) ) * 0 ) !default; // A value of `.01` for some reasons breaks the iPad Air (iOS 9.2)
 
 
 //SOURCE: http://davidtheclark.github.io/scut/characters.html
@@ -435,7 +435,8 @@ $colors: (
 ) !default;
 
 
-//SOURCE: https://github.com/thoughtbot/bourbon/blob/master/core/bourbon/addons/_timing-functions.scss
+//SOURCE: https://github.com/thoughtbot/bourbon/blob/master/core/bourbon/library/_timing-functions.scss
+//URL: http://jaukia.github.io/easie
 
 /* EASINGS */
 
@@ -475,7 +476,7 @@ $grid-columns: 12 !default;
 /* GUTTER */
 
 $gutter: .625rem !default;
-$gutter-half: $gutter / 2;
+$gutter-half: $gutter / 2 !default;
 
 
 /* STICKY */
@@ -524,7 +525,7 @@ $body-color: 'base' !default;
 
 /* HEADER */
 
-$layout-header-bg-color: darken( nth( map-get( $colors, $body-color ), 1 ), 70 ) !default;
+$layout-header-bg-color: darken( if( color-exists( $body-color ), nth( map-get( $colors, $body-color ), 1 ), #eceff1 ), 70 ) !default;
 $layout-header-border-color: darken( $layout-header-bg-color, $color-border-darken-amount ) !default;
 $layout-header-color: $color-black-text !default; // The bg color is quite a bit darkened
 
@@ -542,7 +543,7 @@ $layout-footer-color: $layout-header-color !default;
 
 /* SVELTO */
 
-$svelto-version: '1.0.0' !default;
+$svelto-version: '1.2.15' !default;
 $svelto-environment: 'development' !default;
 $svelto-development: $svelto-environment == 'development' !default;
 
@@ -570,7 +571,7 @@ $font-size: 16px !default;
 /* LINE HEIGHT */
 
 $line-height: 22 / 16 !default;
-$line-height-em: $line-height * 1em;
+$line-height-em: $line-height * 1em !default;
 
 
 // @require core/typography/variables.scss
@@ -848,7 +849,7 @@ $highlighted-colors-directions: ( 'top', 'right', 'bottom', 'left' ) !default;
 
 /* LIMITED */
 
-$limited-width: map-get( $breakpoints, last( map-keys( $breakpoints ) ) ) * 1.05 !default;
+$limited-width: if( is-empty( $breakpoints ), 1000000px, map-get( $breakpoints, last( map-keys( $breakpoints ) ) ) * 1.05 ) !default;
 
 
 // @require core/animations/variables.scss
@@ -859,7 +860,7 @@ $obscured-bg-color: rgba( black, .5 ) !default;
 
 /* ANIMATION */
 
-$obscured-animation-duration: $animation-fast;
+$obscured-animation-duration: $animation-fast !default;
 
 
 // @require _/math/constants/variables.scss
@@ -868,10 +869,10 @@ $obscured-animation-duration: $animation-fast;
 /* TIP */
 
 $pointing-tip-size: .625em !default;
-$pointing-tip-size-half: $pointing-tip-size / 2;
+$pointing-tip-size-half: $pointing-tip-size / 2 !default;
 
-$pointing-tip-diagonal: $pointing-tip-size * $SQRT2;
-$pointing-tip-diagonal-half: $pointing-tip-diagonal / 2;
+$pointing-tip-diagonal: $pointing-tip-size * $SQRT2 !default;
+$pointing-tip-diagonal-half: $pointing-tip-diagonal / 2 !default;
 
 $pointing-tip-color: 'inherit' !default;
 $pointing-tip-color-force: true !default;
@@ -1123,7 +1124,7 @@ $container-padding-y: $container-padding-x !default;
 
 $highlight-width: $border-width * 2 !default;
 $highlight-bordered-width: $border-width !default;
-$highlight-color: nth( map-get( $colors, $container-color ), 5 ) !default;
+$highlight-color: if( color-exists( $container-color ), nth( map-get( $colors, $container-color ), 5 ), #ef6c00 ) !default;
 
 
 // @require widgets/container/variables.scss
@@ -2679,6 +2680,28 @@ $checkbox-inner-gutter: $label-inner-gutter !default;
 $checkbox-icon-animation-duration: $animation-fast !default;
 
 
+// @require core/colors/variables.scss
+// @require widgets/container/variables.scss
+// @require widgets/label/variables.scss
+
+/* DIALOG */
+
+$dialog-min-width: 19rem !default;
+$dialog-max-width: 30rem !default;
+$dialog-padding-x: $container-padding-x + ( unit-strip( $label-padding-x ) * 1rem ) !default;
+$dialog-padding-y: $container-padding-y !default;
+
+/* TITLE */
+
+$dialog-title-size: 'large' !default;
+$dialog-title-font-weight: 500 !default;
+
+/* BUTTON */
+
+$dialog-button-font-weight: 500 !default;
+$dialog-button-focus-color: $color-secondary !default;
+
+
 // @require widgets/label/variables.scss
 
 /* INPUT */
@@ -2749,6 +2772,12 @@ $label-floating-offset: 1.5rem !default;
 
 $label-floating-compact-padding-x: $label-floating-padding-x * .75 !default;
 $label-floating-compact-padding-y: $label-floating-padding-y * .75 !default;
+
+
+/* LAYOUT RESIZABLE */
+
+$layout-resizable-sash-size: 4px !default;
+$layout-resizable-sash-z-index: 1 !default;
 
 
 // @require core/colors/variables.scss
@@ -3029,7 +3058,7 @@ $rails-scrollbar-sizes: 0px, 12px, 15px, 16px, 17px !default; // Possible scroll
 /* SHADOW */
 
 $rails-shadow-width: 5em !default;
-$rails-shadow-color: nth( map-get( $colors, $container-color ), 1 ) !default;
+$rails-shadow-color: if( color-exists( $container-color ), nth( map-get( $colors, $container-color ), 1 ), #ffffff ) !default;
 
 /* ANIMATION */
 
@@ -3498,7 +3527,7 @@ $tagbox-partial-min-width: 6.5em !default;
 /* AUTOEXPAND */
 
 $toast-autoexpand-breakpoint: 'small' !default;
-$toast-autoexpand-width: map-get( $breakpoints, $toast-autoexpand-breakpoint ) - $breakpoint-epsilon !default;
+$toast-autoexpand-width: if( breakpoint-exists( $toast-autoexpand-breakpoint ), map-get( $breakpoints, $toast-autoexpand-breakpoint ) - $breakpoint-epsilon, -1px ) !default;
 
 
 // @require core/colors/variables.scss

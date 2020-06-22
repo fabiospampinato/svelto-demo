@@ -1600,10 +1600,7 @@ html {
 /* BODY */
 
 body {
-  $datas: map-get( $colors, $body-color );
-  background-color: nth( $datas, 1 );
-  color: nth( $datas, 6 );
-  border-color: nth( $datas, 4 );
+  @include color-inline ( $body-color, 'base' );
   font-family: $font-family-root;
   font-size: 1rem;
   line-height: $line-height;
@@ -3602,7 +3599,11 @@ canvas.chart {
   /* HANDLER */
 
   &-handler {
-    box-shadow: map-get( $z-depths, $colorpicker-handler-z-depth ), $colorpicker-handler-shadow;
+    @if z-depth-exists( $colorpicker-handler-z-depth ) {
+      box-shadow: map-get( $z-depths, $colorpicker-handler-z-depth ), $colorpicker-handler-shadow;
+    } @else {
+      box-shadow: $colorpicker-handler-shadow;
+    }
     position: absolute;
     z-index: 2;
     cursor: move;
@@ -4594,6 +4595,54 @@ html.clip-path-url {
 
 .datepicker.valid {
   border-color: $color-success !important;
+}
+
+
+/* DIALOG */
+
+.dialog {
+
+  min-width: $dialog-min-width;
+  max-width: $dialog-max-width !important;
+
+  & > .card-header {
+
+    @include size-inline ( $dialog-title-size );
+    padding: $dialog-padding-y $dialog-padding-x !important;
+    font-weight: $dialog-title-font-weight;
+
+    &:not(.bordered) {
+      padding-bottom: 0 !important;
+    }
+
+  }
+
+  & > .card-block {
+    padding: $dialog-padding-y $dialog-padding-x !important;
+  }
+
+  & > .card-footer {
+
+    .multiple.stack {
+      align-items: flex-end;
+    }
+
+    .button {
+
+      font-weight: $dialog-button-font-weight;
+
+      &:not(:hover):not(.hover):not(:active):not(.active):focus {
+        color: $dialog-button-focus-color !important;
+      }
+
+    }
+
+    &:not(:only-child):not(.bordered) {
+      padding-top: 0 !important;
+    }
+
+  }
+
 }
 
 
@@ -6189,8 +6238,11 @@ img {
   @include color ( $image-color, $image-color-force, $image-color-basic );
   display: block;
   max-width: 100%;
-  height: auto;
   min-height: 1px; // It fixes a bug in IE11 where the images are stretched vertically
+
+  &:not([height]) {
+    height: auto;
+  }
 
   /* INLINE */
 
@@ -6340,7 +6392,7 @@ input[type="file"] {
 /* PLACEHOLDER */
 
 ::placeholder {
-  color: rgba( nth( map-get( $colors, $input-color ), 6 ), $input-placeholder-opacity );
+  color: rgba( if( color-exists( $input-color ), nth( map-get( $colors, $input-color ), 6 ), #212121 ), $input-placeholder-opacity );
 }
 
 
@@ -6500,9 +6552,17 @@ input[type="file"] {
 /* BUTTON */
 
 .button {
+
   @extend %actionable;
   @extend .label;
   @include color ( $button-color, $button-color-force, $button-color-basic );
+
+  /* CURSOR */
+
+  > * {
+    @extend %actionable;
+  }
+
 }
 
 
@@ -6918,6 +6978,83 @@ input[type="file"] {
     color: $color-success !important;
   }
 
+}
+
+
+// @require core/layout/layout.scss
+
+/* LAYOUT RESIZABLE */
+
+.layout.resizable {
+
+  & > .sash {
+    z-index: $layout-resizable-sash-z-index;
+  }
+
+}
+
+
+// @require ../layout_resizable.scss
+
+/* HORIZONTAL */
+
+.layout.horizontal.resizable {
+
+  &.sash-dragging {
+
+    cursor: col-resize !important;
+
+    & > *:not(.sash) {
+      pointer-events: none !important;
+    }
+
+  }
+
+  & > .sash {
+    @include absolute ( 0 auto 0 auto );
+    cursor: col-resize;
+    width: $layout-resizable-sash-size;
+    margin-left: - $layout-resizable-sash-size / 2;
+    transform: translateX( - $layout-resizable-sash-size / 2 ); // Starting hidden
+  }
+
+}
+
+
+// @require ../layout_resizable.scss
+
+/* VERTICAL */
+
+.layout.vertical.resizable {
+
+  &.sash-dragging {
+
+    cursor: row-resize !important;
+
+    & > *:not(.sash) {
+      pointer-events: none !important;
+    }
+
+  }
+
+  & > .sash {
+    @include absolute ( auto 0 auto 0 );
+    cursor: row-resize;
+    height: $layout-resizable-sash-size;
+    margin-top: - $layout-resizable-sash-size / 2;
+    transform: translateY( - $layout-resizable-sash-size / 2 ); // Starting hidden
+  }
+
+}
+
+
+// @optional ./horizontal.scss
+// @optional ./vertical.scss
+
+/* DEFAULT */
+
+.layout.resizable:not(.vertical):not(.horizontal) {
+  @extend .layout.resizable.horizontal;
 }
 
 
@@ -7442,7 +7579,7 @@ html.flexbox-tweener {
 
 .overlay.dimmer {
   @include color ( $overlay-dimmer-color, $overlay-dimmer-color-force, $overlay-dimmer-color-basic );
-  background-color: rgba( nth( map-get( $colors, $overlay-dimmer-color ), 1 ), $overlay-dimmer-bg-opacity );
+  background-color: rgba( if( color-exists( $overlay-dimmer-color ), nth( map-get( $colors, $overlay-dimmer-color ), 1 ), #212121 ), $overlay-dimmer-bg-opacity );
 }
 
 
@@ -8560,7 +8697,7 @@ input[type=radio] {
   &-content {
 
     flex: 1 1 auto;
-    overflow-x: scroll;
+    overflow-x: hidden; /* In order to avoid displaying any scrollbars, even while loading */
     overflow-y: hidden;
 
     /* READY */
@@ -8595,6 +8732,7 @@ input[type=radio] {
 
       .rails-content {
 
+        overflow-x: scroll;
         margin-bottom: calc( ( #{$rails-extra-padding} + #{$size} ) * -1 );
 
         &:not(.multiple) {
@@ -12134,6 +12272,9 @@ a {
   // Elsewhere this might be an unwanted style
 
   p &,
+  li &,
+  th &,
+  td &,
   address & {
 
     @include color-link ( $link-color, $link-color-force, $link-color-basic );

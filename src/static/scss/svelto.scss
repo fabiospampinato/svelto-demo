@@ -22,6 +22,34 @@
 }
 
 
+/* LANGUAGE */
+
+@function is-empty ( $x ) {
+
+  @if not $x or $x == '' or $x == 0 or $x == () or length( $x ) == 0 {
+
+    @return true;
+
+  } @else {
+
+    @return false;
+
+  }
+
+}
+
+
+/* LIST */
+
+@function first ( $list ) {
+  @return nth( $list, 1 );
+}
+
+@function last ( $list ) {
+  @return nth( $list, length( $list ) );
+}
+
+
 /* MAP */
 
 @function map-previous ( $map, $key ) {
@@ -379,6 +407,12 @@
 
 /* BREAKPOINTS */
 
+@function breakpoint-exists ( $breakpoint ) {
+
+  @return map-has-key( $breakpoints, $breakpoint );
+
+}
+
 @function breakpoint-previous ( $breakpoint ) {
 
   @return map-previous( $breakpoints, $breakpoint );
@@ -393,9 +427,13 @@
 
 @function breakpoint-min ( $breakpoint ) {
 
-  $value: map-get( $breakpoints, $breakpoint );
+  @if breakpoint-exists( $breakpoint ) {
 
-  @return if( unit-strip( $value ) != 0, $value, null );
+    $value: map-get( $breakpoints, $breakpoint );
+
+    @return if( unit-strip( $value ) != 0, $value, null );
+
+  }
 
 }
 
@@ -456,6 +494,14 @@
 }
 
 
+/* EXISTS */
+
+@function color-exists ( $color ) {
+
+  @return map-has-key( $colors, $color );
+
+}
+
 /* SELECTOR */
 
 @function colors-get-undefined-selector () {
@@ -495,19 +541,33 @@
 }
 
 
+// @require core/colors/functions.scss
+
 /* GRADIENT */
 
 @function gradient-get-start-end-from-color ( $color ) {
 
-  $datas: map-get( $colors, $color );
+  @if color-exists( $color ) {
 
-  $start: nth( $datas, 2 ); // Hover
-  $end: nth( $datas, 3 ); // Active
+    $datas: map-get( $colors, $color );
 
-  @return ( $start, $end );
+    $start: nth( $datas, 2 ); // Hover
+    $end: nth( $datas, 3 ); // Active
+
+    @return ( $start, $end );
+
+  }
 
 }
 
+
+/* EXISTS */
+
+@function size-exists ( $size ) {
+
+  @return map-has-key( $sizes, $size );
+
+}
 
 /* SIZES */
 
@@ -624,6 +684,14 @@
 
 }
 
+
+/* EXISTS */
+
+@function z-depth-exists ( $z-depth ) {
+
+  @return map-has-key( $z-depths, $z-depth );
+
+}
 
 /* SELECTOR */
 
@@ -880,17 +948,6 @@
 }
 
 
-/* LIST */
-
-@function first ( $list ) {
-  @return nth( $list, 1 );
-}
-
-@function last ( $list ) {
-  @return nth( $list, length( $list ) );
-}
-
-
 /* MARGIN */
 
 @mixin margin-x ( $margin ) {
@@ -1048,6 +1105,20 @@
 }
 
 // `$axis` can be either: `x`, `y` or `false` for both
+
+@mixin center-flex ( $axis: false ) {
+
+  display: flex;
+
+  @if $axis != x {
+    align-items: center;
+  }
+
+  @if $axis != y {
+    justify-content: center;
+  }
+
+}
 
 @mixin center-transform ( $axis: false ) {
 
@@ -1516,13 +1587,23 @@
 /* GRADIENT */
 
 @mixin gradient-x-from-color ( $color ) {
+
   $start-end: gradient-get-start-end-from-color( $color );
-  @include gradient-x ( nth( $start-end, 1 ), nth( $start-end, 2 ), 0%, 100% );
+
+  @if $start-end {
+    @include gradient-x ( nth( $start-end, 1 ), nth( $start-end, 2 ), 0%, 100% );
+  }
+
 }
 
 @mixin gradient-y-from-color ( $color ) {
+
   $start-end: gradient-get-start-end-from-color( $color );
-  @include gradient-y ( nth( $start-end, 1 ), nth( $start-end, 2 ), 0%, 100% );
+
+  @if $start-end {
+    @include gradient-y ( nth( $start-end, 1 ), nth( $start-end, 2 ), 0%, 100% );
+  }
+
 }
 
 
@@ -1567,41 +1648,45 @@
 
 @mixin color ( $color, $force: false, $basic: false ) {
 
-  @if not $force {
+  @if color-exists( $color ) {
 
-    $selector: colors-get-undefined-selector();
+    @if not $force {
 
-    &#{$selector} {
+      $selector: colors-get-undefined-selector();
 
-      @if not $basic {
+      &#{$selector} {
 
-        @if $svelto-development { // For performance reasons
-          @include color-inline ( $color, 'full' );
+        @if not $basic {
+
+          @if $svelto-development { // For performance reasons
+            @include color-inline ( $color, 'full' );
+          } @else {
+            @extend %color-#{$color};
+          }
+
         } @else {
-          @extend %color-#{$color};
-        }
 
-      } @else {
+          @if $svelto-development { // For performance reasons
+            @include color-inline ( $color, 'base' );
+          } @else {
+            @extend %color-#{$color}-base;
+          }
 
-        @if $svelto-development { // For performance reasons
-          @include color-inline ( $color, 'base' );
-        } @else {
-          @extend %color-#{$color}-base;
         }
 
       }
 
-    }
-
-  } @else {
-
-    @if not $basic {
-
-      @extend %color-#{$color};
-
     } @else {
 
-      @extend %color-#{$color}-base;
+      @if not $basic {
+
+        @extend %color-#{$color};
+
+      } @else {
+
+        @extend %color-#{$color}-base;
+
+      }
 
     }
 
@@ -1611,40 +1696,44 @@
 
 @mixin color-inline ( $color, $type ) {
 
-  $datas: map-get( $colors, $color );
+  @if color-exists( $color ) {
 
-  $bg: nth( $datas, 1 );
-  $bg-hover: nth( $datas, 2 );
-  $bg-active: nth( $datas, 3 );
-  $border: nth( $datas, 4 );
-  $text: nth( $datas, 6 );
+    $datas: map-get( $colors, $color );
 
-  @if $type == 'base' {
+    $bg: nth( $datas, 1 );
+    $bg-hover: nth( $datas, 2 );
+    $bg-active: nth( $datas, 3 );
+    $border: nth( $datas, 4 );
+    $text: nth( $datas, 6 );
 
-    background-color: $bg;
-    border-color: $border;
-    color: $text;
+    @if $type == 'base' {
 
-  } @else if $type == 'hover' {
+      background-color: $bg;
+      border-color: $border;
+      color: $text;
 
-    background-color: $bg-hover;
+    } @else if $type == 'hover' {
 
-  } @else if $type == 'active' {
+      background-color: $bg-hover;
 
-    background-color: $bg-active;
+    } @else if $type == 'active' {
 
-  } @else if $type == 'full' {
+      background-color: $bg-active;
 
-    @include color-inline ( $color, 'base' );
+    } @else if $type == 'full' {
 
-    &.hover,
-    &:hover {
-      @include color-inline ( $color, 'hover' );
-    }
+      @include color-inline ( $color, 'base' );
 
-    &.active,
-    &:active {
-      @include color-inline ( $color, 'active' );
+      &.hover,
+      &:hover {
+        @include color-inline ( $color, 'hover' );
+      }
+
+      &.active,
+      &:active {
+        @include color-inline ( $color, 'active' );
+      }
+
     }
 
   }
@@ -1656,11 +1745,27 @@
 
 @mixin size ( $size, $force: false, $basic: false ) {
 
-  @if not $force {
+  @if size-exists( $size ) {
 
-    $selector: sizes-get-undefined-selector();
+    @if not $force {
 
-    &#{$selector} {
+      $selector: sizes-get-undefined-selector();
+
+      &#{$selector} {
+
+        @if not $basic {
+
+          @extend %size-#{$size};
+
+        } @else {
+
+          @extend %size-#{$size}-base;
+
+        }
+
+      }
+
+    } @else {
 
       @if not $basic {
 
@@ -1674,27 +1779,19 @@
 
     }
 
-  } @else {
-
-    @if not $basic {
-
-      @extend %size-#{$size};
-
-    } @else {
-
-      @extend %size-#{$size}-base;
-
-    }
-
   }
 
 }
 
 @mixin size-inline ( $size ) {
 
-  $font-size: map-get( $sizes, $size );
+  @if size-exists( $size ) {
 
-  font-size: $font-size;
+    $font-size: map-get( $sizes, $size );
+
+    font-size: $font-size;
+
+  }
 
 }
 
@@ -1703,11 +1800,27 @@
 
 @mixin z-depth ( $depth, $force: false, $basic: false ) {
 
-  @if not $force {
+  @if z-depth-exists( $depth ) {
 
-    $selector: z-depths-get-undefined-selector();
+    @if not $force {
 
-    &#{$selector} {
+      $selector: z-depths-get-undefined-selector();
+
+      &#{$selector} {
+
+        @if not $basic {
+
+          @extend %z-depth-#{$depth};
+
+        } @else {
+
+          @extend %z-depth-#{$depth}-base;
+
+        }
+
+      }
+
+    } @else {
 
       @if not $basic {
 
@@ -1721,27 +1834,19 @@
 
     }
 
-  } @else {
-
-    @if not $basic {
-
-      @extend %z-depth-#{$depth};
-
-    } @else {
-
-      @extend %z-depth-#{$depth}-base;
-
-    }
-
   }
 
 }
 
 @mixin z-depth-inline ( $depth ) {
 
-  $z-depth: map-get( $z-depths, $depth );
+  @if z-depth-exists( $depth ) {
 
-  box-shadow: $z-depth;
+    $z-depth: map-get( $z-depths, $depth );
+
+    box-shadow: $z-depth;
+
+  }
 
 }
 
@@ -1754,15 +1859,19 @@
 
   @if $depth != false {
 
-    @include z-depth ( $depth, $force );
+    @if z-depth-exists( $depth ) {
 
-    @if not $force {
+      @include z-depth ( $depth, $force );
 
-      @extend %raisable;
+      @if not $force {
 
-    } @else {
+        @extend %raisable;
 
-      @extend %raisable%z-depth-#{$depth};
+      } @else {
+
+        @extend %raisable%z-depth-#{$depth};
+
+      }
 
     }
 
@@ -1884,11 +1993,27 @@
 
 @mixin color-link ( $color, $force: false, $basic: false ) {
 
-  @if not $force {
+  @if color-exists( $color ) {
 
-    $selector: colors-link-get-undefined-selector();
+    @if not $force {
 
-    &#{$selector} {
+      $selector: colors-link-get-undefined-selector();
+
+      &#{$selector} {
+
+        @if not $basic {
+
+          @extend %color-#{$color}-link;
+
+        } @else {
+
+          @extend %color-#{$color}-link-base;
+
+        }
+
+      }
+
+    } @else {
 
       @if not $basic {
 
@@ -1902,52 +2027,44 @@
 
     }
 
-  } @else {
-
-    @if not $basic {
-
-      @extend %color-#{$color}-link;
-
-    } @else {
-
-      @extend %color-#{$color}-link-base;
-
-    }
-
   }
 
 }
 
 @mixin color-link-inline ( $color, $type ) {
 
-  $datas: map-get( $colors, $color );
+  @if color-exists( $color ) {
 
-  $bg: nth( $datas, 1 );
-  $bg-hover: nth( $datas, 2 );
-  $bg-active: nth( $datas, 3 );
+    $datas: map-get( $colors, $color );
 
-  @if $type == 'base' {
+    $bg: nth( $datas, 1 );
+    $bg-hover: nth( $datas, 2 );
+    $bg-active: nth( $datas, 3 );
 
-    color: $bg;
+    @if $type == 'base' {
 
-  } @else if $type == 'hover' {
+      color: $bg;
 
-    color: $bg-hover;
+    } @else if $type == 'hover' {
 
-  } @else if $type == 'active' {
+      color: $bg-hover;
 
-    color: $bg-active;
+    } @else if $type == 'active' {
 
-  } @else if $type == 'full' {
+      color: $bg-active;
 
-    @include color-link-inline ( $color, 'base' );
+    } @else if $type == 'full' {
 
-    &:hover {
-      @include color-link-inline ( $color, 'hover' );
-    }
+      @include color-link-inline ( $color, 'base' );
 
-    &:active {
-      @include color-link-inline ( $color, 'active' );
+      &:hover {
+        @include color-link-inline ( $color, 'hover' );
+      }
+
+      &:active {
+        @include color-link-inline ( $color, 'active' );
+      }
+
     }
 
   }
@@ -2036,7 +2153,7 @@ $breakpoints: (
 
 /* EPSILON */
 
-$breakpoint-epsilon: .1 + ( map-get( $breakpoints, last( map-keys( $breakpoints ) ) ) * 0 ) !default; // A value of `.01` for some reasons breaks the iPad Air (iOS 9.2)
+$breakpoint-epsilon: .1 + ( if( is-empty( $breakpoints ), 0px, map-get( $breakpoints, last( map-keys( $breakpoints ) ) ) ) * 0 ) !default; // A value of `.01` for some reasons breaks the iPad Air (iOS 9.2)
 
 
 //SOURCE: http://davidtheclark.github.io/scut/characters.html
@@ -2391,7 +2508,8 @@ $colors: (
 ) !default;
 
 
-//SOURCE: https://github.com/thoughtbot/bourbon/blob/master/core/bourbon/addons/_timing-functions.scss
+//SOURCE: https://github.com/thoughtbot/bourbon/blob/master/core/bourbon/library/_timing-functions.scss
+//URL: http://jaukia.github.io/easie
 
 /* EASINGS */
 
@@ -2431,7 +2549,7 @@ $grid-columns: 12 !default;
 /* GUTTER */
 
 $gutter: .625rem !default;
-$gutter-half: $gutter / 2;
+$gutter-half: $gutter / 2 !default;
 
 
 /* STICKY */
@@ -2480,7 +2598,7 @@ $body-color: 'base' !default;
 
 /* HEADER */
 
-$layout-header-bg-color: darken( nth( map-get( $colors, $body-color ), 1 ), 70 ) !default;
+$layout-header-bg-color: darken( if( color-exists( $body-color ), nth( map-get( $colors, $body-color ), 1 ), #eceff1 ), 70 ) !default;
 $layout-header-border-color: darken( $layout-header-bg-color, $color-border-darken-amount ) !default;
 $layout-header-color: $color-black-text !default; // The bg color is quite a bit darkened
 
@@ -2498,7 +2616,7 @@ $layout-footer-color: $layout-header-color !default;
 
 /* SVELTO */
 
-$svelto-version: '1.0.0' !default;
+$svelto-version: '1.2.15' !default;
 $svelto-environment: 'development' !default;
 $svelto-development: $svelto-environment == 'development' !default;
 
@@ -2526,7 +2644,7 @@ $font-size: 16px !default;
 /* LINE HEIGHT */
 
 $line-height: 22 / 16 !default;
-$line-height-em: $line-height * 1em;
+$line-height-em: $line-height * 1em !default;
 
 
 // @require core/typography/variables.scss
@@ -2804,7 +2922,7 @@ $highlighted-colors-directions: ( 'top', 'right', 'bottom', 'left' ) !default;
 
 /* LIMITED */
 
-$limited-width: map-get( $breakpoints, last( map-keys( $breakpoints ) ) ) * 1.05 !default;
+$limited-width: if( is-empty( $breakpoints ), 1000000px, map-get( $breakpoints, last( map-keys( $breakpoints ) ) ) * 1.05 ) !default;
 
 
 // @require core/animations/variables.scss
@@ -2815,7 +2933,7 @@ $obscured-bg-color: rgba( black, .5 ) !default;
 
 /* ANIMATION */
 
-$obscured-animation-duration: $animation-fast;
+$obscured-animation-duration: $animation-fast !default;
 
 
 // @require _/math/constants/variables.scss
@@ -2824,10 +2942,10 @@ $obscured-animation-duration: $animation-fast;
 /* TIP */
 
 $pointing-tip-size: .625em !default;
-$pointing-tip-size-half: $pointing-tip-size / 2;
+$pointing-tip-size-half: $pointing-tip-size / 2 !default;
 
-$pointing-tip-diagonal: $pointing-tip-size * $SQRT2;
-$pointing-tip-diagonal-half: $pointing-tip-diagonal / 2;
+$pointing-tip-diagonal: $pointing-tip-size * $SQRT2 !default;
+$pointing-tip-diagonal-half: $pointing-tip-diagonal / 2 !default;
 
 $pointing-tip-color: 'inherit' !default;
 $pointing-tip-color-force: true !default;
@@ -3079,7 +3197,7 @@ $container-padding-y: $container-padding-x !default;
 
 $highlight-width: $border-width * 2 !default;
 $highlight-bordered-width: $border-width !default;
-$highlight-color: nth( map-get( $colors, $container-color ), 5 ) !default;
+$highlight-color: if( color-exists( $container-color ), nth( map-get( $colors, $container-color ), 5 ), #ef6c00 ) !default;
 
 
 // @require widgets/container/variables.scss
@@ -4635,6 +4753,28 @@ $checkbox-inner-gutter: $label-inner-gutter !default;
 $checkbox-icon-animation-duration: $animation-fast !default;
 
 
+// @require core/colors/variables.scss
+// @require widgets/container/variables.scss
+// @require widgets/label/variables.scss
+
+/* DIALOG */
+
+$dialog-min-width: 19rem !default;
+$dialog-max-width: 30rem !default;
+$dialog-padding-x: $container-padding-x + ( unit-strip( $label-padding-x ) * 1rem ) !default;
+$dialog-padding-y: $container-padding-y !default;
+
+/* TITLE */
+
+$dialog-title-size: 'large' !default;
+$dialog-title-font-weight: 500 !default;
+
+/* BUTTON */
+
+$dialog-button-font-weight: 500 !default;
+$dialog-button-focus-color: $color-secondary !default;
+
+
 // @require widgets/label/variables.scss
 
 /* INPUT */
@@ -4705,6 +4845,12 @@ $label-floating-offset: 1.5rem !default;
 
 $label-floating-compact-padding-x: $label-floating-padding-x * .75 !default;
 $label-floating-compact-padding-y: $label-floating-padding-y * .75 !default;
+
+
+/* LAYOUT RESIZABLE */
+
+$layout-resizable-sash-size: 4px !default;
+$layout-resizable-sash-z-index: 1 !default;
 
 
 // @require core/colors/variables.scss
@@ -4985,7 +5131,7 @@ $rails-scrollbar-sizes: 0px, 12px, 15px, 16px, 17px !default; // Possible scroll
 /* SHADOW */
 
 $rails-shadow-width: 5em !default;
-$rails-shadow-color: nth( map-get( $colors, $container-color ), 1 ) !default;
+$rails-shadow-color: if( color-exists( $container-color ), nth( map-get( $colors, $container-color ), 1 ), #ffffff ) !default;
 
 /* ANIMATION */
 
@@ -5454,7 +5600,7 @@ $tagbox-partial-min-width: 6.5em !default;
 /* AUTOEXPAND */
 
 $toast-autoexpand-breakpoint: 'small' !default;
-$toast-autoexpand-width: map-get( $breakpoints, $toast-autoexpand-breakpoint ) - $breakpoint-epsilon !default;
+$toast-autoexpand-width: if( breakpoint-exists( $toast-autoexpand-breakpoint ), map-get( $breakpoints, $toast-autoexpand-breakpoint ) - $breakpoint-epsilon, -1px ) !default;
 
 
 // @require core/colors/variables.scss
@@ -7397,10 +7543,7 @@ html {
 /* BODY */
 
 body {
-  $datas: map-get( $colors, $body-color );
-  background-color: nth( $datas, 1 );
-  color: nth( $datas, 6 );
-  border-color: nth( $datas, 4 );
+  @include color-inline ( $body-color, 'base' );
   font-family: $font-family-root;
   font-size: 1rem;
   line-height: $line-height;
@@ -9399,7 +9542,11 @@ canvas.chart {
   /* HANDLER */
 
   &-handler {
-    box-shadow: map-get( $z-depths, $colorpicker-handler-z-depth ), $colorpicker-handler-shadow;
+    @if z-depth-exists( $colorpicker-handler-z-depth ) {
+      box-shadow: map-get( $z-depths, $colorpicker-handler-z-depth ), $colorpicker-handler-shadow;
+    } @else {
+      box-shadow: $colorpicker-handler-shadow;
+    }
     position: absolute;
     z-index: 2;
     cursor: move;
@@ -10391,6 +10538,54 @@ html.clip-path-url {
 
 .datepicker.valid {
   border-color: $color-success !important;
+}
+
+
+/* DIALOG */
+
+.dialog {
+
+  min-width: $dialog-min-width;
+  max-width: $dialog-max-width !important;
+
+  & > .card-header {
+
+    @include size-inline ( $dialog-title-size );
+    padding: $dialog-padding-y $dialog-padding-x !important;
+    font-weight: $dialog-title-font-weight;
+
+    &:not(.bordered) {
+      padding-bottom: 0 !important;
+    }
+
+  }
+
+  & > .card-block {
+    padding: $dialog-padding-y $dialog-padding-x !important;
+  }
+
+  & > .card-footer {
+
+    .multiple.stack {
+      align-items: flex-end;
+    }
+
+    .button {
+
+      font-weight: $dialog-button-font-weight;
+
+      &:not(:hover):not(.hover):not(:active):not(.active):focus {
+        color: $dialog-button-focus-color !important;
+      }
+
+    }
+
+    &:not(:only-child):not(.bordered) {
+      padding-top: 0 !important;
+    }
+
+  }
+
 }
 
 
@@ -11986,8 +12181,11 @@ img {
   @include color ( $image-color, $image-color-force, $image-color-basic );
   display: block;
   max-width: 100%;
-  height: auto;
   min-height: 1px; // It fixes a bug in IE11 where the images are stretched vertically
+
+  &:not([height]) {
+    height: auto;
+  }
 
   /* INLINE */
 
@@ -12137,7 +12335,7 @@ input[type="file"] {
 /* PLACEHOLDER */
 
 ::placeholder {
-  color: rgba( nth( map-get( $colors, $input-color ), 6 ), $input-placeholder-opacity );
+  color: rgba( if( color-exists( $input-color ), nth( map-get( $colors, $input-color ), 6 ), #212121 ), $input-placeholder-opacity );
 }
 
 
@@ -12297,9 +12495,17 @@ input[type="file"] {
 /* BUTTON */
 
 .button {
+
   @extend %actionable;
   @extend .label;
   @include color ( $button-color, $button-color-force, $button-color-basic );
+
+  /* CURSOR */
+
+  > * {
+    @extend %actionable;
+  }
+
 }
 
 
@@ -12715,6 +12921,83 @@ input[type="file"] {
     color: $color-success !important;
   }
 
+}
+
+
+// @require core/layout/layout.scss
+
+/* LAYOUT RESIZABLE */
+
+.layout.resizable {
+
+  & > .sash {
+    z-index: $layout-resizable-sash-z-index;
+  }
+
+}
+
+
+// @require ../layout_resizable.scss
+
+/* HORIZONTAL */
+
+.layout.horizontal.resizable {
+
+  &.sash-dragging {
+
+    cursor: col-resize !important;
+
+    & > *:not(.sash) {
+      pointer-events: none !important;
+    }
+
+  }
+
+  & > .sash {
+    @include absolute ( 0 auto 0 auto );
+    cursor: col-resize;
+    width: $layout-resizable-sash-size;
+    margin-left: - $layout-resizable-sash-size / 2;
+    transform: translateX( - $layout-resizable-sash-size / 2 ); // Starting hidden
+  }
+
+}
+
+
+// @require ../layout_resizable.scss
+
+/* VERTICAL */
+
+.layout.vertical.resizable {
+
+  &.sash-dragging {
+
+    cursor: row-resize !important;
+
+    & > *:not(.sash) {
+      pointer-events: none !important;
+    }
+
+  }
+
+  & > .sash {
+    @include absolute ( auto 0 auto 0 );
+    cursor: row-resize;
+    height: $layout-resizable-sash-size;
+    margin-top: - $layout-resizable-sash-size / 2;
+    transform: translateY( - $layout-resizable-sash-size / 2 ); // Starting hidden
+  }
+
+}
+
+
+// @optional ./horizontal.scss
+// @optional ./vertical.scss
+
+/* DEFAULT */
+
+.layout.resizable:not(.vertical):not(.horizontal) {
+  @extend .layout.resizable.horizontal;
 }
 
 
@@ -13239,7 +13522,7 @@ html.flexbox-tweener {
 
 .overlay.dimmer {
   @include color ( $overlay-dimmer-color, $overlay-dimmer-color-force, $overlay-dimmer-color-basic );
-  background-color: rgba( nth( map-get( $colors, $overlay-dimmer-color ), 1 ), $overlay-dimmer-bg-opacity );
+  background-color: rgba( if( color-exists( $overlay-dimmer-color ), nth( map-get( $colors, $overlay-dimmer-color ), 1 ), #212121 ), $overlay-dimmer-bg-opacity );
 }
 
 
@@ -14357,7 +14640,7 @@ input[type=radio] {
   &-content {
 
     flex: 1 1 auto;
-    overflow-x: scroll;
+    overflow-x: hidden; /* In order to avoid displaying any scrollbars, even while loading */
     overflow-y: hidden;
 
     /* READY */
@@ -14392,6 +14675,7 @@ input[type=radio] {
 
       .rails-content {
 
+        overflow-x: scroll;
         margin-bottom: calc( ( #{$rails-extra-padding} + #{$size} ) * -1 );
 
         &:not(.multiple) {
@@ -17931,6 +18215,9 @@ a {
   // Elsewhere this might be an unwanted style
 
   p &,
+  li &,
+  th &,
+  td &,
   address & {
 
     @include color-link ( $link-color, $link-color-force, $link-color-basic );
