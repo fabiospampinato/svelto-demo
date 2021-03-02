@@ -13,6 +13,7 @@
       <div class="scrollbars-track horizontal">
         <div class="scrollbars-thumb"></div>
       </div>
+      <div class="scrollbars-shadows"></div>
       <div class="scrollbars-viewport">
         <div class="scrollbars-content" style="width: 150%">
           <div class="container">
@@ -37,6 +38,32 @@
       <div class="scrollbars-track horizontal">
         <div class="scrollbars-thumb"></div>
       </div>
+      <div class="scrollbars-shadows"></div>
+      <div class="scrollbars-viewport">
+        <div class="scrollbars-content" style="width: 150%">
+          <div class="container">
+            {{{sample.paragraph}}}
+            {{{sample.paragraph}}}
+            {{{sample.paragraph}}}
+            {{{sample.paragraph}}}
+            {{{sample.paragraph}}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{{widget.divider "Scrollbars - With Shadows"}}}
+
+  <div class="container bordered" style="height: 200px;">
+    <div class="scrollbars has-shadows">
+      <div class="scrollbars-track vertical">
+        <div class="scrollbars-thumb"></div>
+      </div>
+      <div class="scrollbars-track horizontal">
+        <div class="scrollbars-thumb"></div>
+      </div>
+      <div class="scrollbars-shadows"></div>
       <div class="scrollbars-viewport">
         <div class="scrollbars-content" style="width: 150%">
           <div class="container">
@@ -62,6 +89,7 @@
         <div class="scrollbars-thumb"></div>
       </div>
       <div class="scrollbars-corner"></div>
+      <div class="scrollbars-shadows"></div>
       <div class="scrollbars-viewport">
         <div class="scrollbars-content" style="width: 150%">
           <div class="container">
@@ -86,6 +114,7 @@
       <div class="scrollbars-track horizontal">
         <div class="scrollbars-thumb"></div>
       </div>
+      <div class="scrollbars-shadows"></div>
       <div class="scrollbars-viewport">
         <div class="scrollbars-content">
           <div class="container">
@@ -110,6 +139,7 @@
       <div class="scrollbars-track horizontal">
         <div class="scrollbars-thumb"></div>
       </div>
+      <div class="scrollbars-shadows"></div>
       <div class="scrollbars-viewport">
         <div class="scrollbars-content" style="width: 150%">
           <div class="container">
@@ -130,6 +160,7 @@
       <div class="scrollbars-track horizontal">
         <div class="scrollbars-thumb"></div>
       </div>
+      <div class="scrollbars-shadows"></div>
       <div class="scrollbars-viewport">
         <div class="scrollbars-content" style="width: 10000%">
           <div class="container">
@@ -320,6 +351,8 @@
   <div class="multiple actions">
     {{{widget.action "Randomize Height" "randomize_height ()"}}}
     {{{widget.action "Randomize Width" "randomize_width ()"}}}
+    {{{widget.action "Toggle Placeholders" "toggle_placeholders ()"}}}
+    {{{widget.action "Toggle Shadows" "toggle_shadows ()"}}}
   </div>
 
   <script>
@@ -335,6 +368,14 @@
     function randomize_width () {
       var width = 300 * Math.random ();
       $('.scrollbars-content').css ( 'width', width + '%' );
+    }
+
+    function toggle_placeholders () {
+      $('.placeholder').toggleClass ( 'invisible' );
+    }
+
+    function toggle_shadows () {
+      $('.scrollbars').toggleClass ( 'has-shadows' );
     }
   </script>
 
