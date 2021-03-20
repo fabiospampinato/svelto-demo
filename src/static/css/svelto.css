@@ -5227,7 +5227,7 @@ html.clip-path-url .pointing-left:after, html.clip-path-polygon .chat-message.di
 html.clip-path-url .chat-message.direction-left .chat-message-content > .card-header:after,
 html.clip-path-url .chat-message:not(.direction-center):not(.direction-right) .chat-message-content > .card-header:after {
   left: -0.3125em;
-  clip-path: url(/static/images/pointing-clips.svg?v=1.2.15#clip-left);
+  clip-path: url(/static/images/pointing-clips.svg?v=1.2.34#clip-left);
   clip-path: polygon(0 0, 100% 100%, 0 100%);
 }
 
@@ -5256,7 +5256,7 @@ html.clip-path-polygon .pointing-right:after,
 html.clip-path-url .pointing-right:after, html.clip-path-polygon .chat-message.direction-right .chat-message-content > .card-header:after,
 html.clip-path-url .chat-message.direction-right .chat-message-content > .card-header:after {
   right: -0.3125em;
-  clip-path: url(/static/images/pointing-clips.svg?v=1.2.15#clip-right);
+  clip-path: url(/static/images/pointing-clips.svg?v=1.2.34#clip-right);
   clip-path: polygon(0 0, 100% 100%, 100% 0);
 }
 
@@ -5296,7 +5296,7 @@ html.clip-path-url .pointing-bottom {
 html.clip-path-polygon .pointing-bottom:after,
 html.clip-path-url .pointing-bottom:after {
   bottom: -0.3125em;
-  clip-path: url(/static/images/pointing-clips.svg?v=1.2.15#clip-bottom);
+  clip-path: url(/static/images/pointing-clips.svg?v=1.2.34#clip-bottom);
   clip-path: polygon(0 100%, 100% 100%, 100% 0);
 }
 
@@ -5328,7 +5328,7 @@ html.clip-path-url .pointing-top, html.clip-path-url .pointing:not(.pointing-rig
 html.clip-path-polygon .pointing-top:after, html.clip-path-polygon .pointing:not(.pointing-left):not(.pointing-bottom):not(.pointing-right):after,
 html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointing-left):not(.pointing-bottom):not(.pointing-right):after {
   top: -0.3125em;
-  clip-path: url(/static/images/pointing-clips.svg?v=1.2.15#clip-top);
+  clip-path: url(/static/images/pointing-clips.svg?v=1.2.34#clip-top);
   clip-path: polygon(100% 0, 0 0, 0 100%);
 }
 
@@ -7203,7 +7203,7 @@ i.flag {
   vertical-align: middle;
   width: 16px;
   height: 11px;
-  background-image: url(/static/images/flags.png?v=1.2.15);
+  background-image: url(/static/images/flags.png?v=1.2.34);
 }
 
 /* FLAGS */
@@ -8333,7 +8333,7 @@ header, footer {
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url(/static/fonts/MaterialIcons-Regular.woff2?v=1.2.15) format("woff2"), url(/static/fonts/MaterialIcons-Regular.woff?v=1.2.15) format("woff"), url(/static/fonts/MaterialIcons-Regular.ttf?v=1.2.15) format("truetype"), url(/static/fonts/MaterialIcons-Regular.eot?v=1.2.15) format("eot");
+  src: url(/static/fonts/MaterialIcons-Regular.woff2?v=1.2.34) format("woff2"), url(/static/fonts/MaterialIcons-Regular.woff?v=1.2.34) format("woff"), url(/static/fonts/MaterialIcons-Regular.ttf?v=1.2.34) format("truetype"), url(/static/fonts/MaterialIcons-Regular.eot?v=1.2.34) format("eot");
 }
 
 /* ICON */
@@ -9571,12 +9571,16 @@ input.valid, textarea.valid {
 
 /* LAYOUT RESIZABLE */
 .layout.resizable > .sash {
-  z-index: 1;
+  z-index: 75;
 }
 
 /* HORIZONTAL */
 .layout.horizontal.resizable.sash-dragging, .sash-dragging.layout.resizable:not(.vertical):not(.horizontal) {
   cursor: col-resize !important;
+}
+
+html.windows .layout.horizontal.resizable.sash-dragging, html.windows .sash-dragging.layout.resizable:not(.vertical):not(.horizontal) {
+  cursor: ew-resize !important;
 }
 
 .layout.horizontal.resizable.sash-dragging > *:not(.sash), .sash-dragging.layout.resizable:not(.vertical):not(.horizontal) > *:not(.sash) {
@@ -9595,9 +9599,17 @@ input.valid, textarea.valid {
   transform: translateX(-2px);
 }
 
+html.windows .layout.horizontal.resizable > .sash, html.windows .layout.resizable:not(.vertical):not(.horizontal) > .sash {
+  cursor: ew-resize !important;
+}
+
 /* VERTICAL */
 .layout.vertical.resizable.sash-dragging, .resizable.sash-dragging.layout:not(.vertical):not(.horizontal) {
   cursor: row-resize !important;
+}
+
+html.windows .layout.vertical.resizable.sash-dragging, html.windows .resizable.sash-dragging.layout:not(.vertical):not(.horizontal) {
+  cursor: ns-resize !important;
 }
 
 .layout.vertical.resizable.sash-dragging > *:not(.sash), .resizable.sash-dragging.layout:not(.vertical):not(.horizontal) > *:not(.sash) {
@@ -9614,6 +9626,10 @@ input.valid, textarea.valid {
   height: 4px;
   margin-top: -2px;
   transform: translateY(-2px);
+}
+
+html.windows .layout.vertical.resizable > .sash, html.windows .resizable.layout:not(.vertical):not(.horizontal) > .sash {
+  cursor: ns-resize !important;
 }
 
 /* DEFAULT */
@@ -11152,6 +11168,282 @@ html.scrollbar-size-17 .rails .rails-content.multiple {
 
 .ripple-base > .ripple-circle:before {
   background-color: #eceff1;
+}
+
+/* SCROLLBARS */
+.scrollbars {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  /* TRACK */
+  /* THUMB */
+  /* CORNER */
+  /* SHADOWS */
+  /* VIEWPORT */
+  /* CONTENT */
+  /* HAS HORIZONTAL */
+  /* HAS VERTICAL */
+  /* HAS CORNER */
+  /* HAS SHADOWS */
+  /* IS DRAGGING */
+  /* IS DRAGGING HORIZONTAL */
+  /* IS DRAGGING VERTICAL */
+  /* AUTOHIDE */
+  /* AUTOSIZE */
+  /* IS MOBILE */
+  /* IS DRAGGING */
+}
+
+.scrollbars-track {
+  position: absolute;
+  z-index: 52;
+  user-select: none !important;
+  overflow: hidden;
+  transition-duration: 0.15s;
+  /* HORIZONTAL */
+  /* VERTICAL */
+}
+
+.scrollbars-track.horizontal {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+
+.scrollbars-track.horizontal .scrollbars-thumb {
+  min-width: 20px;
+  top: 9px;
+  height: 3px;
+  transition-property: top, height;
+  transition-duration: 0.075s;
+}
+
+.scrollbars-track.vertical {
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+}
+
+.scrollbars-track.vertical .scrollbars-thumb {
+  min-height: 20px;
+  left: 9px;
+  width: 3px;
+  transition-property: left, width;
+  transition-duration: 0.075s;
+}
+
+.scrollbars-thumb {
+  position: absolute;
+  z-index: 53;
+  background-color: #00000066;
+}
+
+.scrollbars-corner {
+  display: none;
+  position: absolute;
+  z-index: 54;
+  right: 0;
+  bottom: 0;
+  width: 9px;
+  height: 9px;
+}
+
+.scrollbars-shadows {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 51;
+  transition-duration: 0s;
+}
+
+.scrollbars-viewport {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: scroll;
+  scrollbar-width: 0;
+}
+
+.scrollbars-viewport::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.scrollbars-content {
+  position: relative !important;
+  overflow: visible;
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.scrollbars:not(.has-horizontal) > .scrollbars-track.horizontal {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.scrollbars:not(.has-vertical) > .scrollbars-track.vertical {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.scrollbars.has-corner {
+  /* HORIZONTAL */
+  /* VERTICAL */
+}
+
+.scrollbars.has-corner > .scrollbars-track.horizontal {
+  right: 9px;
+}
+
+.scrollbars.has-corner > .scrollbars-track.vertical {
+  bottom: 9px;
+}
+
+.scrollbars.has-shadows.is-vertical-scrolled-start > .scrollbars-shadows {
+  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-horizontal-scrolled-end > .scrollbars-shadows {
+  box-shadow: inset -9px 0 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-vertical-scrolled-end > .scrollbars-shadows {
+  box-shadow: inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-horizontal-scrolled-start > .scrollbars-shadows {
+  box-shadow: inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-vertical-scrolled-start.is-horizontal-scrolled-end > .scrollbars-shadows {
+  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset -9px 0 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-vertical-scrolled-start.is-vertical-scrolled-end > .scrollbars-shadows {
+  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-vertical-scrolled-start.is-horizontal-scrolled-start > .scrollbars-shadows {
+  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-horizontal-scrolled-end.is-vertical-scrolled-end > .scrollbars-shadows {
+  box-shadow: inset -9px 0 9px -9px rgba(0, 0, 0, 0.2), inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-horizontal-scrolled-end.is-horizontal-scrolled-start > .scrollbars-shadows {
+  box-shadow: inset -9px 0 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-vertical-scrolled-end.is-horizontal-scrolled-start > .scrollbars-shadows {
+  box-shadow: inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-vertical-scrolled-start.is-horizontal-scrolled-end.is-vertical-scrolled-end > .scrollbars-shadows {
+  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset -9px 0 9px -9px rgba(0, 0, 0, 0.2), inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-vertical-scrolled-start.is-horizontal-scrolled-end.is-horizontal-scrolled-start > .scrollbars-shadows {
+  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset -9px 0 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-vertical-scrolled-start.is-vertical-scrolled-end.is-horizontal-scrolled-start > .scrollbars-shadows {
+  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-horizontal-scrolled-end.is-vertical-scrolled-end.is-horizontal-scrolled-start > .scrollbars-shadows {
+  box-shadow: inset -9px 0 9px -9px rgba(0, 0, 0, 0.2), inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.has-shadows.is-vertical-scrolled-start.is-horizontal-scrolled-end.is-vertical-scrolled-end.is-horizontal-scrolled-start > .scrollbars-shadows {
+  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset -9px 0 9px -9px rgba(0, 0, 0, 0.2), inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+}
+
+.scrollbars.is-horizontal-dragging > .scrollbars-viewport, .scrollbars.is-vertical-dragging > .scrollbars-viewport {
+  pointer-events: none;
+}
+
+.scrollbars-track.horizontal:hover .scrollbars-thumb, .scrollbars-track.horizontal:active .scrollbars-thumb,
+.scrollbars.is-horizontal-dragging > .scrollbars-track.horizontal .scrollbars-thumb {
+  top: 3px;
+  height: 9px;
+}
+
+.scrollbars-track.vertical:hover .scrollbars-thumb, .scrollbars-track.vertical:active .scrollbars-thumb,
+.scrollbars.is-vertical-dragging > .scrollbars-track.vertical .scrollbars-thumb {
+  left: 3px;
+  width: 9px;
+}
+
+.scrollbars.autohide {
+  /* HORIZONTAL SCROLLING */
+  /* VERTICAL SCROLLING */
+}
+
+.scrollbars.autohide:not(.is-horizontal-scrolling) > .scrollbars-track:not(:hover):not(:active).horizontal {
+  opacity: 0;
+}
+
+.scrollbars.autohide.is-horizontal-scrolling > .scrollbars-track.horizontal {
+  transition-duration: 0s;
+}
+
+.scrollbars.autohide:not(.is-vertical-scrolling) > .scrollbars-track:not(:hover):not(:active).vertical {
+  opacity: 0;
+}
+
+.scrollbars.autohide.is-vertical-scrolling > .scrollbars-track.vertical {
+  transition-duration: 0s;
+}
+
+.scrollbars.autosize {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
+  height: stretch;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  width: fill-available;
+  width: stretch;
+}
+
+.scrollbars.autosize > .scrollbars-viewport {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+html.mobile .scrollbars-track {
+  pointer-events: none;
+}
+
+html.scrollbars-dragging .scrollbars {
+  /* HORIZONTAL SCROLLING */
+  /* VERTICAL SCROLLING */
+}
+
+html.scrollbars-dragging .scrollbars:not(.is-horizontal-dragging) > .scrollbars-track.horizontal {
+  pointer-events: none;
+}
+
+html.scrollbars-dragging .scrollbars:not(.is-vertical-dragging) > .scrollbars-track.vertical {
+  pointer-events: none;
 }
 
 /* SECTIONS */

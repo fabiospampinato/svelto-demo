@@ -2616,7 +2616,7 @@ $layout-footer-color: $layout-header-color !default;
 
 /* SVELTO */
 
-$svelto-version: '1.2.15' !default;
+$svelto-version: '1.2.34' !default;
 $svelto-environment: 'development' !default;
 $svelto-development: $svelto-environment == 'development' !default;
 
@@ -4850,7 +4850,7 @@ $label-floating-compact-padding-y: $label-floating-padding-y * .75 !default;
 /* LAYOUT RESIZABLE */
 
 $layout-resizable-sash-size: 4px !default;
-$layout-resizable-sash-z-index: 1 !default;
+$layout-resizable-sash-z-index: 75 !default;
 
 
 // @require core/colors/variables.scss
@@ -5216,6 +5216,32 @@ $ripple-circle-z-index: 100 !default;
 $ripple-animation-timing-function: cubic-bezier( .25, .8, .25, 1 ) !default; // Taken from Angular Material
 
 $ripple-animation-duration: $animation-slow !default;
+
+
+$scrollbars-z-index: 50 !default;
+
+$scrollbars-track-size: 12px !default;
+$scrollbars-track-z-index: $scrollbars-z-index + 2 !default;
+$scrollbars-track-animation-duration: $animation-fast !default;
+
+$scrollbars-thumb-collapsed-size: 3px !default;
+$scrollbars-thumb-expanded-size: 9px !default;
+$scrollbars-thumb-min-size: 20px !default;
+$scrollbars-thumb-z-index: $scrollbars-z-index + 3 !default;
+$scrollbars-thumb-animation-duration: $animation-xfast !default;
+
+$scrollbars-corner-size: $scrollbars-thumb-expanded-size !default;
+$scrollbars-corner-z-index: $scrollbars-z-index + 4 !default;
+
+$scrollbars-shadows-size: $scrollbars-thumb-expanded-size !default;
+$scrollbars-shadows-color: rgba(0, 0, 0, .2) !default;
+$scrollbars-shadows-z-index: $scrollbars-z-index + 1 !default;
+$scrollbars-shadows-animation-duration: 0s !default;
+
+$scrollbars-shadow-top: inset 0 #{$scrollbars-shadows-size} #{$scrollbars-shadows-size} -#{$scrollbars-shadows-size} #{$scrollbars-shadows-color};
+$scrollbars-shadow-bottom: inset 0 -#{$scrollbars-shadows-size} #{$scrollbars-shadows-size} -#{$scrollbars-shadows-size} #{$scrollbars-shadows-color};
+$scrollbars-shadow-left: inset #{$scrollbars-shadows-size} 0 #{$scrollbars-shadows-size} -#{$scrollbars-shadows-size} #{$scrollbars-shadows-color};
+$scrollbars-shadow-right: inset -#{$scrollbars-shadows-size} 0 #{$scrollbars-shadows-size} -#{$scrollbars-shadows-size} #{$scrollbars-shadows-color};
 
 
 /* POPOVER */
@@ -12947,6 +12973,10 @@ input[type="file"] {
 
     cursor: col-resize !important;
 
+    html.windows & {
+      cursor: ew-resize !important; // Windows doesn't even use the right one...
+    }
+
     & > *:not(.sash) {
       pointer-events: none !important;
     }
@@ -12954,11 +12984,17 @@ input[type="file"] {
   }
 
   & > .sash {
+
     @include absolute ( 0 auto 0 auto );
     cursor: col-resize;
     width: $layout-resizable-sash-size;
     margin-left: - $layout-resizable-sash-size / 2;
     transform: translateX( - $layout-resizable-sash-size / 2 ); // Starting hidden
+
+    html.windows & {
+      cursor: ew-resize !important; // Windows doesn't even use the right one...
+    }
+
   }
 
 }
@@ -12974,6 +13010,10 @@ input[type="file"] {
 
     cursor: row-resize !important;
 
+    html.windows & {
+      cursor: ns-resize !important; // Windows doesn't even use the right one...
+    }
+
     & > *:not(.sash) {
       pointer-events: none !important;
     }
@@ -12981,11 +13021,17 @@ input[type="file"] {
   }
 
   & > .sash {
+
     @include absolute ( auto 0 auto 0 );
     cursor: row-resize;
     height: $layout-resizable-sash-size;
     margin-top: - $layout-resizable-sash-size / 2;
     transform: translateY( - $layout-resizable-sash-size / 2 ); // Starting hidden
+
+    html.windows & {
+      cursor: ns-resize !important; // Windows doesn't even use the right one...
+    }
+
   }
 
 }
@@ -15027,6 +15073,353 @@ input[type=radio] {
 
     .ripple-#{$class} > .ripple-circle:before {
       background-color: $bg;
+    }
+
+  }
+
+}
+
+
+/* SCROLLBARS */
+
+.scrollbars {
+
+  @include fill-absolute ();
+  padding: 0;
+  border-radius: inherit;
+  overflow: hidden;
+
+  /* TRACK */
+
+  &-track {
+
+    position: absolute;
+    z-index: $scrollbars-track-z-index;
+    user-select: none !important;
+    overflow: hidden;
+    transition-duration: $scrollbars-track-animation-duration;
+
+    /* HORIZONTAL */
+
+    &.horizontal {
+
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: $scrollbars-track-size;
+
+      .scrollbars-thumb {
+        min-width: $scrollbars-thumb-min-size;
+        top: $scrollbars-track-size - $scrollbars-thumb-collapsed-size;
+        height: $scrollbars-thumb-collapsed-size;
+        transition-property: top, height;
+        transition-duration: $scrollbars-thumb-animation-duration;
+      }
+
+    }
+
+    /* VERTICAL */
+
+    &.vertical {
+
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: $scrollbars-track-size;
+
+      .scrollbars-thumb {
+        min-height: $scrollbars-thumb-min-size;
+        left: $scrollbars-track-size - $scrollbars-thumb-collapsed-size;
+        width: $scrollbars-thumb-collapsed-size;
+        transition-property: left, width;
+        transition-duration: $scrollbars-thumb-animation-duration;
+      }
+
+    }
+
+  }
+
+  /* THUMB */
+
+  &-thumb {
+    position: absolute;
+    z-index: $scrollbars-thumb-z-index;
+    background-color: #00000066;
+  }
+
+  /* CORNER */
+
+  &-corner {
+    display: none;
+    position: absolute;
+    z-index: $scrollbars-corner-z-index;
+    right: 0;
+    bottom: 0;
+    width: $scrollbars-corner-size;
+    height: $scrollbars-corner-size;
+  }
+
+  /* SHADOWS */
+
+  &-shadows {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: $scrollbars-shadows-z-index;
+    transition-duration: $scrollbars-shadows-animation-duration;
+  }
+
+  /* VIEWPORT */
+
+  &-viewport {
+
+    @include fill-absolute ();
+    overflow: scroll;
+    scrollbar-width: 0;
+
+    &::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+  }
+
+  /* CONTENT */
+
+  &-content {
+    position: relative !important;
+    overflow: visible;
+    min-height: 100%;
+    min-width: 100%;
+  }
+
+  /* HAS HORIZONTAL */
+
+  &:not(.has-horizontal) {
+
+    > .scrollbars-track.horizontal {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+  }
+
+  /* HAS VERTICAL */
+
+  &:not(.has-vertical) {
+
+    > .scrollbars-track.vertical {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+  }
+
+  /* HAS CORNER */
+
+  &.has-corner {
+
+    /* HORIZONTAL */
+
+    > .scrollbars-track.horizontal {
+      right: $scrollbars-corner-size;
+    }
+
+    /* VERTICAL */
+
+    > .scrollbars-track.vertical {
+      bottom: $scrollbars-corner-size;
+    }
+
+  }
+
+  /* HAS SHADOWS */
+
+  &.has-shadows {
+
+    $directions-classes: (
+      top: ".is-vertical-scrolled-start",
+      bottom: ".is-vertical-scrolled-end",
+      left: ".is-horizontal-scrolled-start",
+      right: ".is-horizontal-scrolled-end"
+    );
+
+    $directions-shadows: (
+      top: $scrollbars-shadow-top,
+      bottom: $scrollbars-shadow-bottom,
+      left: $scrollbars-shadow-left,
+      right: $scrollbars-shadow-right
+    );
+
+    $permutations: (
+      /* 1 DIRECTION */
+      ( "top" ), ( "right" ), ( "bottom" ), ( "left" ),
+      /* 2 DIRECTIONS */
+      ( "top", "right" ), ( "top", "bottom" ), ( "top", "left" ), ( "right", "bottom" ), ( "right", "left" ), ( "bottom", "left" ),
+      /* 3 DIRECTIONS */
+      ( "top", "right", "bottom" ), ( "top", "right", "left" ), ( "top", "bottom", "left" ), ( "right", "bottom", "left" ),
+      /* 4 DIRECTIONS */
+      ( "top", "right", "bottom", "left" )
+    );
+
+    @each $permutation in $permutations {
+
+      $classes: "";
+      $shadows: ();
+
+      @each $direction in $permutation {
+
+        $class: map-get( $directions-classes, $direction );
+        $classes: "#{$classes}#{$class}";
+
+        $shadow: map-get( $directions-shadows, $direction );
+        $shadows: append( $shadows, $shadow, "comma" );
+
+      }
+
+      &#{$classes} > .scrollbars-shadows {
+        box-shadow: #{$shadows};
+      }
+
+    }
+
+  }
+
+  /* IS DRAGGING */
+
+  &.is-horizontal-dragging,
+  &.is-vertical-dragging {
+
+    > .scrollbars-viewport {
+      pointer-events: none;
+    }
+
+  }
+
+  /* IS DRAGGING HORIZONTAL */
+
+  &-track.horizontal:hover,
+  &-track.horizontal:active,
+  &.is-horizontal-dragging > .scrollbars-track.horizontal {
+
+    .scrollbars-thumb {
+      top: $scrollbars-track-size - $scrollbars-thumb-expanded-size;
+      height: $scrollbars-thumb-expanded-size;
+    }
+
+  }
+
+  /* IS DRAGGING VERTICAL */
+
+  &-track.vertical:hover,
+  &-track.vertical:active,
+  &.is-vertical-dragging > .scrollbars-track.vertical {
+
+    .scrollbars-thumb {
+      left: $scrollbars-track-size - $scrollbars-thumb-expanded-size;
+      width: $scrollbars-thumb-expanded-size;
+    }
+
+  }
+
+  /* AUTOHIDE */
+
+  &.autohide {
+
+    /* HORIZONTAL SCROLLING */
+
+    &:not(.is-horizontal-scrolling) {
+
+      > .scrollbars-track:not(:hover):not(:active).horizontal {
+        opacity: 0;
+      }
+
+    }
+
+    &.is-horizontal-scrolling {
+
+      > .scrollbars-track.horizontal {
+        transition-duration: 0s;
+      }
+
+    }
+
+    /* VERTICAL SCROLLING */
+
+    &:not(.is-vertical-scrolling) {
+
+      > .scrollbars-track:not(:hover):not(:active).vertical {
+        opacity: 0;
+      }
+
+    }
+
+    &.is-vertical-scrolling {
+
+      > .scrollbars-track.vertical {
+        transition-duration: 0s;
+      }
+
+    }
+
+  }
+
+  /* AUTOSIZE */
+
+  &.autosize {
+
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    height: -moz-available;
+    height: -webkit-fill-available;
+    height: fill-available;
+    height: stretch;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: fill-available;
+    width: stretch;
+
+    > .scrollbars-viewport {
+      position: relative;
+      height: 100%;
+      width: 100%;
+    }
+
+  }
+
+  /* IS MOBILE */
+
+  html.mobile &-track {
+    pointer-events: none;
+  }
+
+  /* IS DRAGGING */
+
+  html.scrollbars-dragging & {
+
+    /* HORIZONTAL SCROLLING */
+
+    &:not(.is-horizontal-dragging) {
+
+      > .scrollbars-track.horizontal {
+        pointer-events: none;
+      }
+
+    }
+
+    /* VERTICAL SCROLLING */
+
+    &:not(.is-vertical-dragging) {
+
+      > .scrollbars-track.vertical {
+        pointer-events: none;
+      }
+
     }
 
   }
