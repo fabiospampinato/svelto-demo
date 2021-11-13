@@ -543,7 +543,7 @@ $layout-footer-color: $layout-header-color !default;
 
 /* SVELTO */
 
-$svelto-version: '1.2.34' !default;
+$svelto-version: '1.2.42' !default;
 $svelto-environment: 'development' !default;
 $svelto-development: $svelto-environment == 'development' !default;
 
@@ -870,6 +870,7 @@ $obscured-animation-duration: $animation-fast !default;
 
 $pointing-tip-size: .625em !default;
 $pointing-tip-size-half: $pointing-tip-size / 2 !default;
+$pointing-tip-border-radius: $pointing-tip-size / 3 !default;
 
 $pointing-tip-diagonal: $pointing-tip-size * $SQRT2 !default;
 $pointing-tip-diagonal-half: $pointing-tip-diagonal / 2 !default;
@@ -3151,8 +3152,8 @@ $scrollbars-track-size: 12px !default;
 $scrollbars-track-z-index: $scrollbars-z-index + 2 !default;
 $scrollbars-track-animation-duration: $animation-fast !default;
 
-$scrollbars-thumb-collapsed-size: 3px !default;
-$scrollbars-thumb-expanded-size: 9px !default;
+$scrollbars-thumb-collapsed-size: 10px !default;
+$scrollbars-thumb-expanded-size: $scrollbars-thumb-collapsed-size !default;
 $scrollbars-thumb-min-size: 20px !default;
 $scrollbars-thumb-z-index: $scrollbars-z-index + 3 !default;
 $scrollbars-thumb-animation-duration: $animation-xfast !default;
@@ -3165,10 +3166,10 @@ $scrollbars-shadows-color: rgba(0, 0, 0, .2) !default;
 $scrollbars-shadows-z-index: $scrollbars-z-index + 1 !default;
 $scrollbars-shadows-animation-duration: 0s !default;
 
-$scrollbars-shadow-top: inset 0 #{$scrollbars-shadows-size} #{$scrollbars-shadows-size} -#{$scrollbars-shadows-size} #{$scrollbars-shadows-color};
-$scrollbars-shadow-bottom: inset 0 -#{$scrollbars-shadows-size} #{$scrollbars-shadows-size} -#{$scrollbars-shadows-size} #{$scrollbars-shadows-color};
-$scrollbars-shadow-left: inset #{$scrollbars-shadows-size} 0 #{$scrollbars-shadows-size} -#{$scrollbars-shadows-size} #{$scrollbars-shadows-color};
-$scrollbars-shadow-right: inset -#{$scrollbars-shadows-size} 0 #{$scrollbars-shadows-size} -#{$scrollbars-shadows-size} #{$scrollbars-shadows-color};
+$scrollbars-shadow-top: inset 0 #{$scrollbars-shadows-size} #{$scrollbars-shadows-size} -#{$scrollbars-shadows-size} #{$scrollbars-shadows-color} !default;
+$scrollbars-shadow-bottom: inset 0 -#{$scrollbars-shadows-size} #{$scrollbars-shadows-size} -#{$scrollbars-shadows-size} #{$scrollbars-shadows-color} !default;
+$scrollbars-shadow-left: inset #{$scrollbars-shadows-size} 0 #{$scrollbars-shadows-size} -#{$scrollbars-shadows-size} #{$scrollbars-shadows-color} !default;
+$scrollbars-shadow-right: inset -#{$scrollbars-shadows-size} 0 #{$scrollbars-shadows-size} -#{$scrollbars-shadows-size} #{$scrollbars-shadows-color} !default;
 
 
 /* POPOVER */

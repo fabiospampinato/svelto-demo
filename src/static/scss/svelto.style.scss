@@ -2708,6 +2708,7 @@ $offsets-bordered: (
 
   &:after {
     left: - $pointing-tip-size-half;
+    border-bottom-left-radius: $pointing-tip-border-radius;
     clip-path: url(#{$pointing-path-images}pointing-clips.svg#{$revision}#clip-left); // The polygon is not supported on Firefox
     clip-path: polygon(0 0, 100% 100%, 0 100%);
   }
@@ -2753,6 +2754,7 @@ html.clip-path-url {
 
   &:after {
     right: - $pointing-tip-size-half;
+    border-top-right-radius: $pointing-tip-border-radius;
     clip-path: url(#{$pointing-path-images}pointing-clips.svg#{$revision}#clip-right); // The polygon is not supported on Firefox
     clip-path: polygon(0 0, 100% 100%, 100% 0);
   }
@@ -2816,6 +2818,7 @@ html.clip-path-url {
 
   &:after {
     bottom: - $pointing-tip-size-half;
+    border-bottom-right-radius: $pointing-tip-border-radius;
     clip-path: url(#{$pointing-path-images}pointing-clips.svg#{$revision}#clip-bottom); // The polygon is not supported on Firefox
     clip-path: polygon(0 100%, 100% 100%, 100% 0);
   }
@@ -2868,6 +2871,7 @@ html.clip-path-url {
 
   &:after {
     top: - $pointing-tip-size-half;
+    border-top-left-radius: $pointing-tip-border-radius;
     clip-path: url(#{$pointing-path-images}pointing-clips.svg#{$revision}#clip-top); // The polygon is not supported on Firefox
     clip-path: polygon(100% 0, 0 0, 0 100%);
   }
@@ -9176,6 +9180,7 @@ input[type=radio] {
     position: absolute;
     z-index: $scrollbars-thumb-z-index;
     background-color: #00000066;
+    clip-path: inset(2px round $gutter);
   }
 
   /* CORNER */
@@ -9363,7 +9368,8 @@ input[type=radio] {
 
     /* HORIZONTAL SCROLLING */
 
-    &:not(.is-horizontal-scrolling) {
+    &:not(.autohide-hover):not(.is-horizontal-scrolling),
+    &.autohide-hover:not(.is-horizontal-scrolling):not(:hover):not(:active) {
 
       > .scrollbars-track:not(:hover):not(:active).horizontal {
         opacity: 0;
@@ -9381,7 +9387,8 @@ input[type=radio] {
 
     /* VERTICAL SCROLLING */
 
-    &:not(.is-vertical-scrolling) {
+    &:not(.autohide-hover):not(.is-vertical-scrolling),
+    &.autohide-hover:not(.is-vertical-scrolling):not(:hover):not(:active) {
 
       > .scrollbars-track:not(:hover):not(:active).vertical {
         opacity: 0;

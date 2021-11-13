@@ -5227,7 +5227,8 @@ html.clip-path-url .pointing-left:after, html.clip-path-polygon .chat-message.di
 html.clip-path-url .chat-message.direction-left .chat-message-content > .card-header:after,
 html.clip-path-url .chat-message:not(.direction-center):not(.direction-right) .chat-message-content > .card-header:after {
   left: -0.3125em;
-  clip-path: url(/static/images/pointing-clips.svg?v=1.2.34#clip-left);
+  border-bottom-left-radius: 0.2083333333em;
+  clip-path: url(/static/images/pointing-clips.svg?v=1.2.42#clip-left);
   clip-path: polygon(0 0, 100% 100%, 0 100%);
 }
 
@@ -5256,7 +5257,8 @@ html.clip-path-polygon .pointing-right:after,
 html.clip-path-url .pointing-right:after, html.clip-path-polygon .chat-message.direction-right .chat-message-content > .card-header:after,
 html.clip-path-url .chat-message.direction-right .chat-message-content > .card-header:after {
   right: -0.3125em;
-  clip-path: url(/static/images/pointing-clips.svg?v=1.2.34#clip-right);
+  border-top-right-radius: 0.2083333333em;
+  clip-path: url(/static/images/pointing-clips.svg?v=1.2.42#clip-right);
   clip-path: polygon(0 0, 100% 100%, 100% 0);
 }
 
@@ -5296,7 +5298,8 @@ html.clip-path-url .pointing-bottom {
 html.clip-path-polygon .pointing-bottom:after,
 html.clip-path-url .pointing-bottom:after {
   bottom: -0.3125em;
-  clip-path: url(/static/images/pointing-clips.svg?v=1.2.34#clip-bottom);
+  border-bottom-right-radius: 0.2083333333em;
+  clip-path: url(/static/images/pointing-clips.svg?v=1.2.42#clip-bottom);
   clip-path: polygon(0 100%, 100% 100%, 100% 0);
 }
 
@@ -5328,7 +5331,8 @@ html.clip-path-url .pointing-top, html.clip-path-url .pointing:not(.pointing-rig
 html.clip-path-polygon .pointing-top:after, html.clip-path-polygon .pointing:not(.pointing-left):not(.pointing-bottom):not(.pointing-right):after,
 html.clip-path-url .pointing-top:after, html.clip-path-url .pointing:not(.pointing-left):not(.pointing-bottom):not(.pointing-right):after {
   top: -0.3125em;
-  clip-path: url(/static/images/pointing-clips.svg?v=1.2.34#clip-top);
+  border-top-left-radius: 0.2083333333em;
+  clip-path: url(/static/images/pointing-clips.svg?v=1.2.42#clip-top);
   clip-path: polygon(100% 0, 0 0, 0 100%);
 }
 
@@ -7203,7 +7207,7 @@ i.flag {
   vertical-align: middle;
   width: 16px;
   height: 11px;
-  background-image: url(/static/images/flags.png?v=1.2.34);
+  background-image: url(/static/images/flags.png?v=1.2.42);
 }
 
 /* FLAGS */
@@ -8333,7 +8337,7 @@ header, footer {
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url(/static/fonts/MaterialIcons-Regular.woff2?v=1.2.34) format("woff2"), url(/static/fonts/MaterialIcons-Regular.woff?v=1.2.34) format("woff"), url(/static/fonts/MaterialIcons-Regular.ttf?v=1.2.34) format("truetype"), url(/static/fonts/MaterialIcons-Regular.eot?v=1.2.34) format("eot");
+  src: url(/static/fonts/MaterialIcons-Regular.woff2?v=1.2.42) format("woff2"), url(/static/fonts/MaterialIcons-Regular.woff?v=1.2.42) format("woff"), url(/static/fonts/MaterialIcons-Regular.ttf?v=1.2.42) format("truetype"), url(/static/fonts/MaterialIcons-Regular.eot?v=1.2.42) format("eot");
 }
 
 /* ICON */
@@ -11218,8 +11222,8 @@ html.scrollbar-size-17 .rails .rails-content.multiple {
 
 .scrollbars-track.horizontal .scrollbars-thumb {
   min-width: 20px;
-  top: 9px;
-  height: 3px;
+  top: 2px;
+  height: 10px;
   transition-property: top, height;
   transition-duration: 0.075s;
 }
@@ -11233,8 +11237,8 @@ html.scrollbar-size-17 .rails .rails-content.multiple {
 
 .scrollbars-track.vertical .scrollbars-thumb {
   min-height: 20px;
-  left: 9px;
-  width: 3px;
+  left: 2px;
+  width: 10px;
   transition-property: left, width;
   transition-duration: 0.075s;
 }
@@ -11243,6 +11247,7 @@ html.scrollbar-size-17 .rails .rails-content.multiple {
   position: absolute;
   z-index: 53;
   background-color: #00000066;
+  clip-path: inset(2px round 0.625rem);
 }
 
 .scrollbars-corner {
@@ -11251,8 +11256,8 @@ html.scrollbar-size-17 .rails .rails-content.multiple {
   z-index: 54;
   right: 0;
   bottom: 0;
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
 }
 
 .scrollbars-shadows {
@@ -11305,71 +11310,71 @@ html.scrollbar-size-17 .rails .rails-content.multiple {
 }
 
 .scrollbars.has-corner > .scrollbars-track.horizontal {
-  right: 9px;
+  right: 10px;
 }
 
 .scrollbars.has-corner > .scrollbars-track.vertical {
-  bottom: 9px;
+  bottom: 10px;
 }
 
 .scrollbars.has-shadows.is-vertical-scrolled-start > .scrollbars-shadows {
-  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-horizontal-scrolled-end > .scrollbars-shadows {
-  box-shadow: inset -9px 0 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-vertical-scrolled-end > .scrollbars-shadows {
-  box-shadow: inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-horizontal-scrolled-start > .scrollbars-shadows {
-  box-shadow: inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 10px 0 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-vertical-scrolled-start.is-horizontal-scrolled-end > .scrollbars-shadows {
-  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset -9px 0 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.2), inset -10px 0 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-vertical-scrolled-start.is-vertical-scrolled-end > .scrollbars-shadows {
-  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.2), inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-vertical-scrolled-start.is-horizontal-scrolled-start > .scrollbars-shadows {
-  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.2), inset 10px 0 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-horizontal-scrolled-end.is-vertical-scrolled-end > .scrollbars-shadows {
-  box-shadow: inset -9px 0 9px -9px rgba(0, 0, 0, 0.2), inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.2), inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-horizontal-scrolled-end.is-horizontal-scrolled-start > .scrollbars-shadows {
-  box-shadow: inset -9px 0 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.2), inset 10px 0 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-vertical-scrolled-end.is-horizontal-scrolled-start > .scrollbars-shadows {
-  box-shadow: inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2), inset 10px 0 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-vertical-scrolled-start.is-horizontal-scrolled-end.is-vertical-scrolled-end > .scrollbars-shadows {
-  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset -9px 0 9px -9px rgba(0, 0, 0, 0.2), inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.2), inset -10px 0 10px -10px rgba(0, 0, 0, 0.2), inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-vertical-scrolled-start.is-horizontal-scrolled-end.is-horizontal-scrolled-start > .scrollbars-shadows {
-  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset -9px 0 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.2), inset -10px 0 10px -10px rgba(0, 0, 0, 0.2), inset 10px 0 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-vertical-scrolled-start.is-vertical-scrolled-end.is-horizontal-scrolled-start > .scrollbars-shadows {
-  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.2), inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2), inset 10px 0 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-horizontal-scrolled-end.is-vertical-scrolled-end.is-horizontal-scrolled-start > .scrollbars-shadows {
-  box-shadow: inset -9px 0 9px -9px rgba(0, 0, 0, 0.2), inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.2), inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2), inset 10px 0 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.has-shadows.is-vertical-scrolled-start.is-horizontal-scrolled-end.is-vertical-scrolled-end.is-horizontal-scrolled-start > .scrollbars-shadows {
-  box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.2), inset -9px 0 9px -9px rgba(0, 0, 0, 0.2), inset 0 -9px 9px -9px rgba(0, 0, 0, 0.2), inset 9px 0 9px -9px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.2), inset -10px 0 10px -10px rgba(0, 0, 0, 0.2), inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2), inset 10px 0 10px -10px rgba(0, 0, 0, 0.2);
 }
 
 .scrollbars.is-horizontal-dragging > .scrollbars-viewport, .scrollbars.is-vertical-dragging > .scrollbars-viewport {
@@ -11378,14 +11383,14 @@ html.scrollbar-size-17 .rails .rails-content.multiple {
 
 .scrollbars-track.horizontal:hover .scrollbars-thumb, .scrollbars-track.horizontal:active .scrollbars-thumb,
 .scrollbars.is-horizontal-dragging > .scrollbars-track.horizontal .scrollbars-thumb {
-  top: 3px;
-  height: 9px;
+  top: 2px;
+  height: 10px;
 }
 
 .scrollbars-track.vertical:hover .scrollbars-thumb, .scrollbars-track.vertical:active .scrollbars-thumb,
 .scrollbars.is-vertical-dragging > .scrollbars-track.vertical .scrollbars-thumb {
-  left: 3px;
-  width: 9px;
+  left: 2px;
+  width: 10px;
 }
 
 .scrollbars.autohide {
@@ -11393,7 +11398,7 @@ html.scrollbar-size-17 .rails .rails-content.multiple {
   /* VERTICAL SCROLLING */
 }
 
-.scrollbars.autohide:not(.is-horizontal-scrolling) > .scrollbars-track:not(:hover):not(:active).horizontal {
+.scrollbars.autohide:not(.autohide-hover):not(.is-horizontal-scrolling) > .scrollbars-track:not(:hover):not(:active).horizontal, .scrollbars.autohide.autohide-hover:not(.is-horizontal-scrolling):not(:hover):not(:active) > .scrollbars-track:not(:hover):not(:active).horizontal {
   opacity: 0;
 }
 
@@ -11401,7 +11406,7 @@ html.scrollbar-size-17 .rails .rails-content.multiple {
   transition-duration: 0s;
 }
 
-.scrollbars.autohide:not(.is-vertical-scrolling) > .scrollbars-track:not(:hover):not(:active).vertical {
+.scrollbars.autohide:not(.autohide-hover):not(.is-vertical-scrolling) > .scrollbars-track:not(:hover):not(:active).vertical, .scrollbars.autohide.autohide-hover:not(.is-vertical-scrolling):not(:hover):not(:active) > .scrollbars-track:not(:hover):not(:active).vertical {
   opacity: 0;
 }
 
