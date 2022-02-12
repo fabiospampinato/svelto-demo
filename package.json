@@ -33,6 +33,7 @@
     "svelto:prod": "npm run svelto:build:prod && npm run svelto:watch:prod"
   },
   "devDependencies": {
+    "@fabiospampinato/statico": "^0.0.3",
     "lodash": "^4.17.5"
   }
 }
